@@ -4,11 +4,25 @@ import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Scanner;
 
 public class XQueryGeneratorTest extends TestCase {
 
+    String getFileContents(String fname) throws IOException {
+        final InputStream is = this.getClass().getClassLoader().getResourceAsStream(fname);
+        try {
+            final Scanner s = new Scanner(is, "UTF-8");
+            //Stupid scanner tricks to read the entire file as one token
+            s.useDelimiter("\\A");
+            return s.hasNext() ? s.next() : "";
+        }finally{
+            is.close();
+        }
+    }
     private File getResources(String resourceName){
         URL url = this.getClass().getClassLoader().getResource(resourceName);
         File dir = null;
@@ -60,4 +74,17 @@ public class XQueryGeneratorTest extends TestCase {
         runTestCollection("de/tuberlin/dima/schubotz/MathMLQueryGenerator/cmml");
     }
 
+    public void testHeaderAndFooter() throws Exception {
+        final String testHead = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
+                "<result>{\n" +
+                "let $m := .";
+        final String testFooter = "$x}\n" +
+                "</result>";
+        final String testInput = getFileContents("de/tuberlin/dima/schubotz/MathMLQueryGenerator/cmml/q1.xml");
+        Document query = XMLHelper.String2Doc(testInput);
+        XQueryGenerator xQueryGenerator = new XQueryGenerator(query);
+        xQueryGenerator.setFooter(testFooter);
+        xQueryGenerator.setHeader(testHead);
+        System.out.println(xQueryGenerator);
+    }
 }

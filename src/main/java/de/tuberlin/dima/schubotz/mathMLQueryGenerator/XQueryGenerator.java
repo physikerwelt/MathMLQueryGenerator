@@ -15,20 +15,30 @@ import java.util.Map;
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
 
-@SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
+@SuppressWarnings({"WeakerAccess"})
 public class XQueryGenerator {
     private final Map<String, ArrayList<String>> qvar = new HashMap<String, ArrayList<String>>();
     private String relativeXPath = "";
     private String lengthConstraint = "";
-    private String db2ColumnName = "math.math_mathml";
-
-    public String getDb2ColumnName() {
-        return db2ColumnName;
+    private String header = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
+            "for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
+    private String footer = "data($m/*[1]/@alttext)";
+    public String getFooter() {
+        return footer;
     }
 
-    public void setDb2ColumnName(String db2ColumnName) {
-        this.db2ColumnName = db2ColumnName;
+    public void setFooter(String footer) {
+        this.footer = footer;
     }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
 
     private final Document xml;
 
@@ -151,13 +161,4 @@ public class XQueryGenerator {
         return out;
     }
 
-    protected String getHeader() {
-        return "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-                "for $m in db2-fn:xmlcolumn(\"" + db2ColumnName + "\") return\n";
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    protected String getFooter() {
-        return "data($m/*[1]/@alttext)";
-    }
 }

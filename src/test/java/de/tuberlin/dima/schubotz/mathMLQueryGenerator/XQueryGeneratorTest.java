@@ -9,12 +9,9 @@ import java.nio.file.Files;
 
 public class XQueryGeneratorTest extends TestCase {
 
-    public void testGetXQuery() {
-        URL url = this.getClass().getClassLoader().getResource("de/tuberlin/dima/schubotz/MathMLQueryGenerator/mws");
+    private File getResources(String resourceName){
+        URL url = this.getClass().getClassLoader().getResource(resourceName);
         File dir = null;
-        String queryString = null;
-        String reference = null;
-        Document query = null;
         try {
             //IntelliJ would accept if (url != null) { ... } else { throw new NullPointerException(); }
             //but I don't like that
@@ -23,7 +20,17 @@ public class XQueryGeneratorTest extends TestCase {
         } catch (Exception e) {
             fail("Cannot open test resource folder.");
         }
-        //noinspection ConstantConditions
+        return dir;
+    }
+
+    private void runTestCollection(String resourceName){
+        runTestCollection(getResources(resourceName));
+    }
+
+    private void runTestCollection(File dir){
+        String queryString = null;
+        String reference = null;
+        Document query = null;
         for (File nextFile : dir.listFiles()) {
             if (nextFile.getName().endsWith(".xml")) {
                 File resultPath = new File(nextFile.getAbsolutePath().replace(".xml", ".xq"));
@@ -43,6 +50,14 @@ public class XQueryGeneratorTest extends TestCase {
                 assertEquals("Example " + nextFile.getName() + " does not match reference.", reference, xQueryGenerator.toString());
             }
         }
+    }
+
+    public void testMwsConversion() {
+        runTestCollection("de/tuberlin/dima/schubotz/MathMLQueryGenerator/mws");
+    }
+
+    public void testCmmlConversion() {
+        runTestCollection("de/tuberlin/dima/schubotz/MathMLQueryGenerator/cmml");
     }
 
 }

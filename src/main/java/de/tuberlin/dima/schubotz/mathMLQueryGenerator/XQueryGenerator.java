@@ -4,6 +4,7 @@ package de.tuberlin.dima.schubotz.mathMLQueryGenerator;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,12 +36,27 @@ public class XQueryGenerator {
         this.xml = xml;
     }
 
-    private NdLst getMainElements() {
-        return new NdLst(xml.getElementsByTagName("mws:expr"));
+    private Node getMainElement() {
+        // Try to get main mws:expr first
+        NodeList expr = xml.getElementsByTagName("mws:expr");
+
+        if(expr.getLength() > 0){
+            return new NdLst( expr ).item(0);
+        } else {
+            // if that fails try to get content MathML from an annotation tag
+            expr = xml.getElementsByTagName("annotation-xml");
+            for (Node node : new NdLst(expr)) {
+                if(node.hasAttributes() && node.getAttributes().getNamedItem("encoding").getNodeValue().equals("MathML-Content")){
+                    return node;
+                }
+            }
+
+        }
+        return null;
     }
 
     public String toString() {
-        String fixedConstraints = generateConstraint(getMainElements().item(0), true);
+        String fixedConstraints = generateConstraint(getMainElement(), true);
         String qvarConstraintString = "";
         for (Map.Entry<String, ArrayList<String>> entry : qvar.entrySet()) {
             String addString = "";
@@ -71,7 +87,7 @@ public class XQueryGenerator {
 
 
         return getHeader() + "for $x in $m//*:" +
-                (new NdLst(getMainElements().item(0).getChildNodes())).item(0).getLocalName() + "\n" +
+                (new NdLst(getMainElement().getChildNodes())).item(0).getLocalName() + "\n" +
                 fixedConstraints + "\n" +
                 "where" + "\n" +
                 lengthConstraint +

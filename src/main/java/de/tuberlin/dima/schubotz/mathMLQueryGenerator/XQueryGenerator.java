@@ -42,7 +42,7 @@ public class XQueryGenerator {
 
     private final Document xml;
 
-    XQueryGenerator(Document xml) {
+    public XQueryGenerator(Document xml) {
         this.xml = xml;
     }
 
@@ -52,21 +52,27 @@ public class XQueryGenerator {
 
         if(expr.getLength() > 0){
             return new NdLst( expr ).item(0);
-        } else {
-            // if that fails try to get content MathML from an annotation tag
-            expr = xml.getElementsByTagName("annotation-xml");
-            for (Node node : new NdLst(expr)) {
-                if(node.hasAttributes() && node.getAttributes().getNamedItem("encoding").getNodeValue().equals("MathML-Content")){
-                    return node;
-                }
+        }
+        // if that fails try to get content MathML from an annotation tag
+        expr = xml.getElementsByTagName("annotation-xml");
+        for (Node node : new NdLst(expr)) {
+            if(node.hasAttributes() && node.getAttributes().getNamedItem("encoding").getNodeValue().equals("MathML-Content")){
+                return node;
             }
-
+        }
+        // if that fails too interprete content of root MathML element as content MathML
+        expr = xml.getElementsByTagName("math");
+        if(expr.getLength() > 0){
+            return new NdLst( expr ).item(0);
         }
         return null;
     }
 
     public String toString() {
-        String fixedConstraints = generateConstraint(getMainElement(), true);
+        Node mainElement = getMainElement();
+        if (mainElement == null)
+            return null;
+        String fixedConstraints = generateConstraint(mainElement, true);
         String qvarConstraintString = "";
         for (Map.Entry<String, ArrayList<String>> entry : qvar.entrySet()) {
             String addString = "";
@@ -97,7 +103,7 @@ public class XQueryGenerator {
 
 
         return getHeader() + "for $x in $m//*:" +
-                (new NdLst(getMainElement().getChildNodes())).item(0).getLocalName() + "\n" +
+                (new NdLst(mainElement.getChildNodes())).item(0).getLocalName() + "\n" +
                 fixedConstraints + "\n" +
                 "where" + "\n" +
                 lengthConstraint +
@@ -115,6 +121,9 @@ public class XQueryGenerator {
         int i = 0;
         String out = "";
         boolean hasText = false;
+        if (node == null ){
+            return null;
+        }
         NdLst nodeList = new NdLst(node.getChildNodes());
         for (Node child : nodeList) {
             if (child.getNodeName().equals("mws:qvar")) {

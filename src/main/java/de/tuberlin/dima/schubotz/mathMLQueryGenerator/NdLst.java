@@ -15,7 +15,7 @@ class NdLst implements NodeList, Iterable<Node> {
     private final List<Node> nodes;
 
     public NdLst(NodeList list) {
-        nodes = new ArrayList<Node>();
+        nodes = new ArrayList<>();
         for (int i = 0; i < list.getLength(); i++) {
             if (!isWhitespaceNode(list.item(i))) {
                 nodes.add(list.item(i));

@@ -12,18 +12,17 @@ import java.util.Scanner;
 
 public class XQueryGeneratorTest extends TestCase {
 
+    @SuppressWarnings("SameParameterValue")
     String getFileContents(String fname) throws IOException {
-        final InputStream is = this.getClass().getClassLoader().getResourceAsStream(fname);
-        try {
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(fname)) {
             final Scanner s = new Scanner(is, "UTF-8");
             //Stupid scanner tricks to read the entire file as one token
             s.useDelimiter("\\A");
             return s.hasNext() ? s.next() : "";
-        }finally{
-            is.close();
         }
     }
-    private File getResources(String resourceName){
+
+    private File getResources(String resourceName) {
         URL url = this.getClass().getClassLoader().getResource(resourceName);
         File dir = null;
         try {
@@ -37,11 +36,11 @@ public class XQueryGeneratorTest extends TestCase {
         return dir;
     }
 
-    private void runTestCollection(String resourceName){
+    private void runTestCollection(String resourceName) {
         runTestCollection(getResources(resourceName));
     }
 
-    private void runTestCollection(File dir){
+    private void runTestCollection(File dir) {
         String queryString = null;
         String reference = null;
         Document query = null;
@@ -81,20 +80,20 @@ public class XQueryGeneratorTest extends TestCase {
         final String testFooter = "$x}\n" +
                 "</result>";
         final String testInput = getFileContents("de/tuberlin/dima/schubotz/MathMLQueryGenerator/cmml/q1.xml");
-	    final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-		    "<result>{\n" +
-		    "let $m := .for $x in $m//*:ci\n" +
-		    "[./text() = 'E']\n" +
-		    "where\n" +
-		    "fn:count($x/*) = 0\n" +
-		    "\n" +
-		    "return\n" +
-		    "$x}\n" +
-		    "</result>";
+        final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
+                "<result>{\n" +
+                "let $m := .for $x in $m//*:ci\n" +
+                "[./text() = 'E']\n" +
+                "where\n" +
+                "fn:count($x/*) = 0\n" +
+                "\n" +
+                "return\n" +
+                "$x}\n" +
+                "</result>";
         Document query = XMLHelper.String2Doc(testInput);
         XQueryGenerator xQueryGenerator = new XQueryGenerator(query);
         xQueryGenerator.setFooter(testFooter);
         xQueryGenerator.setHeader(testHead);
-	    assertEquals(expectedOutput,xQueryGenerator.toString());
+        assertEquals(expectedOutput, xQueryGenerator.toString());
     }
 }

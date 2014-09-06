@@ -1,4 +1,4 @@
-package de.tuberlin.dima.schubotz.mathMLQueryGenerator;
+package de.tuberlin.dima.schubotz.mathmlquerygenerator;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

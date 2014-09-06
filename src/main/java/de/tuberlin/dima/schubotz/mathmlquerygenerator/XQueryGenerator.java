@@ -1,4 +1,4 @@
-package de.tuberlin.dima.schubotz.mathMLQueryGenerator;
+package de.tuberlin.dima.schubotz.mathmlquerygenerator;
 
 
 import com.google.common.collect.Lists;

@@ -66,11 +66,11 @@ public class XQueryGeneratorTest extends TestCase {
     }
 
     public void testMwsConversion() {
-        runTestCollection("de/tuberlin/dima/schubotz/MathMLQueryGenerator/mws");
+        runTestCollection("de/tuberlin/dima/schubotz/mathmlquerygenerator/mws");
     }
 
     public void testCmmlConversion() {
-        runTestCollection("de/tuberlin/dima/schubotz/MathMLQueryGenerator/cmml");
+        runTestCollection("de/tuberlin/dima/schubotz/mathmlquerygenerator/cmml");
     }
 
     public void testHeaderAndFooter() throws Exception {
@@ -79,7 +79,7 @@ public class XQueryGeneratorTest extends TestCase {
                 "let $m := .";
         final String testFooter = "$x}\n" +
                 "</result>";
-        final String testInput = getFileContents("de/tuberlin/dima/schubotz/MathMLQueryGenerator/cmml/q1.xml");
+        final String testInput = getFileContents("de/tuberlin/dima/schubotz/mathmlquerygenerator/cmml/q1.xml");
         final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
                 "<result>{\n" +
                 "let $m := .for $x in $m//*:ci\n" +

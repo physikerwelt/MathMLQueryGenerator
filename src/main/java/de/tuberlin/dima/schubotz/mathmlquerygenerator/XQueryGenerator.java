@@ -45,7 +45,10 @@ public class XQueryGenerator {
         this.xml = xml;
     }
 
-    private Node getMainElement() {
+	private Node getMainElement (){
+		return getMainElement( xml );
+	}
+    public static Node getMainElement(Document xml) {
         // Try to get main mws:expr first
         NodeList expr = xml.getElementsByTagName("mws:expr");
 

@@ -65,11 +65,17 @@ public class XQueryGenerator {
 				return node;
 			}
 		}
+        // if that fails too interprete content of first semantic element as content MathML
+        expr = xml.getElementsByTagName( "semantics" );
+        if ( expr.getLength() > 0 ) {
+            return new NdLst( expr ).item( 0 );
+        }
 		// if that fails too interprete content of root MathML element as content MathML
 		expr = xml.getElementsByTagName( "math" );
 		if ( expr.getLength() > 0 ) {
 			return new NdLst( expr ).item( 0 );
 		}
+
 		return null;
 	}
 
@@ -158,7 +164,7 @@ public class XQueryGenerator {
 					}
 
 				} else if ( child.getNodeType() == Node.TEXT_NODE ) {
-					out = "./text() = '" + child.getNodeValue() + "'";
+					out = "./text() = '" + child.getNodeValue().trim() + "'";
 				}
 			}
 		}

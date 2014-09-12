@@ -66,7 +66,7 @@ public class XQueryGenerator {
 			}
 		}
         // if that fails too interprete content of first semantic element as content MathML
-        expr = xml.getElementsByTagName( "semantics" );
+        expr = xml.getElementsByTagNameNS("*", "semantics");
         if ( expr.getLength() > 0 ) {
             return new NdLst( expr ).item( 0 );
         }
@@ -147,7 +147,10 @@ public class XQueryGenerator {
 				}
 			} else {
 				if ( child.getNodeType() == Node.ELEMENT_NODE ) {
-					i++;
+					if(child.getLocalName().matches("annotation(-xml)?")){
+                        continue;
+                    }
+                    i++;
 					if ( hasText ) {
 						out += " and ";
 					}
@@ -165,7 +168,9 @@ public class XQueryGenerator {
 
 				} else if ( child.getNodeType() == Node.TEXT_NODE ) {
 					out = "./text() = '" + child.getNodeValue().trim() + "'";
-				}
+				} else {
+                    System.out.println(child.getNodeType());
+                }
 			}
 		}
 		if ( !isRoot ) {

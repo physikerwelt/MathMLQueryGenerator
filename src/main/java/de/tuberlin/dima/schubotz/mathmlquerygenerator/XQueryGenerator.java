@@ -113,15 +113,30 @@ public class XQueryGenerator {
 		}
 
 
-		return getHeader() + "for $x in $m//*:" +
-			(new NdLst( mainElement.getChildNodes() )).item( 0 ).getLocalName() + "\n" +
-			fixedConstraints + "\n" +
-			"where" + "\n" +
-			lengthConstraint +
-			(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
-			qvarConstraintString + "\n" +
-			"return" + "\n" + getFooter();
+		return getString( mainElement, fixedConstraints, qvarConstraintString );
 
+	}
+
+	public String getString (Node mainElement, String fixedConstraints, String qvarConstraintString) {
+		String out = getHeader();
+		out += "for $x in $m//*:" +
+			(new NdLst( mainElement.getChildNodes() )).item( 0 ).getLocalName() + "\n" +
+			fixedConstraints + "\n";
+		out +=	getConstraings( qvarConstraintString );
+		out +=
+				"return" + "\n" + getFooter();
+		return out;
+	}
+
+	private String getConstraings (String qvarConstraintString) {
+		String  out = lengthConstraint +
+			(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
+			qvarConstraintString ;
+		if (out.trim().length()>0){
+			return "where" + "\n" + out +"\n";
+		} else {
+			return "";
+		}
 	}
 
 	private String generateConstraint (Node node) {
@@ -168,9 +183,7 @@ public class XQueryGenerator {
 
 				} else if ( child.getNodeType() == Node.TEXT_NODE ) {
 					out = "./text() = '" + child.getNodeValue().trim() + "'";
-				} else {
-                    System.out.println(child.getNodeType());
-                }
+				}
 			}
 		}
 		if ( !isRoot ) {

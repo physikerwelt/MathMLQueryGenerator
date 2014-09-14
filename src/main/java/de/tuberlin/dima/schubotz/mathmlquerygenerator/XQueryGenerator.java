@@ -55,11 +55,11 @@ public class XQueryGenerator {
 		NodeList expr = xml.getElementsByTagName( "mws:expr" );
 
 		if ( expr.getLength() > 0 ) {
-			return new NdLst( expr ).item( 0 );
+			return new NonWhitespaceNodeList( expr ).item( 0 );
 		}
 		// if that fails try to get content MathML from an annotation tag
 		expr = xml.getElementsByTagName( "annotation-xml" );
-		for ( Node node : new NdLst( expr ) ) {
+		for ( Node node : new NonWhitespaceNodeList( expr ) ) {
 			if ( node.hasAttributes() &&
 				node.getAttributes().getNamedItem( "encoding" ).getNodeValue().equals( "MathML-Content" ) ) {
 				return node;
@@ -68,12 +68,12 @@ public class XQueryGenerator {
         // if that fails too interprete content of first semantic element as content MathML
         expr = xml.getElementsByTagName( "semantics" );
         if ( expr.getLength() > 0 ) {
-            return new NdLst( expr ).item( 0 );
+            return new NonWhitespaceNodeList( expr ).item( 0 );
         }
 		// if that fails too interprete content of root MathML element as content MathML
 		expr = xml.getElementsByTagName( "math" );
 		if ( expr.getLength() > 0 ) {
-			return new NdLst( expr ).item( 0 );
+			return new NonWhitespaceNodeList( expr ).item( 0 );
 		}
 
 		return null;
@@ -114,7 +114,7 @@ public class XQueryGenerator {
 
 
 		return getHeader() + "for $x in $m//*:" +
-			(new NdLst( mainElement.getChildNodes() )).item( 0 ).getLocalName() + "\n" +
+			(new NonWhitespaceNodeList( mainElement.getChildNodes() )).item( 0 ).getLocalName() + "\n" +
 			fixedConstraints + "\n" +
 			"where" + "\n" +
 			lengthConstraint +
@@ -135,7 +135,7 @@ public class XQueryGenerator {
 		if ( node == null ) {
 			return null;
 		}
-		NdLst nodeList = new NdLst( node.getChildNodes() );
+		NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList( node.getChildNodes() );
 		for ( Node child : nodeList ) {
 			if ( child.getNodeName().equals( "mws:qvar" ) ) {
 				i++;

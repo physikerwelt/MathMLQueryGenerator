@@ -39,7 +39,7 @@ class XMLHelper {
                 .newInstance();
         domFactory.setNamespaceAware(true);
         // Unfortunately we can not ignore whitespaces without a schema.
-        // So we use the NdLst workaround for now.
+        // So we use the NonWhiteSpaceNodeList workaround for now.
         domFactory.setAttribute(
                 "http://apache.org/xml/features/dom/include-ignorable-whitespace",
                 Boolean.FALSE);

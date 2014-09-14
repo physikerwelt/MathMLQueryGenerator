@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * from http://stackoverflow.com/questions/229310/how-to-ignore-whitespace-while-reading-a-file-to-produce-an-xml-dom
  */
-class NonWhitespaceNodeList implements NodeList, Iterable<Node> {
+public class NonWhitespaceNodeList implements NodeList, Iterable<Node> {
 
     private final List<Node> nodes;
 

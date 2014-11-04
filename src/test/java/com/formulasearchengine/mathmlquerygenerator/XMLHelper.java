@@ -1,4 +1,4 @@
-package de.tuberlin.dima.schubotz.mathmlquerygenerator;
+package com.formulasearchengine.mathmlquerygenerator;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;

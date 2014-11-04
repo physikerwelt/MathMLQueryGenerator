@@ -1,4 +1,4 @@
-package de.tuberlin.dima.schubotz.mathmlquerygenerator;
+package com.formulasearchengine.xmlhelper;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * from http://stackoverflow.com/questions/229310/how-to-ignore-whitespace-while-reading-a-file-to-produce-an-xml-dom
  */
-class NdLst implements NodeList, Iterable<Node> {
+public class NdLst implements NodeList, Iterable<Node> {
 
     private final List<Node> nodes;
 

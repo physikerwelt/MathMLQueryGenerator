@@ -1,6 +1,7 @@
-package de.tuberlin.dima.schubotz.mathmlquerygenerator;
+package com.formulasearchengine.mathmlquerygenerator;
 
 
+import com.formulasearchengine.xmlhelper.NdLst;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

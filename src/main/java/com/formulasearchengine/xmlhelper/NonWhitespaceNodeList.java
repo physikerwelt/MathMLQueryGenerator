@@ -23,6 +23,10 @@ public class NonWhitespaceNodeList implements NodeList, Iterable<Node> {
         }
     }
 
+	public static Node getFirstChild(Node node){
+		NonWhitespaceNodeList children = new NonWhitespaceNodeList( node.getChildNodes() );
+		return children.item( 0 );
+	}
     @Override
     public Node item(int index) {
         return nodes.get(index);

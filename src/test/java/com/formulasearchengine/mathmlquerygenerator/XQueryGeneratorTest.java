@@ -1,6 +1,5 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
-import com.formulasearchengine.mathmlquerygenerator.XQueryGenerator;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
@@ -14,8 +13,8 @@ import java.util.Scanner;
 public class XQueryGeneratorTest extends TestCase {
 
     @SuppressWarnings("SameParameterValue")
-    String getFileContents(String fname) throws IOException {
-        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(fname)) {
+    static public String getFileContents (String fname) throws IOException {
+        try (InputStream is = XQueryGeneratorTest.class.getClassLoader().getResourceAsStream(fname)) {
             final Scanner s = new Scanner(is, "UTF-8");
             //Stupid scanner tricks to read the entire file as one token
             s.useDelimiter("\\A");
@@ -67,11 +66,11 @@ public class XQueryGeneratorTest extends TestCase {
     }
 
     public void testMwsConversion() {
-        runTestCollection("de/tuberlin/dima/schubotz/mathmlquerygenerator/mws");
+        runTestCollection( "com/formulasearchengine/mathmlquerygenerator/mws" );
     }
 
     public void testCmmlConversion() {
-        runTestCollection("de/tuberlin/dima/schubotz/mathmlquerygenerator/cmml");
+        runTestCollection( "com/formulasearchengine/mathmlquerygenerator/cmml" );
     }
 
     public void testHeaderAndFooter() throws Exception {
@@ -80,7 +79,7 @@ public class XQueryGeneratorTest extends TestCase {
                 "let $m := .";
         final String testFooter = "$x}\n" +
                 "</result>";
-        final String testInput = getFileContents("de/tuberlin/dima/schubotz/mathmlquerygenerator/cmml/q1.xml");
+        final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/cmml/q1.xml" );
         final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
                 "<result>{\n" +
                 "let $m := .for $x in $m//*:ci\n" +

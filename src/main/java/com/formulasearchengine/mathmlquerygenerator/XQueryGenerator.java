@@ -1,7 +1,7 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
 
-import com.formulasearchengine.xmlhelper.NdLst;
+import com.formulasearchengine.xmlhelper.NonWhitespaceNodeList;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -56,11 +56,11 @@ public class XQueryGenerator {
 		NodeList expr = xml.getElementsByTagName( "mws:expr" );
 
 		if ( expr.getLength() > 0 ) {
-			return new NdLst( expr ).item( 0 );
+			return new NonWhitespaceNodeList( expr ).item( 0 );
 		}
 		// if that fails try to get content MathML from an annotation tag
 		expr = xml.getElementsByTagName( "annotation-xml" );
-		for ( Node node : new NdLst( expr ) ) {
+		for ( Node node : new NonWhitespaceNodeList( expr ) ) {
 			if ( node.hasAttributes() &&
 				node.getAttributes().getNamedItem( "encoding" ).getNodeValue().equals( "MathML-Content" ) ) {
 				return node;
@@ -69,12 +69,12 @@ public class XQueryGenerator {
         // if that fails too interprete content of first semantic element as content MathML
         expr = xml.getElementsByTagNameNS("*", "semantics");
         if ( expr.getLength() > 0 ) {
-            return new NdLst( expr ).item( 0 );
+            return new NonWhitespaceNodeList( expr ).item( 0 );
         }
 		// if that fails too interprete content of root MathML element as content MathML
 		expr = xml.getElementsByTagName( "math" );
 		if ( expr.getLength() > 0 ) {
-			return new NdLst( expr ).item( 0 );
+			return new NonWhitespaceNodeList( expr ).item( 0 );
 		}
 
 		return null;
@@ -121,7 +121,7 @@ public class XQueryGenerator {
 	public String getString (Node mainElement, String fixedConstraints, String qvarConstraintString) {
 		String out = getHeader();
 		out += "for $x in $m//*:" +
-			(new NdLst( mainElement.getChildNodes() )).item( 0 ).getLocalName() + "\n" +
+			(new NonWhitespaceNodeList( mainElement.getChildNodes() )).item( 0 ).getLocalName() + "\n" +
 			fixedConstraints + "\n";
 		out +=	getConstraings( qvarConstraintString );
 		out +=
@@ -151,7 +151,7 @@ public class XQueryGenerator {
 		if ( node == null ) {
 			return null;
 		}
-		NdLst nodeList = new NdLst( node.getChildNodes() );
+		NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList( node.getChildNodes() );
 		for ( Node child : nodeList ) {
 			if ( child.getNodeName().equals( "mws:qvar" ) ) {
 				i++;

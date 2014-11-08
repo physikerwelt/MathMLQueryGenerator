@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * from http://stackoverflow.com/questions/229310/how-to-ignore-whitespace-while-reading-a-file-to-produce-an-xml-dom
  */
-public class NdLst implements NodeList, Iterable<Node> {
+public class NonWhitespaceNodeList implements NodeList, Iterable<Node> {
 
     private final List<Node> nodes;
 
-    public NdLst(NodeList list) {
+    public NonWhitespaceNodeList (NodeList list) {
         nodes = new ArrayList<>();
         for (int i = 0; i < list.getLength(); i++) {
             if (!isWhitespaceNode(list.item(i))) {

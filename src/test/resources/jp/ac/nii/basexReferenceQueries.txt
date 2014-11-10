@@ -204,7 +204,7 @@ fn:count($x/*[2]/*[1]/*) = 0
  and fn:count($x/*[3]/*[2]/*) = 7
  and fn:count($x/*[3]/*) = 2
  and fn:count($x/*) = 3
- and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[2]/*[2]/*[3] and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[4]/*[2]/*[3]/*[2]/*[3] and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[4]/*[3]/*[3]/*[3] and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[5]/*[2]/*[3] and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[5]/*[3] and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[7]/*[2]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -456,7 +456,7 @@ fn:count($x/*[2]/*[2]/*) = 0
  and fn:count($x/*[3]/*[2]/*) = 2
  and fn:count($x/*[3]/*) = 2
  and fn:count($x/*) = 3
- and $x/*[3]/*[1]/*[3] = $x/*[3]/*[2]/*[2]/*[3]/*[2]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -784,7 +784,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
  and fn:count($x/*[3]/*[3]/*) = 2
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[2]/*[3]/*[1]/*[2]/*[3] = $x/*[3]/*[3]/*[1]/*[2]/*[3] and $x/*[2]/*[3]/*[1]/*[2]/*[3] = $x/*[3]/*[3]/*[2]/*[3]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1183,7 +1183,7 @@ fn:count($x/*[2]/*[1]/*) = 0
  and fn:count($x/*[3]/*[3]/*) = 3
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[2]/*[3] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[2]/*[2]/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[2]/*[2]/*[2]/*[2]/*[2]/*[4] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[2]/*[2]/*[2]/*[3]/*[3]/*[3] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[2]/*[2] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[2]/*[3]/*[2] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[3]/*[2]/*[2]/*[2]/*[2]/*[3] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[3]/*[2]/*[2]/*[2]/*[3] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[3]/*[2]/*[2]/*[3]/*[3] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[3]/*[3]/*[2] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[3]/*[3]/*[4]/*[2]/*[2] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2]/*[3]/*[3]/*[4]/*[3]/*[1] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[3]/*[2]/*[2] and $x/*[2]/*[2]/*[2]/*[2]/*[3]/*[2] = $x/*[3]/*[3]/*[3]/*[4]/*[2]/*[2]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1399,7 +1399,7 @@ fn:count($x/*[2]/*) = 0
  and fn:count($x/*[3]/*[3]/*) = 3
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[3]/*[2]/*[3]/*[2]/*[2]/*[3] = $x/*[3]/*[2]/*[3]/*[2]/*[3]/*[3] and $x/*[3]/*[2]/*[3]/*[2]/*[2]/*[3] = $x/*[3]/*[2]/*[3]/*[2]/*[3]/*[4]/*[2]/*[2] and $x/*[3]/*[2]/*[3]/*[2]/*[2]/*[3] = $x/*[3]/*[2]/*[3]/*[2]/*[3]/*[4]/*[2]/*[3] and $x/*[3]/*[2]/*[3]/*[2]/*[2]/*[3] = $x/*[3]/*[3]/*[3]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1462,7 +1462,7 @@ fn:count($x/*[2]/*[2]/*) = 0
  and fn:count($x/*[3]/*[3]/*) = 3
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[3]/*[2]/*[1] = $x/*[3]/*[2]/*[2]/*[3]/*[2] and $x/*[3]/*[2]/*[1] = $x/*[3]/*[2]/*[2]/*[3]/*[3] and $x/*[3]/*[2]/*[1] = $x/*[3]/*[2]/*[2]/*[4]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1695,7 +1695,7 @@ fn:count($x/*[1]/*) = 0
  and fn:count($x/*[3]/*[3]/*) = 3
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[2]/*[2]/*[2]/*[3] = $x/*[2]/*[2]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1834,7 +1834,7 @@ fn:count($x/*[2]/*[2]/*) = 0
  and fn:count($x/*[3]/*[2]/*) = 4
  and fn:count($x/*[3]/*) = 2
  and fn:count($x/*) = 3
- and $x/*[3]/*[1]/*[2]/*[3]/*[3] = $x/*[3]/*[2]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1870,7 +1870,7 @@ fn:count($x/*[2]/*[2]/*[2]/*) = 0
  and fn:count($x/*[2]/*) = 3
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[3]/*[2] = $x/*[3]/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -1957,7 +1957,7 @@ fn:count($x/*[2]/*[2]/*[2]/*) = 0
  and fn:count($x/*[3]/*[3]/*) = 3
  and fn:count($x/*[3]/*) = 3
  and fn:count($x/*) = 3
- and $x/*[3]/*[2] = $x/*[3]/*[3]/*[2]/*[2] and $x/*[3]/*[2] = $x/*[3]/*[3]/*[3]/*[2]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
@@ -2212,7 +2212,7 @@ for $x in $m//*:apply
 [*[1]/name() = 'divide']
 where
 fn:count($x/*) = 3
- and $x/*[2] = $x/*[3]
+
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";

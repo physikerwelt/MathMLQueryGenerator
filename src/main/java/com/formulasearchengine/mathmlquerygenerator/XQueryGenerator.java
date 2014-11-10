@@ -136,13 +136,13 @@ public class XQueryGenerator {
 		String out = getHeader();
 		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
 			fixedConstraints + "\n";
-		out += getConstraings( qvarConstraintString );
+		out += getConstraints( qvarConstraintString );
 		out +=
 			"return" + "\n" + getFooter();
 		return out;
 	}
 
-	private String getConstraings (String qvarConstraintString) {
+	private String getConstraints (String qvarConstraintString) {
 		String out = lengthConstraint +
 			(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
 			qvarConstraintString;
@@ -169,6 +169,9 @@ public class XQueryGenerator {
 			if ( child.getNodeName().equals( "mws:qvar" ) ) {
 				i++;
 				String qvarName = child.getTextContent();
+				if (qvarName.equals( "" )){
+					qvarName = child.getAttributes().getNamedItem( "name" ).getTextContent();
+				}
 				if ( qvar.containsKey( qvarName ) ) {
 					qvar.get( qvarName ).add( relativeXPath + "/*[" + i + "]" );
 				} else {

@@ -74,26 +74,43 @@ public class XQueryGeneratorTest extends TestCase {
     }
 
     public void testHeaderAndFooter() throws Exception {
-        final String testHead = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-                "<result>{\n" +
-                "let $m := .";
-        final String testFooter = "$x}\n" +
-                "</result>";
-        final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/cmml/q1.xml" );
-        final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-                "<result>{\n" +
-                "let $m := .for $x in $m//*:ci\n" +
-                "[./text() = 'E']\n" +
-                "where\n" +
-                "fn:count($x/*) = 0\n" +
-                "\n" +
-                "return\n" +
-                "$x}\n" +
-                "</result>";
-        Document query = XMLHelper.String2Doc(testInput);
-        XQueryGenerator xQueryGenerator = new XQueryGenerator(query);
-        xQueryGenerator.setFooter(testFooter);
-        xQueryGenerator.setHeader(testHead);
-        assertEquals(expectedOutput, xQueryGenerator.toString());
-    }
+		final String testHead = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
+			"<result>{\n" +
+			"let $m := .";
+		final String testFooter = "$x}\n" +
+			"</result>";
+		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/cmml/q1.xml" );
+		final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
+			"<result>{\n" +
+			"let $m := .for $x in $m//*:ci\n" +
+			"[./text() = 'E']\n" +
+			"where\n" +
+			"fn:count($x/*) = 0\n" +
+			"\n" +
+			"return\n" +
+			"$x}\n" +
+			"</result>";
+		Document query = XMLHelper.String2Doc(testInput);
+		XQueryGenerator xQueryGenerator = new XQueryGenerator(query);
+		xQueryGenerator.setFooter(testFooter);
+		xQueryGenerator.setHeader(testHead);
+		assertEquals(expectedOutput, xQueryGenerator.toString());
+	}
+
+	public void testNoRestriction() throws Exception {
+		final String testHead = "" ;
+		final String testFooter = "";
+		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/mws/qqx2x.xml" );
+		final String expectedOutput = "for $x in $m//*:apply\n" +
+			"[*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]\n" +
+			"where\n" +
+			"$x/*[2]/*[2] = $x/*[3]\n" +
+			"return\n" ;
+		Document query = XMLHelper.String2Doc(testInput);
+		XQueryGenerator xQueryGenerator = new XQueryGenerator(query);
+		xQueryGenerator.setFooter(testFooter);
+		xQueryGenerator.setHeader( testHead );
+		xQueryGenerator.setRestrictLength( false );
+		assertEquals( expectedOutput, xQueryGenerator.toString() );
+	}
 }

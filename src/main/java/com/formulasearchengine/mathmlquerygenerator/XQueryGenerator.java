@@ -28,6 +28,20 @@ public class XQueryGenerator {
 	private String footer = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
 
+	public boolean isRestrictLength () {
+		return restrictLength;
+	}
+
+	/**
+	 * If set to true a query like $x+y$ does not match $x+y+z$.
+	 * @param restrictLength
+	 */
+	public void setRestrictLength (boolean restrictLength) {
+		this.restrictLength = restrictLength;
+	}
+
+	private boolean restrictLength = true;
+
 	public XQueryGenerator (Document xml) {
 		this.xml = xml;
 	}
@@ -87,6 +101,10 @@ public class XQueryGenerator {
 
 	}
 
+	/**
+	 * Resets the current xQuery expression and sets a new main element.
+	 * @param mainElement
+	 */
 	public void setMainElement (Node mainElement) {
 		this.mainElement = mainElement;
 		qvar = new HashMap<>();
@@ -203,8 +221,8 @@ public class XQueryGenerator {
 				}
 			}
 		}
-		if ( !isRoot ) {
-			if ( lengthConstraint.equals( "" ) ) {
+		if ( !isRoot && restrictLength ) {
+			if ( lengthConstraint.equals( "" )  ) {
 				lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + i + "\n";
 			} else {
 				lengthConstraint += " and fn:count($x" + relativeXPath + "/*) = " + i + "\n";

@@ -213,7 +213,10 @@ public class XQueryGenerator {
 							relativeXPath += "/*[" + i + "]";
 							out += " and *[" + i + "]";
 						}
-						out += "[" + generateConstraint( child ) + "]";
+						final String constraint = generateConstraint( child );
+						if ( constraint.length() > 0 ) {
+							out += "[" + constraint + "]";
+						}
 					}
 
 				} else if ( child.getNodeType() == Node.TEXT_NODE ) {

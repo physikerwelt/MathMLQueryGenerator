@@ -27,11 +27,11 @@ public class NtcirTopicReaderTest{
 		assertEquals( "Count in arXiv testfile incorrect", 55,  countFormulaeInTopics( "jp/ac/nii/NTCIR-11-Math-test.xml" ) );
 	}
 	private int countFormulaeInTopics (String resourceName) throws URISyntaxException, IOException, SAXException, ParserConfigurationException, XPathExpressionException {
-		final List<NtcirPattern> ntcirPatterns = getTopicReader( resourceName ).extractPatterns();;
+		final List<NtcirPattern> ntcirPatterns = getTopicReader( resourceName ).extractPatterns();
 		return ntcirPatterns.size();
 	}
 
-	private NtcirTopicReader getTopicReader (String resourceName) throws ParserConfigurationException, IOException, SAXException, URISyntaxException, XPathExpressionException {
+	private NtcirTopicReader getTopicReader (String resourceName) throws ParserConfigurationException, IOException, SAXException, URISyntaxException, XPathExpressionException, NullPointerException {
 		URL resource = this.getClass().getClassLoader().getResource( resourceName );
 		return new NtcirTopicReader( new File( resource.toURI() ) );
 	}
@@ -47,6 +47,18 @@ public class NtcirTopicReaderTest{
 			sb.append( ntcirPattern.getxQueryExpression() );
 		}
 		assertEquals( referenceString,  sb.toString());
+
+	}
+	@Test
+	public void extractPattern() throws Exception {
+		NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
+		tr.setHeader( BASEX_HEADER );
+		tr.setFooter( BASEX_FOOTER );
+		for ( NtcirPattern ntcirPattern : tr.extractPatterns() ) {
+			if (ntcirPattern.getNum().endsWith( "29" )){
+				System.out.println(ntcirPattern.getxQueryExpression());
+			}
+		}
 
 	}
 }

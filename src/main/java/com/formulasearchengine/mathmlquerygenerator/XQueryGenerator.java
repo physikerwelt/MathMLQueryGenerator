@@ -36,8 +36,9 @@ public class XQueryGenerator {
 	 * If set to true a query like $x+y$ does not match $x+y+z$.
 	 * @param restrictLength
 	 */
-	public void setRestrictLength (boolean restrictLength) {
+	public XQueryGenerator setRestrictLength ( boolean restrictLength ) {
 		this.restrictLength = restrictLength;
+		return this;
 	}
 
 	private boolean restrictLength = true;
@@ -79,16 +80,18 @@ public class XQueryGenerator {
 		return footer;
 	}
 
-	public void setFooter (String footer) {
+	public XQueryGenerator setFooter (String footer) {
 		this.footer = footer;
+		return this;
 	}
 
 	public String getHeader () {
 		return header;
 	}
 
-	public void setHeader (String header) {
+	public XQueryGenerator setHeader (String header) {
 		this.header = header;
+		return this;
 	}
 
 

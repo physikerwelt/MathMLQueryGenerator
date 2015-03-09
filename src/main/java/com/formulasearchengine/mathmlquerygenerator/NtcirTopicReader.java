@@ -56,10 +56,11 @@ public class NtcirTopicReader {
 		NamespaceContext ctx = new NamespaceContext() {
 			@Override
 			public String getNamespaceURI (String aPrefix) {
-				if ( aPrefix.equals( prefix ) )
-					return nsURI;
-				else
-					return null;
+				if ( aPrefix.equals( prefix ) ) {
+                    return nsURI;
+                } else {
+                    return null;
+                }
 			}
 
 			@Override
@@ -86,7 +87,7 @@ public class NtcirTopicReader {
 		return this;
 	}
 
-	public NtcirTopicReader setRestricLength ( boolean restrictLength) {
+	public NtcirTopicReader setRestrictLength(boolean restrictLength) {
 		queryGenerator.setRestrictLength( restrictLength );
 		return this;
 	}

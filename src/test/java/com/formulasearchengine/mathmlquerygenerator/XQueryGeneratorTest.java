@@ -112,5 +112,6 @@ public class XQueryGeneratorTest extends TestCase {
 		xQueryGenerator.setHeader( testHead );
 		xQueryGenerator.setRestrictLength( false );
 		assertEquals( expectedOutput, xQueryGenerator.toString() );
+        assertFalse(xQueryGenerator.isRestrictLength());
 	}
 }

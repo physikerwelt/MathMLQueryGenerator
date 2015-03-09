@@ -117,8 +117,9 @@ public class XQueryGenerator {
 
 	public String toString () {
 		Node mainElement = getMainElement();
-		if ( mainElement == null )
-			return null;
+		if ( mainElement == null ) {
+            return null;
+        }
 		String fixedConstraints = generateConstraint( mainElement, true );
 		String qvarConstraintString = "";
 		for ( Map.Entry<String, ArrayList<String>> entry : qvar.entrySet() ) {

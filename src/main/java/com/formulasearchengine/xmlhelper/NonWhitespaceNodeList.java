@@ -50,4 +50,16 @@ public class NonWhitespaceNodeList implements NodeList, Iterable<Node> {
     public Iterator<Node> iterator() {
         return nodes.iterator();
     }
+
+    /**
+     * @return Node or Null if list is empty
+     */
+    @SuppressWarnings({"ReturnOfNull", "SuppressionAnnotation"})
+    public final Node getFirstElement() {
+        if (nodes.isEmpty()) {
+            return null;
+        } else {
+            return item(0);
+        }
+    }
 }

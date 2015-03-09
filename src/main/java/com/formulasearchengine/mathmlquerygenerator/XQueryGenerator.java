@@ -1,12 +1,16 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
 
+import com.formulasearchengine.xmlhelper.DomDocumentHelper;
 import com.formulasearchengine.xmlhelper.NonWhitespaceNodeList;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +21,7 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
-@SuppressWarnings ("WeakerAccess")
+@SuppressWarnings("WeakerAccess")
 public class XQueryGenerator {
 	private final Document xml;
 	private Map<String, ArrayList<String>> qvar = new HashMap<>();
@@ -28,26 +32,32 @@ public class XQueryGenerator {
 	private String footer = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
 
-	public boolean isRestrictLength () {
+	public XQueryGenerator( String input )
+		throws IOException, SAXException, ParserConfigurationException {
+		xml = DomDocumentHelper.String2Doc( input );
+	}
+
+	public boolean isRestrictLength() {
 		return restrictLength;
 	}
 
 	/**
 	 * If set to true a query like $x+y$ does not match $x+y+z$.
+	 *
 	 * @param restrictLength
 	 */
-	public XQueryGenerator setRestrictLength ( boolean restrictLength ) {
+	public XQueryGenerator setRestrictLength( boolean restrictLength ) {
 		this.restrictLength = restrictLength;
 		return this;
 	}
 
 	private boolean restrictLength = true;
 
-	public XQueryGenerator (Document xml) {
+	public XQueryGenerator( Document xml ) {
 		this.xml = xml;
 	}
 
-	public static Node getMainElement (Document xml) {
+	public static Node getMainElement( Document xml ) {
 		// Try to get main mws:expr first
 		NodeList expr = xml.getElementsByTagName( "mws:expr" );
 
@@ -76,26 +86,26 @@ public class XQueryGenerator {
 		return null;
 	}
 
-	public String getFooter () {
+	public String getFooter() {
 		return footer;
 	}
 
-	public XQueryGenerator setFooter (String footer) {
+	public XQueryGenerator setFooter( String footer ) {
 		this.footer = footer;
 		return this;
 	}
 
-	public String getHeader () {
+	public String getHeader() {
 		return header;
 	}
 
-	public XQueryGenerator setHeader (String header) {
+	public XQueryGenerator setHeader( String header ) {
 		this.header = header;
 		return this;
 	}
 
 
-	private Node getMainElement () {
+	private Node getMainElement() {
 		if ( mainElement == null ) {
 			return getMainElement( xml );
 		} else {
@@ -106,19 +116,21 @@ public class XQueryGenerator {
 
 	/**
 	 * Resets the current xQuery expression and sets a new main element.
+	 *
 	 * @param mainElement
 	 */
-	public void setMainElement (Node mainElement) {
+	public void setMainElement( Node mainElement ) {
 		this.mainElement = mainElement;
 		qvar = new HashMap<>();
 		relativeXPath = "";
 		lengthConstraint = "";
 	}
 
-	public String toString () {
+	public String toString() {
 		Node mainElement = getMainElement();
-		if ( mainElement == null )
+		if ( mainElement == null ) {
 			return null;
+		}
 		String fixedConstraints = generateConstraint( mainElement, true );
 		String qvarConstraintString = "";
 		for ( Map.Entry<String, ArrayList<String>> entry : qvar.entrySet() ) {
@@ -153,7 +165,7 @@ public class XQueryGenerator {
 
 	}
 
-	public String getString (Node mainElement, String fixedConstraints, String qvarConstraintString) {
+	public String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
 		String out = getHeader();
 		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
 			fixedConstraints + "\n";
@@ -163,7 +175,7 @@ public class XQueryGenerator {
 		return out;
 	}
 
-	private String getConstraints (String qvarConstraintString) {
+	private String getConstraints( String qvarConstraintString ) {
 		String out = lengthConstraint +
 			(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
 			qvarConstraintString;
@@ -174,11 +186,11 @@ public class XQueryGenerator {
 		}
 	}
 
-	private String generateConstraint (Node node) {
+	private String generateConstraint( Node node ) {
 		return generateConstraint( node, false );
 	}
 
-	private String generateConstraint (Node node, boolean isRoot) {
+	private String generateConstraint( Node node, boolean isRoot ) {
 		int i = 0;
 		String out = "";
 		boolean hasText = false;
@@ -190,7 +202,7 @@ public class XQueryGenerator {
 			if ( child.getNodeName().equals( "mws:qvar" ) ) {
 				i++;
 				String qvarName = child.getTextContent();
-				if (qvarName.equals( "" )){
+				if ( qvarName.equals( "" ) ) {
 					qvarName = child.getAttributes().getNamedItem( "name" ).getTextContent();
 				}
 				if ( qvar.containsKey( qvarName ) ) {
@@ -228,7 +240,7 @@ public class XQueryGenerator {
 			}
 		}
 		if ( !isRoot && restrictLength ) {
-			if ( lengthConstraint.equals( "" )  ) {
+			if ( lengthConstraint.equals( "" ) ) {
 				lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + i + "\n";
 			} else {
 				lengthConstraint += " and fn:count($x" + relativeXPath + "/*) = " + i + "\n";

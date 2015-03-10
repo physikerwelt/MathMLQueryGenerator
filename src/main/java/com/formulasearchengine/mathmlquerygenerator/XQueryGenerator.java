@@ -194,9 +194,6 @@ public class XQueryGenerator {
 		int i = 0;
 		String out = "";
 		boolean hasText = false;
-		if ( node == null ) {
-			return null;
-		}
 		NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList( node.getChildNodes() );
 		for ( Node child : nodeList ) {
 			if ( child.getNodeName().equals( "mws:qvar" ) ) {

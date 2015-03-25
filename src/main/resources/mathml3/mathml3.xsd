@@ -1,0 +1,3107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           xmlns:m="http://www.w3.org/1998/Math/MathML"
+           targetNamespace="http://www.w3.org/1998/Math/MathML">
+    <xs:element name="math">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
+            <xs:attributeGroup ref="m:math.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="CommonDeprecatedAtt">
+        <xs:attribute name="other"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="CommonAtt">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute name="xref"/>
+        <xs:attribute name="class" type="xs:NMTOKENS"/>
+        <xs:attribute name="style" type="xs:string"/>
+        <xs:attribute name="href" type="xs:anyURI"/>
+        <xs:attributeGroup ref="m:CommonDeprecatedAtt"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="math.deprecatedattributes">
+        <xs:attribute name="mode" type="xs:string"/>
+        <xs:attribute name="macros" type="xs:string"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="name">
+        <xs:attribute name="name" use="required" type="xs:NCName"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="cd">
+        <xs:attribute name="cd" use="required" type="xs:NCName"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="src">
+        <xs:attribute name="src" type="xs:anyURI"/>
+    </xs:attributeGroup>
+    <xs:element name="annotation">
+        <xs:complexType mixed="true">
+            <xs:attributeGroup ref="m:annotation.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="annotation-xml.model"><!--content model altered for libxml (annotation-xml)-->
+        <xs:sequence>
+            <xs:any processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:group name="anyElement">
+        <xs:choice>
+            <xs:any namespace="##other" processContents="skip"/>
+            <xs:any namespace="##local" processContents="skip"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="annotation-xml">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:annotation-xml.model">
+                    <xs:attributeGroup ref="m:annotation.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="annotation.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attribute name="cd" type="xs:NCName"/>
+        <xs:attribute name="name" type="xs:NCName"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+        <xs:attributeGroup ref="m:src"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="DefEncAtt">
+        <xs:attribute name="encoding" type="xs:string"/>
+        <xs:attribute name="definitionURL" type="xs:anyURI"/>
+    </xs:attributeGroup>
+    <xs:group name="semantics">
+        <xs:sequence>
+            <xs:element name="semantics">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:group ref="m:MathExpression"/>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element ref="m:annotation"/>
+                            <xs:element ref="m:annotation-xml"/>
+                        </xs:choice>
+                    </xs:sequence>
+                    <xs:attributeGroup ref="m:semantics.attributes"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:attributeGroup name="semantics.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+        <xs:attribute name="cd" type="xs:NCName"/>
+        <xs:attribute name="name" type="xs:NCName"/>
+    </xs:attributeGroup>
+    <xs:simpleType name="length">
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                    value="\s*((-?[0-9]*([0-9]\.?|\.[0-9])[0-9]*(e[mx]|in|cm|mm|p[xtc]|%)?)|(negative)?((very){0,2}thi(n|ck)|medium)mathspace)\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="cn.content" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="m:mglyph"/>
+            <xs:element ref="m:sep"/>
+            <xs:element ref="m:PresentationExpression"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:attributeGroup name="cn.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+        <xs:attribute name="type"/>
+        <xs:attribute name="base"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ci.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+        <xs:attribute name="type"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ci.type">
+        <xs:attribute name="type" use="required"/>
+    </xs:attributeGroup>
+    <xs:complexType name="ci.content" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="m:mglyph"/>
+            <xs:element ref="m:PresentationExpression"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:attributeGroup name="csymbol.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+        <xs:attribute name="type"/>
+        <xs:attribute name="cd" type="xs:NCName"/>
+    </xs:attributeGroup>
+    <xs:complexType name="csymbol.content" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="m:mglyph"/>
+            <xs:element ref="m:PresentationExpression"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="bvar">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:choice>
+                    <xs:element ref="m:ci"/>
+                    <xs:group ref="m:semantics-ci"/>
+                </xs:choice>
+                <xs:element ref="m:degree"/>
+            </xs:choice>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="cbytes.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="cs.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:DefEncAtt"/>
+    </xs:attributeGroup>
+    <!--Ambiguous content model altered (apply.content)-->
+    <xs:complexType name="apply.content">
+        <xs:sequence>
+            <xs:group ref="m:ContExp"/>
+            <xs:group ref="m:BvarQ"/>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:Qualifier"/>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:ContExp"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="bind.content">
+        <xs:complexContent>
+            <xs:extension base="m:apply.content"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:attributeGroup name="base">
+        <xs:attribute name="base" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="sep">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="PresentationExpression" abstract="true"/>
+    <xs:group name="DomainQ">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="m:domainofapplication"/>
+                <xs:element ref="m:condition"/>
+                <!--Ambiguous content model altered (interval)-->
+                <xs:sequence>
+                    <xs:element ref="m:lowlimit"/>
+                    <xs:element minOccurs="0" ref="m:uplimit"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+    <xs:element name="domainofapplication">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="condition">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="uplimit">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="lowlimit">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:group name="Qualifier">
+        <xs:choice>
+            <xs:group ref="m:DomainQ"/>
+            <xs:element ref="m:degree"/>
+            <xs:element ref="m:momentabout"/>
+            <xs:element ref="m:logbase"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="degree">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="momentabout">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="logbase">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="type">
+        <xs:attribute name="type" use="required"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="order">
+        <xs:attribute name="order" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="numeric"/>
+                    <xs:enumeration value="lexicographic"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="closure">
+        <xs:attribute name="closure" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="piecewise">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="m:piece"/>
+                <xs:element ref="m:otherwise"/>
+            </xs:choice>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="piece">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:ContExp"/>
+                <xs:group ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="otherwise">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeprecatedContExp" abstract="true"/>
+    <xs:element name="reln" substitutionGroup="m:DeprecatedContExp">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fn" substitutionGroup="m:DeprecatedContExp">
+        <xs:complexType>
+            <xs:group ref="m:ContExp"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="declare" substitutionGroup="m:DeprecatedContExp">
+        <xs:complexType>
+            <xs:group maxOccurs="unbounded" ref="m:ContExp"/>
+            <xs:attribute name="type" type="xs:string"/>
+            <xs:attribute name="scope" type="xs:string"/>
+            <xs:attribute name="nargs" type="xs:nonNegativeInteger"/>
+            <xs:attribute name="occurrence">
+                <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                        <xs:enumeration value="prefix"/>
+                        <xs:enumeration value="infix"/>
+                        <xs:enumeration value="function-model"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="interval.class" abstract="true">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:ContExp"/>
+                <xs:group ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+            <xs:attribute name="closure"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="interval" substitutionGroup="m:interval.class"/>
+    <xs:element name="unary-functional.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="inverse" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="ident" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="domain" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="codomain" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="image" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="ln" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="log" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="moment" substitutionGroup="m:unary-functional.class"/>
+    <xs:element name="lambda.class" abstract="true">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:BvarQ"/>
+                <xs:group ref="m:DomainQ"/>
+                <xs:group ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="lambda" substitutionGroup="m:lambda.class"/>
+    <xs:element name="nary-functional.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="compose" substitutionGroup="m:nary-functional.class"/>
+    <xs:group name="binary-arith.class">
+        <xs:choice>
+            <xs:element ref="m:quotient"/>
+            <xs:element ref="m:divide"/>
+            <xs:element ref="m:minus"/>
+            <xs:element ref="m:power"/>
+            <xs:element ref="m:rem"/>
+            <xs:element ref="m:root"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="quotient">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="divide">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="minus">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="power">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="rem">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:group name="unary-arith.class">
+        <xs:choice>
+            <xs:element ref="m:factorial"/>
+            <!--Ambiguous content model altered (minus)--><!--Ambiguous content model altered (root)-->
+            <xs:element ref="m:abs"/>
+            <xs:element ref="m:conjugate"/>
+            <xs:element ref="m:arg"/>
+            <xs:element ref="m:real"/>
+            <xs:element ref="m:imaginary"/>
+            <xs:element ref="m:floor"/>
+            <xs:element ref="m:ceiling"/>
+            <xs:element ref="m:exp"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="factorial">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="abs">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="conjugate">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="arg">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="real">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="imaginary">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="floor">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ceiling">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="exp">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="nary-minmax.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="max" substitutionGroup="m:nary-minmax.class"/>
+    <xs:element name="min" substitutionGroup="m:nary-minmax.class"/>
+    <xs:element name="nary-arith.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="plus" substitutionGroup="m:nary-arith.class"/>
+    <xs:element name="times" substitutionGroup="m:nary-arith.class"/>
+    <xs:element name="gcd" substitutionGroup="m:nary-arith.class"/>
+    <xs:element name="lcm" substitutionGroup="m:nary-arith.class"/>
+    <xs:element name="nary-logical.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="and" substitutionGroup="m:nary-logical.class"/>
+    <xs:element name="or" substitutionGroup="m:nary-logical.class"/>
+    <xs:element name="xor" substitutionGroup="m:nary-logical.class"/>
+    <xs:element name="unary-logical.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="not" substitutionGroup="m:unary-logical.class"/>
+    <xs:element name="binary-logical.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="implies" substitutionGroup="m:binary-logical.class"/>
+    <xs:element name="equivalent" substitutionGroup="m:binary-logical.class"/>
+    <xs:element name="quantifier.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="forall" substitutionGroup="m:quantifier.class"/>
+    <xs:element name="exists" substitutionGroup="m:quantifier.class"/>
+    <xs:element name="nary-reln.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="eq" substitutionGroup="m:nary-reln.class"/>
+    <xs:element name="gt" substitutionGroup="m:nary-reln.class"/>
+    <xs:element name="lt" substitutionGroup="m:nary-reln.class"/>
+    <xs:element name="geq" substitutionGroup="m:nary-reln.class"/>
+    <xs:element name="leq" substitutionGroup="m:nary-reln.class"/>
+    <xs:element name="binary-reln.class" abstract="true"/>
+    <xs:element name="neq" substitutionGroup="m:binary-reln.class">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="approx" substitutionGroup="m:binary-reln.class">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="factorof" substitutionGroup="m:binary-reln.class">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tendsto" substitutionGroup="m:binary-reln.class">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+            <xs:attribute name="type"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="int.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="int" substitutionGroup="m:int.class"/>
+    <xs:element name="Differential-Operator.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="diff" substitutionGroup="m:Differential-Operator.class"/>
+    <xs:element name="partialdiff.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="partialdiff" substitutionGroup="m:partialdiff.class"/>
+    <xs:element name="unary-veccalc.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="divergence" substitutionGroup="m:unary-veccalc.class"/>
+    <xs:element name="grad" substitutionGroup="m:unary-veccalc.class"/>
+    <xs:element name="curl" substitutionGroup="m:unary-veccalc.class"/>
+    <xs:element name="laplacian" substitutionGroup="m:unary-veccalc.class"/>
+    <xs:element name="nary-setlist-constructor.class" abstract="true"/>
+    <xs:element name="set" substitutionGroup="m:nary-setlist-constructor.class">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:BvarQ"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:DomainQ"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+            <xs:attribute name="type"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="list" substitutionGroup="m:nary-setlist-constructor.class">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:BvarQ"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:DomainQ"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+            <xs:attribute name="order">
+                <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                        <xs:enumeration value="numeric"/>
+                        <xs:enumeration value="lexicographic"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="nary-set.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="union" substitutionGroup="m:nary-set.class"/>
+    <xs:element name="intersect" substitutionGroup="m:nary-set.class"/>
+    <xs:element name="cartesianproduct" substitutionGroup="m:nary-set.class"/>
+    <xs:element name="binary-set.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="in" substitutionGroup="m:binary-set.class"/>
+    <xs:element name="notin" substitutionGroup="m:binary-set.class"/>
+    <xs:element name="notsubset" substitutionGroup="m:binary-set.class"/>
+    <xs:element name="notprsubset" substitutionGroup="m:binary-set.class"/>
+    <xs:element name="setdiff" substitutionGroup="m:binary-set.class"/>
+    <xs:element name="nary-set-reln.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subset" substitutionGroup="m:nary-set-reln.class"/>
+    <xs:element name="prsubset" substitutionGroup="m:nary-set-reln.class"/>
+    <xs:element name="unary-set.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="card" substitutionGroup="m:unary-set.class"/>
+    <xs:element name="sum.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sum" substitutionGroup="m:sum.class"/>
+    <xs:element name="product.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="product" substitutionGroup="m:product.class"/>
+    <xs:element name="limit.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="limit" substitutionGroup="m:limit.class"/>
+    <xs:element name="unary-elementary.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sin" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="cos" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="tan" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="sec" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="csc" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="cot" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="sinh" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="cosh" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="tanh" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="sech" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="csch" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="coth" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arcsin" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arccos" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arctan" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arccosh" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arccot" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arccoth" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arccsc" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arccsch" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arcsec" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arcsech" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arcsinh" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="arctanh" substitutionGroup="m:unary-elementary.class"/>
+    <xs:element name="nary-stats.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="mean" substitutionGroup="m:nary-stats.class"/>
+    <xs:element name="sdev" substitutionGroup="m:nary-stats.class"/>
+    <xs:element name="variance" substitutionGroup="m:nary-stats.class"/>
+    <xs:element name="median" substitutionGroup="m:nary-stats.class"/>
+    <xs:element name="mode" substitutionGroup="m:nary-stats.class"/>
+    <xs:element name="nary-constructor.class" abstract="true">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:BvarQ"/>
+                <xs:group ref="m:DomainQ"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="vector" substitutionGroup="m:nary-constructor.class"/>
+    <xs:element name="matrix" substitutionGroup="m:nary-constructor.class"/>
+    <xs:element name="matrixrow" substitutionGroup="m:nary-constructor.class"/>
+    <xs:element name="unary-linalg.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="determinant" substitutionGroup="m:unary-linalg.class"/>
+    <xs:element name="transpose" substitutionGroup="m:unary-linalg.class"/>
+    <xs:element name="nary-linalg.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="selector" substitutionGroup="m:nary-linalg.class"/>
+    <xs:element name="binary-linalg.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="vectorproduct" substitutionGroup="m:binary-linalg.class"/>
+    <xs:element name="scalarproduct" substitutionGroup="m:binary-linalg.class"/>
+    <xs:element name="outerproduct" substitutionGroup="m:binary-linalg.class"/>
+    <xs:element name="constant-set.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="integers" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="reals" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="rationals" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="naturalnumbers" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="complexes" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="primes" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="emptyset" substitutionGroup="m:constant-set.class"/>
+    <xs:element name="constant-arith.class" abstract="true">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:DefEncAtt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="exponentiale" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="imaginaryi" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="notanumber" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="true" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="false" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="pi" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="eulergamma" substitutionGroup="m:constant-arith.class"/>
+    <xs:element name="infinity" substitutionGroup="m:constant-arith.class"/>
+    <xs:complexType name="ImpliedMrow">
+        <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
+    </xs:complexType>
+    <xs:element name="TableRowExpression" abstract="true"/>
+    <xs:element name="TableCellExpression" abstract="true">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:mtd.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:group name="MstackExpression">
+        <xs:choice>
+            <xs:group ref="m:MathExpression"/>
+            <xs:element ref="m:mscarries"/>
+            <xs:element ref="m:msline"/>
+            <xs:element ref="m:msrow"/>
+            <xs:element ref="m:msgroup"/>
+        </xs:choice>
+    </xs:group>
+    <xs:group name="MsrowExpression">
+        <xs:choice>
+            <xs:group ref="m:MathExpression"/>
+            <xs:element ref="m:none"/>
+        </xs:choice>
+    </xs:group>
+    <xs:group name="MultiScriptExpression">
+        <xs:sequence>
+            <xs:choice>
+                <xs:group ref="m:MathExpression"/>
+                <xs:element ref="m:none"/>
+            </xs:choice>
+            <xs:choice>
+                <xs:group ref="m:MathExpression"/>
+                <xs:element ref="m:none"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+    <xs:simpleType name="mpadded-length">
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                    value="\s*([\+\-]?[0-9]*([0-9]\.?|\.[0-9])[0-9]*\s*((%?\s*(height|depth|width)?)|e[mx]|in|cm|mm|p[xtc]|((negative)?((very){0,2}thi(n|ck)|medium)mathspace))?)\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="linestyle">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="solid"/>
+            <xs:enumeration value="dashed"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="verticalalign">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="baseline"/>
+            <xs:enumeration value="axis"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="columnalignstyle">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="notationstyle">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="longdiv"/>
+            <xs:enumeration value="actuarial"/>
+            <xs:enumeration value="radical"/>
+            <xs:enumeration value="box"/>
+            <xs:enumeration value="roundedbox"/>
+            <xs:enumeration value="circle"/>
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="updiagonalstrike"/>
+            <xs:enumeration value="downdiagonalstrike"/>
+            <xs:enumeration value="verticalstrike"/>
+            <xs:enumeration value="horizontalstrike"/>
+            <xs:enumeration value="madruwb"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="unsigned-integer">
+        <xs:restriction base="xs:unsignedLong"/>
+    </xs:simpleType>
+    <xs:simpleType name="integer">
+        <xs:restriction base="xs:integer"/>
+    </xs:simpleType>
+    <xs:simpleType name="number">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:simpleType name="character">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\s*\S\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="color">
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                    value="\s*((#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?)|[aA][qQ][uU][aA]|[bB][lL][aA][cC][kK]|[bB][lL][uU][eE]|[fF][uU][cC][hH][sS][iI][aA]|[gG][rR][aA][yY]|[gG][rR][eE][eE][nN]|[lL][iI][mM][eE]|[mM][aA][rR][oO][oO][nN]|[nN][aA][vV][yY]|[oO][lL][iI][vV][eE]|[pP][uU][rR][pP][lL][eE]|[rR][eE][dD]|[sS][iI][lL][vV][eE][rR]|[tT][eE][aA][lL]|[wW][hH][iI][tT][eE]|[yY][eE][lL][lL][oO][wW])\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="group-alignment">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="decimalpoint"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="group-alignment-list">
+        <xs:restriction>
+            <xs:simpleType>
+                <xs:list itemType="m:group-alignment"/>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="group-alignment-list-list">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(\s*\{\s*(left|center|right|decimalpoint)(\s+(left|center|right|decimalpoint))*\})*\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="positive-integer">
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+    <xs:element name="TokenExpression" abstract="true"
+                substitutionGroup="m:PresentationExpression"/>
+    <xs:group name="token.content">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element ref="m:mglyph"/>
+                <xs:element ref="m:malignmark"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+    <xs:element name="mi" substitutionGroup="m:TokenExpression">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:token.content"/>
+            <xs:attributeGroup ref="m:mi.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mi.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:TokenAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mn" substitutionGroup="m:TokenExpression">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:token.content"/>
+            <xs:attributeGroup ref="m:mn.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mn.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:TokenAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mo" substitutionGroup="m:TokenExpression">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:token.content"/>
+            <xs:attributeGroup ref="m:mo.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mo.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:TokenAtt"/>
+        <xs:attribute name="form">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="prefix"/>
+                    <xs:enumeration value="infix"/>
+                    <xs:enumeration value="postfix"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="fence">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="separator">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="lspace" type="m:length"/>
+        <xs:attribute name="rspace" type="m:length"/>
+        <xs:attribute name="stretchy">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="symmetric">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="maxsize">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="infinity"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="minsize" type="m:length"/>
+        <xs:attribute name="largeop">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="movablelimits">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="accent">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="linebreak">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="newline"/>
+                    <xs:enumeration value="nobreak"/>
+                    <xs:enumeration value="goodbreak"/>
+                    <xs:enumeration value="badbreak"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="lineleading" type="m:length"/>
+        <xs:attribute name="linebreakstyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="after"/>
+                    <xs:enumeration value="duplicate"/>
+                    <xs:enumeration value="infixlinebreakstyle"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="linebreakmultchar"/>
+        <xs:attribute name="indentalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshift" type="m:length"/>
+        <xs:attribute name="indenttarget"/>
+        <xs:attribute name="indentalignfirst">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                    <xs:enumeration value="indentalign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshiftfirst">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="indentshift"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentalignlast">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                    <xs:enumeration value="indentalign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshiftlast">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="indentshift"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="mtext" substitutionGroup="m:TokenExpression">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:token.content"/>
+            <xs:attributeGroup ref="m:mtext.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mtext.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:TokenAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mspace" substitutionGroup="m:TokenExpression">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:mspace.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mspace.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:TokenAtt"/>
+        <xs:attribute name="width" type="m:length"/>
+        <xs:attribute name="height" type="m:length"/>
+        <xs:attribute name="depth" type="m:length"/>
+        <xs:attribute name="linebreak">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="newline"/>
+                    <xs:enumeration value="nobreak"/>
+                    <xs:enumeration value="goodbreak"/>
+                    <xs:enumeration value="badbreak"/>
+                    <xs:enumeration value="indentingnewline"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshift" type="m:length"/>
+        <xs:attribute name="indenttarget"/>
+        <xs:attribute name="indentalignfirst">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                    <xs:enumeration value="indentalign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshiftfirst">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="indentshift"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentalignlast">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                    <xs:enumeration value="indentalign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshiftlast">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="indentshift"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="ms" substitutionGroup="m:TokenExpression">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:token.content"/>
+            <xs:attributeGroup ref="m:ms.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="ms.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:TokenAtt"/>
+        <xs:attribute name="lquote"/>
+        <xs:attribute name="rquote"/>
+    </xs:attributeGroup>
+    <xs:element name="mglyph">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:mglyph.attributes"/>
+            <xs:attributeGroup ref="m:mglyph.deprecatedattributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mglyph.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="src" type="xs:anyURI"/>
+        <xs:attribute name="width" type="m:length"/>
+        <xs:attribute name="height" type="m:length"/>
+        <xs:attribute name="valign" type="m:length"/>
+        <xs:attribute name="alt"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="mglyph.deprecatedattributes">
+        <xs:attribute name="index" type="m:integer"/>
+        <xs:attribute name="mathvariant">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="bold"/>
+                    <xs:enumeration value="italic"/>
+                    <xs:enumeration value="bold-italic"/>
+                    <xs:enumeration value="double-struck"/>
+                    <xs:enumeration value="bold-fraktur"/>
+                    <xs:enumeration value="script"/>
+                    <xs:enumeration value="bold-script"/>
+                    <xs:enumeration value="fraktur"/>
+                    <xs:enumeration value="sans-serif"/>
+                    <xs:enumeration value="bold-sans-serif"/>
+                    <xs:enumeration value="sans-serif-italic"/>
+                    <xs:enumeration value="sans-serif-bold-italic"/>
+                    <xs:enumeration value="monospace"/>
+                    <xs:enumeration value="initial"/>
+                    <xs:enumeration value="tailed"/>
+                    <xs:enumeration value="looped"/>
+                    <xs:enumeration value="stretched"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mathsize">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="small"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="normal"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="big"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="m:DeprecatedTokenAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="msline">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:msline.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msline.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="position" type="m:integer"/>
+        <xs:attribute name="length" type="m:unsigned-integer"/>
+        <xs:attribute name="leftoverhang" type="m:length"/>
+        <xs:attribute name="rightoverhang" type="m:length"/>
+        <xs:attribute name="mslinethickness">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thin"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="medium"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thick"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="none">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:none.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="none.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mprescripts">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:mprescripts.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mprescripts.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="CommonPresAtt">
+        <xs:attribute name="mathcolor" type="m:color"/>
+        <xs:attribute name="mathbackground">
+            <xs:simpleType>
+                <xs:union memberTypes="m:color">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="transparent"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TokenAtt">
+        <xs:attribute name="mathvariant">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="bold"/>
+                    <xs:enumeration value="italic"/>
+                    <xs:enumeration value="bold-italic"/>
+                    <xs:enumeration value="double-struck"/>
+                    <xs:enumeration value="bold-fraktur"/>
+                    <xs:enumeration value="script"/>
+                    <xs:enumeration value="bold-script"/>
+                    <xs:enumeration value="fraktur"/>
+                    <xs:enumeration value="sans-serif"/>
+                    <xs:enumeration value="bold-sans-serif"/>
+                    <xs:enumeration value="sans-serif-italic"/>
+                    <xs:enumeration value="sans-serif-bold-italic"/>
+                    <xs:enumeration value="monospace"/>
+                    <xs:enumeration value="initial"/>
+                    <xs:enumeration value="tailed"/>
+                    <xs:enumeration value="looped"/>
+                    <xs:enumeration value="stretched"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mathsize">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="small"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="normal"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="big"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dir">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ltr"/>
+                    <xs:enumeration value="rtl"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="m:DeprecatedTokenAtt"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="DeprecatedTokenAtt">
+        <xs:attribute name="fontfamily"/>
+        <xs:attribute name="fontweight">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="bold"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="fontstyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="italic"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="fontsize" type="m:length"/>
+        <xs:attribute name="color" type="m:color"/>
+        <xs:attribute name="background">
+            <xs:simpleType>
+                <xs:union memberTypes="m:color">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="transparent"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="MalignExpression" abstract="true"
+                substitutionGroup="m:PresentationExpression"/>
+    <xs:element name="malignmark" substitutionGroup="m:MalignExpression">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:malignmark.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="malignmark.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="edge">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="maligngroup" substitutionGroup="m:MalignExpression">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:maligngroup.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="maligngroup.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="groupalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="decimalpoint"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="mrow" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
+            <xs:attributeGroup ref="m:mrow.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mrow.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="dir">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ltr"/>
+                    <xs:enumeration value="rtl"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="mfrac" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mfrac.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mfrac.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="linethickness">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thin"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="medium"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thick"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="numalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="denomalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="bevelled">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="msqrt" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:msqrt.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msqrt.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mroot" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mroot.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mroot.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mstyle" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:mstyle.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mstyle.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:mstyle.specificattributes"/>
+        <xs:attributeGroup ref="m:mstyle.generalattributes"/>
+        <xs:attributeGroup ref="m:mstyle.deprecatedattributes"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="mstyle.specificattributes">
+        <xs:attribute name="scriptlevel" type="m:integer"/>
+        <xs:attribute name="displaystyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="scriptsizemultiplier" type="m:number"/>
+        <xs:attribute name="scriptminsize" type="m:length"/>
+        <xs:attribute name="infixlinebreakstyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="after"/>
+                    <xs:enumeration value="duplicate"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="decimalpoint" type="m:character"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="mstyle.generalattributes">
+        <xs:attribute name="accent">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="accentunder">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="center"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="alignmentscope">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:token">
+                                    <xs:enumeration value="true"/>
+                                    <xs:enumeration value="false"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:list>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="bevelled">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="charalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="charspacing">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="loose"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="medium"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="tight"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="close"/>
+        <xs:attribute name="columnalign">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:columnalignstyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnlines">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:linestyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnspacing">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:length"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnspan" type="m:positive-integer"/>
+        <xs:attribute name="columnwidth">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list>
+                            <xs:simpleType>
+                                <xs:union memberTypes="m:length">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:token">
+                                            <xs:enumeration value="auto"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:token">
+                                            <xs:enumeration value="fit"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:union>
+                            </xs:simpleType>
+                        </xs:list>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="crossout">
+            <xs:simpleType>
+                <xs:list>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="none"/>
+                            <xs:enumeration value="updiagonalstrike"/>
+                            <xs:enumeration value="downdiagonalstrike"/>
+                            <xs:enumeration value="verticalstrike"/>
+                            <xs:enumeration value="horizontalstrike"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:list>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="denomalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="depth" type="m:length"/>
+        <xs:attribute name="dir">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ltr"/>
+                    <xs:enumeration value="rtl"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="edge">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="equalcolumns">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="equalrows">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="fence">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="form">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="prefix"/>
+                    <xs:enumeration value="infix"/>
+                    <xs:enumeration value="postfix"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="frame" type="m:linestyle"/>
+        <xs:attribute name="framespacing">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list>
+                            <xs:simpleType>
+                                <xs:union memberTypes="m:length m:length"/>
+                            </xs:simpleType>
+                        </xs:list>
+                    </xs:simpleType>
+                    <xs:length value="2"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="groupalign" type="m:group-alignment-list-list"/>
+        <xs:attribute name="height" type="m:length"/>
+        <xs:attribute name="indentalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentalignfirst">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                    <xs:enumeration value="indentalign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentalignlast">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="id"/>
+                    <xs:enumeration value="indentalign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshift" type="m:length"/>
+        <xs:attribute name="indentshiftfirst">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="indentshift"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indentshiftlast">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="indentshift"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indenttarget"/>
+        <xs:attribute name="largeop">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="leftoverhang" type="m:length"/>
+        <xs:attribute name="length" type="m:unsigned-integer"/>
+        <xs:attribute name="linebreak">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="newline"/>
+                    <xs:enumeration value="nobreak"/>
+                    <xs:enumeration value="goodbreak"/>
+                    <xs:enumeration value="badbreak"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="linebreakmultchar"/>
+        <xs:attribute name="linebreakstyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="after"/>
+                    <xs:enumeration value="duplicate"/>
+                    <xs:enumeration value="infixlinebreakstyle"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="lineleading" type="m:length"/>
+        <xs:attribute name="linethickness">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thin"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="medium"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thick"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="location">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="w"/>
+                    <xs:enumeration value="nw"/>
+                    <xs:enumeration value="n"/>
+                    <xs:enumeration value="ne"/>
+                    <xs:enumeration value="e"/>
+                    <xs:enumeration value="se"/>
+                    <xs:enumeration value="s"/>
+                    <xs:enumeration value="sw"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="longdivstyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="lefttop"/>
+                    <xs:enumeration value="stackedrightright"/>
+                    <xs:enumeration value="mediumstackedrightright"/>
+                    <xs:enumeration value="shortstackedrightright"/>
+                    <xs:enumeration value="righttop"/>
+                    <xs:enumeration value="left/\right"/>
+                    <xs:enumeration value="left)(right"/>
+                    <xs:enumeration value=":right=right"/>
+                    <xs:enumeration value="stackedleftleft"/>
+                    <xs:enumeration value="stackedleftlinetop"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="lquote"/>
+        <xs:attribute name="lspace" type="m:length"/>
+        <xs:attribute name="mathsize">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="small"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="normal"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="big"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mathvariant">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="bold"/>
+                    <xs:enumeration value="italic"/>
+                    <xs:enumeration value="bold-italic"/>
+                    <xs:enumeration value="double-struck"/>
+                    <xs:enumeration value="bold-fraktur"/>
+                    <xs:enumeration value="script"/>
+                    <xs:enumeration value="bold-script"/>
+                    <xs:enumeration value="fraktur"/>
+                    <xs:enumeration value="sans-serif"/>
+                    <xs:enumeration value="bold-sans-serif"/>
+                    <xs:enumeration value="sans-serif-italic"/>
+                    <xs:enumeration value="sans-serif-bold-italic"/>
+                    <xs:enumeration value="monospace"/>
+                    <xs:enumeration value="initial"/>
+                    <xs:enumeration value="tailed"/>
+                    <xs:enumeration value="looped"/>
+                    <xs:enumeration value="stretched"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="maxsize">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="infinity"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="minlabelspacing" type="m:length"/>
+        <xs:attribute name="minsize" type="m:length"/>
+        <xs:attribute name="movablelimits">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mslinethickness">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thin"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="medium"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="thick"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="notation"/>
+        <xs:attribute name="numalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="open"/>
+        <xs:attribute name="position" type="m:integer"/>
+        <xs:attribute name="rightoverhang" type="m:length"/>
+        <xs:attribute name="rowalign">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:verticalalign"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rowlines">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:linestyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rowspacing">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:length"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rowspan" type="m:positive-integer"/>
+        <xs:attribute name="rquote"/>
+        <xs:attribute name="rspace" type="m:length"/>
+        <xs:attribute name="selection" type="m:positive-integer"/>
+        <xs:attribute name="separator">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="separators"/>
+        <xs:attribute name="shift" type="m:integer"/>
+        <xs:attribute name="side">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="leftoverlap"/>
+                    <xs:enumeration value="rightoverlap"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="stackalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="decimalpoint"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="stretchy">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="subscriptshift" type="m:length"/>
+        <xs:attribute name="superscriptshift" type="m:length"/>
+        <xs:attribute name="symmetric">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="valign" type="m:length"/>
+        <xs:attribute name="width" type="m:length"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="mstyle.deprecatedattributes">
+        <xs:attributeGroup ref="m:DeprecatedTokenAtt"/>
+        <xs:attribute name="veryverythinmathspace" type="m:length"/>
+        <xs:attribute name="verythinmathspace" type="m:length"/>
+        <xs:attribute name="thinmathspace" type="m:length"/>
+        <xs:attribute name="mediummathspace" type="m:length"/>
+        <xs:attribute name="thickmathspace" type="m:length"/>
+        <xs:attribute name="verythickmathspace" type="m:length"/>
+        <xs:attribute name="veryverythickmathspace" type="m:length"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="math.attributes">
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attributeGroup ref="m:mstyle.specificattributes"/>
+        <xs:attributeGroup ref="m:mstyle.generalattributes"/>
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attribute name="display">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="block"/>
+                    <xs:enumeration value="inline"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="maxwidth" type="m:length"/>
+        <xs:attribute name="overflow">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="linebreak"/>
+                    <xs:enumeration value="scroll"/>
+                    <xs:enumeration value="elide"/>
+                    <xs:enumeration value="truncate"/>
+                    <xs:enumeration value="scale"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="altimg" type="xs:anyURI"/>
+        <xs:attribute name="altimg-width" type="m:length"/>
+        <xs:attribute name="altimg-height" type="m:length"/>
+        <xs:attribute name="altimg-valign">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="top"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="middle"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="bottom"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="alttext"/>
+        <xs:attribute name="cdgroup" type="xs:anyURI"/>
+        <xs:attributeGroup ref="m:math.deprecatedattributes"/>
+    </xs:attributeGroup>
+    <xs:element name="merror" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:merror.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="merror.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mpadded" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:mpadded.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mpadded.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="height" type="m:mpadded-length"/>
+        <xs:attribute name="depth" type="m:mpadded-length"/>
+        <xs:attribute name="width" type="m:mpadded-length"/>
+        <xs:attribute name="lspace" type="m:mpadded-length"/>
+        <xs:attribute name="voffset" type="m:mpadded-length"/>
+    </xs:attributeGroup>
+    <xs:element name="mphantom" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:mphantom.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mphantom.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="mfenced" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
+            <xs:attributeGroup ref="m:mfenced.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mfenced.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="open"/>
+        <xs:attribute name="close"/>
+        <xs:attribute name="separators"/>
+    </xs:attributeGroup>
+    <xs:element name="menclose" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ImpliedMrow">
+                    <xs:attributeGroup ref="m:menclose.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="menclose.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="notation"/>
+    </xs:attributeGroup>
+    <xs:element name="msub" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:msub.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msub.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="subscriptshift" type="m:length"/>
+    </xs:attributeGroup>
+    <xs:element name="msup" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:msup.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msup.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="superscriptshift" type="m:length"/>
+    </xs:attributeGroup>
+    <xs:element name="msubsup" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:msubsup.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msubsup.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="subscriptshift" type="m:length"/>
+        <xs:attribute name="superscriptshift" type="m:length"/>
+    </xs:attributeGroup>
+    <xs:element name="munder" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:munder.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="munder.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="accentunder">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="center"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="mover" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mover.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mover.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="accent">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="center"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="munderover" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group ref="m:MathExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:munderover.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="munderover.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="accent">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="accentunder">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="center"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="mmultiscripts" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MathExpression"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MultiScriptExpression"/>
+                <xs:sequence minOccurs="0">
+                    <xs:element ref="m:mprescripts"/>
+                    <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MultiScriptExpression"/>
+                </xs:sequence>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mmultiscripts.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mmultiscripts.attributes">
+        <xs:attributeGroup ref="m:msubsup.attributes"/>
+    </xs:attributeGroup>
+    <xs:element name="mtable" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="m:TableRowExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mtable.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mtable.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="align">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="\s*(top|bottom|center|baseline|axis)(\s+-?[0-9]+)?\s*"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rowalign">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:verticalalign"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnalign">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:columnalignstyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="groupalign" type="m:group-alignment-list-list"/>
+        <xs:attribute name="alignmentscope">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:token">
+                                    <xs:enumeration value="true"/>
+                                    <xs:enumeration value="false"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:list>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnwidth">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list>
+                            <xs:simpleType>
+                                <xs:union memberTypes="m:length">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:token">
+                                            <xs:enumeration value="auto"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:token">
+                                            <xs:enumeration value="fit"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:union>
+                            </xs:simpleType>
+                        </xs:list>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="width">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="auto"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rowspacing">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:length"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnspacing">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:length"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rowlines">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:linestyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnlines">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:linestyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="frame" type="m:linestyle"/>
+        <xs:attribute name="framespacing">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list>
+                            <xs:simpleType>
+                                <xs:union memberTypes="m:length m:length"/>
+                            </xs:simpleType>
+                        </xs:list>
+                    </xs:simpleType>
+                    <xs:length value="2"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="equalrows">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="equalcolumns">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="displaystyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="side">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="leftoverlap"/>
+                    <xs:enumeration value="rightoverlap"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="minlabelspacing" type="m:length"/>
+    </xs:attributeGroup>
+    <xs:element name="mlabeledtr" substitutionGroup="m:TableRowExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="m:TableCellExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mlabeledtr.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mlabeledtr.attributes">
+        <xs:attributeGroup ref="m:mtr.attributes"/>
+    </xs:attributeGroup>
+    <xs:element name="mtr" substitutionGroup="m:TableRowExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="m:TableCellExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mtr.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mtr.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="rowalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="top"/>
+                    <xs:enumeration value="bottom"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="baseline"/>
+                    <xs:enumeration value="axis"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnalign">
+            <xs:simpleType>
+                <xs:restriction>
+                    <xs:simpleType>
+                        <xs:list itemType="m:columnalignstyle"/>
+                    </xs:simpleType>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="groupalign" type="m:group-alignment-list-list"/>
+    </xs:attributeGroup>
+    <xs:element name="mtd" substitutionGroup="m:TableCellExpression"/>
+    <xs:attributeGroup name="mtd.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="rowspan" type="m:positive-integer"/>
+        <xs:attribute name="columnspan" type="m:positive-integer"/>
+        <xs:attribute name="rowalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="top"/>
+                    <xs:enumeration value="bottom"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="baseline"/>
+                    <xs:enumeration value="axis"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="columnalign" type="m:columnalignstyle"/>
+        <xs:attribute name="groupalign" type="m:group-alignment-list"/>
+    </xs:attributeGroup>
+    <xs:element name="mstack" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MstackExpression"/>
+            <xs:attributeGroup ref="m:mstack.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mstack.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="align">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="\s*(top|bottom|center|baseline|axis)(\s+-?[0-9]+)?\s*"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="stackalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="decimalpoint"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="charalign">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="charspacing">
+            <xs:simpleType>
+                <xs:union memberTypes="m:length">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="loose"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="medium"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="tight"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="mlongdiv" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="m:MstackExpression"/>
+                <xs:group ref="m:MstackExpression"/>
+                <xs:group maxOccurs="unbounded" ref="m:MstackExpression"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:mlongdiv.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mlongdiv.attributes">
+        <xs:attributeGroup ref="m:msgroup.attributes"/>
+        <xs:attribute name="longdivstyle">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="lefttop"/>
+                    <xs:enumeration value="stackedrightright"/>
+                    <xs:enumeration value="mediumstackedrightright"/>
+                    <xs:enumeration value="shortstackedrightright"/>
+                    <xs:enumeration value="righttop"/>
+                    <xs:enumeration value="left/\right"/>
+                    <xs:enumeration value="left)(right"/>
+                    <xs:enumeration value=":right=right"/>
+                    <xs:enumeration value="stackedleftleft"/>
+                    <xs:enumeration value="stackedleftlinetop"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="msgroup">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MstackExpression"/>
+            <xs:attributeGroup ref="m:msgroup.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msgroup.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="position" type="m:integer"/>
+        <xs:attribute name="shift" type="m:integer"/>
+    </xs:attributeGroup>
+    <xs:element name="msrow">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MsrowExpression"/>
+            <xs:attributeGroup ref="m:msrow.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="msrow.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="position" type="m:integer"/>
+    </xs:attributeGroup>
+    <xs:element name="mscarries">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="m:MsrowExpression"/>
+                <xs:element ref="m:mscarry"/>
+            </xs:choice>
+            <xs:attributeGroup ref="m:mscarries.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mscarries.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="position" type="m:integer"/>
+        <xs:attribute name="location">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="w"/>
+                    <xs:enumeration value="nw"/>
+                    <xs:enumeration value="n"/>
+                    <xs:enumeration value="ne"/>
+                    <xs:enumeration value="e"/>
+                    <xs:enumeration value="se"/>
+                    <xs:enumeration value="s"/>
+                    <xs:enumeration value="sw"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="crossout">
+            <xs:simpleType>
+                <xs:list>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="none"/>
+                            <xs:enumeration value="updiagonalstrike"/>
+                            <xs:enumeration value="downdiagonalstrike"/>
+                            <xs:enumeration value="verticalstrike"/>
+                            <xs:enumeration value="horizontalstrike"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:list>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="scriptsizemultiplier" type="m:number"/>
+    </xs:attributeGroup>
+    <xs:element name="mscarry">
+        <xs:complexType>
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MsrowExpression"/>
+            <xs:attributeGroup ref="m:mscarry.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="mscarry.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="location">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="w"/>
+                    <xs:enumeration value="nw"/>
+                    <xs:enumeration value="n"/>
+                    <xs:enumeration value="ne"/>
+                    <xs:enumeration value="e"/>
+                    <xs:enumeration value="se"/>
+                    <xs:enumeration value="s"/>
+                    <xs:enumeration value="sw"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="crossout">
+            <xs:simpleType>
+                <xs:list>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="none"/>
+                            <xs:enumeration value="updiagonalstrike"/>
+                            <xs:enumeration value="downdiagonalstrike"/>
+                            <xs:enumeration value="verticalstrike"/>
+                            <xs:enumeration value="horizontalstrike"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:list>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="maction" substitutionGroup="m:PresentationExpression">
+        <xs:complexType>
+            <xs:group maxOccurs="unbounded" ref="m:MathExpression"/>
+            <xs:attributeGroup ref="m:maction.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="maction.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+        <xs:attributeGroup ref="m:CommonPresAtt"/>
+        <xs:attribute name="actiontype" use="required"/>
+        <xs:attribute name="selection" type="m:positive-integer"/>
+    </xs:attributeGroup>
+    <xs:group name="ContExp">
+        <xs:choice>
+            <!--Ambiguous content model altered (ContExp)-->
+            <xs:element ref="m:apply"/>
+            <xs:element ref="m:bind"/>
+            <xs:element ref="m:ci"/>
+            <xs:element ref="m:cn"/>
+            <xs:element ref="m:csymbol"/>
+            <xs:element ref="m:cbytes"/>
+            <xs:element ref="m:cerror"/>
+            <xs:element ref="m:cs"/>
+            <xs:element ref="m:share"/>
+            <xs:element ref="m:piecewise"/>
+            <xs:element ref="m:DeprecatedContExp"/>
+            <xs:element ref="m:interval.class"/>
+            <xs:element ref="m:unary-functional.class"/>
+            <xs:element ref="m:lambda.class"/>
+            <xs:element ref="m:nary-functional.class"/>
+            <xs:group ref="m:binary-arith.class"/>
+            <xs:group ref="m:unary-arith.class"/>
+            <xs:element ref="m:nary-minmax.class"/>
+            <xs:element ref="m:nary-arith.class"/>
+            <xs:element ref="m:nary-logical.class"/>
+            <xs:element ref="m:unary-logical.class"/>
+            <xs:element ref="m:binary-logical.class"/>
+            <xs:element ref="m:quantifier.class"/>
+            <xs:element ref="m:nary-reln.class"/>
+            <xs:element ref="m:binary-reln.class"/>
+            <xs:element ref="m:int.class"/>
+            <xs:element ref="m:Differential-Operator.class"/>
+            <xs:element ref="m:partialdiff.class"/>
+            <xs:element ref="m:unary-veccalc.class"/>
+            <xs:element ref="m:nary-setlist-constructor.class"/>
+            <xs:element ref="m:nary-set.class"/>
+            <xs:element ref="m:binary-set.class"/>
+            <xs:element ref="m:nary-set-reln.class"/>
+            <xs:element ref="m:unary-set.class"/>
+            <xs:element ref="m:sum.class"/>
+            <xs:element ref="m:product.class"/>
+            <xs:element ref="m:limit.class"/>
+            <xs:element ref="m:unary-elementary.class"/>
+            <xs:element ref="m:nary-stats.class"/>
+            <xs:element ref="m:nary-constructor.class"/>
+            <xs:element ref="m:unary-linalg.class"/>
+            <xs:element ref="m:nary-linalg.class"/>
+            <xs:element ref="m:binary-linalg.class"/>
+            <xs:element ref="m:constant-set.class"/>
+            <xs:element ref="m:constant-arith.class"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="cn">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:cn.content">
+                    <xs:attributeGroup ref="m:cn.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:group name="semantics-ci">
+        <xs:sequence>
+            <xs:element name="semantics">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element ref="m:ci"/>
+                            <xs:group ref="m:semantics-ci"/>
+                        </xs:choice>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element ref="m:annotation"/>
+                            <xs:element ref="m:annotation-xml"/>
+                        </xs:choice>
+                    </xs:sequence>
+                    <xs:attributeGroup ref="m:semantics.attributes"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="semantics-contexp">
+        <xs:sequence>
+            <xs:element name="semantics">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:group ref="m:ContExp"/>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element ref="m:annotation"/>
+                            <xs:element ref="m:annotation-xml"/>
+                        </xs:choice>
+                    </xs:sequence>
+                    <xs:attributeGroup ref="m:semantics.attributes"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:element name="ci">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:ci.content">
+                    <xs:attributeGroup ref="m:ci.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="csymbol">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:csymbol.content">
+                    <xs:attributeGroup ref="m:csymbol.attributes"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="SymbolName">
+        <xs:restriction base="xs:NCName"/>
+    </xs:simpleType>
+    <xs:group name="BvarQ">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" ref="m:bvar"/>
+        </xs:sequence>
+    </xs:group>
+    <xs:element name="apply">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:apply.content">
+                    <xs:attributeGroup ref="m:CommonAtt"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="bind">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="m:bind.content">
+                    <xs:attributeGroup ref="m:CommonAtt"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="share">
+        <xs:complexType>
+            <xs:attributeGroup ref="m:CommonAtt"/>
+            <xs:attributeGroup ref="m:src"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cerror">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="m:csymbol"/>
+                <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:ContExp"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="m:cerror.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="cerror.attributes">
+        <xs:attributeGroup ref="m:CommonAtt"/>
+    </xs:attributeGroup>
+    <xs:element name="cbytes">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="m:base64">
+                    <xs:attributeGroup ref="m:cbytes.attributes"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="base64">
+        <xs:restriction base="xs:base64Binary"/>
+    </xs:simpleType>
+    <xs:element name="cs">
+        <xs:complexType mixed="true">
+            <xs:attributeGroup ref="m:cs.attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:group name="MathExpression">
+        <xs:choice>
+            <xs:group ref="m:ContExp"/>
+            <xs:element ref="m:PresentationExpression"/>
+            <xs:group ref="m:semantics"/>
+        </xs:choice>
+    </xs:group>
+</xs:schema>

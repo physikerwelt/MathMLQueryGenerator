@@ -8,6 +8,9 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.SchemaFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
@@ -24,6 +27,19 @@ public class DomDocumentHelper {
 	public static DocumentBuilderFactory getDocumentBuilderFactory() {
 		final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setNamespaceAware( true );
+		return documentBuilderFactory;
+	}
+
+	public static DocumentBuilderFactory getDocumentBuilderFactory(boolean validate) throws SAXException {
+		final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		documentBuilderFactory.setNamespaceAware( true );
+		if ( validate ){
+			documentBuilderFactory.setValidating( true );
+		}
+		SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+		StreamSource source = new StreamSource( DomDocumentHelper.class.getClassLoader().getResourceAsStream(
+			"mathml3/mathml3.xsd" ) );
+		documentBuilderFactory.setSchema(schemaFactory.newSchema( new Source[]{ source } ) );
 		return documentBuilderFactory;
 	}
 

@@ -1,5 +1,6 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
+import com.formulasearchengine.xmlhelper.DomDocumentHelper;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
@@ -59,7 +60,7 @@ public class XQueryGeneratorTest extends TestCase {
 					e.printStackTrace();
 					fail( "Cannot parse reference document " + nextFile.getName() );
 				}
-				XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
+				XQueryGenerator xQueryGenerator = new XQueryGenerator( XQueryGenerator.getMainElement( query ) );
 				assertEquals( "Example " + nextFile.getName() + " does not match reference.", reference, xQueryGenerator.toString() );
 			}
 		}
@@ -78,32 +79,19 @@ public class XQueryGeneratorTest extends TestCase {
 	}
 
 	public void testHeaderAndFooter() throws Exception {
-		final String testHead = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-			"<result>{\n" +
-			"let $m := .";
-		final String testFooter = "$x}\n" +
-			"</result>";
 		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/cmml/q1.xml" );
-		final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-			"<result>{\n" +
-			"let $m := .for $x in $m//*:ci\n" +
+		final String expectedOutput = "for $x in $m//*:ci\n" +
 			"[./text() = 'E']\n" +
 			"where\n" +
 			"fn:count($x/*) = 0\n" +
 			"\n" +
-			"return\n" +
-			"$x}\n" +
-			"</result>";
+			"return\n";
 		Document query = XMLHelper.String2Doc( testInput );
-		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
-		xQueryGenerator.setFooter( testFooter );
-		xQueryGenerator.setHeader( testHead );
+		XQueryGenerator xQueryGenerator = new XQueryGenerator( XQueryGenerator.getMainElement(query) );
 		assertEquals( expectedOutput, xQueryGenerator.toString() );
 	}
 
 	public void testNoRestriction() throws Exception {
-		final String testHead = "";
-		final String testFooter = "";
 		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/mws/qqx2x.xml" );
 		final String expectedOutput = "for $x in $m//*:apply\n" +
 			"[*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]\n" +
@@ -111,9 +99,7 @@ public class XQueryGeneratorTest extends TestCase {
 			"$x/*[2]/*[2] = $x/*[3]\n" +
 			"return\n";
 		Document query = XMLHelper.String2Doc( testInput );
-		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
-		xQueryGenerator.setFooter( testFooter );
-		xQueryGenerator.setHeader( testHead );
+		XQueryGenerator xQueryGenerator = new XQueryGenerator( XQueryGenerator.getMainElement(query) );
 		xQueryGenerator.setRestrictLength( false );
 		assertEquals( expectedOutput, xQueryGenerator.toString() );
 		assertFalse( xQueryGenerator.isRestrictLength() );
@@ -121,7 +107,7 @@ public class XQueryGeneratorTest extends TestCase {
 
 	public void testNoMath() throws Exception {
 		final String input = "<?xml version=\"1.0\"?>\n<noMath />";
-		XQueryGenerator qg = new XQueryGenerator( input );
+		XQueryGenerator qg = new XQueryGenerator( XQueryGenerator.getMainElement( DomDocumentHelper.String2Doc( input ) ) );
 		assertNull( "Input without math should return null", qg.toString() );
 	}
 

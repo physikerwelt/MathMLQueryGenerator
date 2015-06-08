@@ -18,11 +18,21 @@ import static com.formulasearchengine.mathmlquerygenerator.XQueryGeneratorTest.g
 import static org.junit.Assert.assertEquals;
 
 public class NtcirTopicReaderTest {
+	//Search the <mws:expr> tags
 	public static final String BASEX_HEADER = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
 		"for $m in //*:expr return \n";
+	//Return the ID of the <mws:expr> in a link
 	public static final String BASEX_FOOTER = "<a href=\"http://demo.formulasearchengine.com/index.php?curid={$m/@url}\">result</a>\n";
+
+	//Search MathML xml columns in a DB2 database instance
+	public static final String DB2_HEADER = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
+		"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
+	//Return the alternate text of the first child of each XML column that matches the query
+	public static final String DB2_FOOTER = "data($m/*[1]/@alttext)";
+
 	public static final String WIKIPEDIA_RESOURCE = "jp/ac/nii/Ntcir11MathWikipediaTopicsParticipants.xml";
 	public static final String ARXIV_RESOURCE = "jp/ac/nii/NTCIR-11-Math-test.xml";
+
 
 
 	@Test
@@ -31,27 +41,29 @@ public class NtcirTopicReaderTest {
 		assertEquals( "Count in arXiv testfile incorrect", 55, countFormulaeInTopics( ARXIV_RESOURCE ) );
 	}
 
-	private int countFormulaeInTopics( String resourceName ) throws URISyntaxException, IOException, SAXException, ParserConfigurationException, XPathExpressionException {
-		final List<NtcirPattern> ntcirPatterns = getTopicReader( resourceName ).extractPatterns();
+	private int countFormulaeInTopics( String resourceName ) throws URISyntaxException,
+			IOException, SAXException, ParserConfigurationException, XPathExpressionException {
+		final List<NtcirPattern> ntcirPatterns = new NtcirTopicReader( getResourceAsFile( resourceName ),
+				DB2_HEADER, DB2_FOOTER, true).extractPatterns();
 		return ntcirPatterns.size();
 	}
 
-	private NtcirTopicReader getTopicReader( String resourceName ) throws ParserConfigurationException, IOException, SAXException, URISyntaxException, XPathExpressionException, NullPointerException {
+	private File getResourceAsFile( String resourceName ) throws URISyntaxException, NullPointerException {
 		final URL resource = getClass().getClassLoader().getResource( resourceName );
-		return new NtcirTopicReader( new File( resource.toURI() ) );
+		return new File( resource.toURI() );
 	}
 
 	public NtcirPattern getFirstTopic() throws URISyntaxException, ParserConfigurationException, SAXException, XPathExpressionException, IOException {
-		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
+		final NtcirTopicReader tr = new NtcirTopicReader( getResourceAsFile( WIKIPEDIA_RESOURCE ),
+				DB2_HEADER, DB2_FOOTER, true);
 		return tr.extractPatterns().get( 0 );
 	}
 
 	@Test
 	public void checkBaseX() throws Exception {
 		final String referenceString = getFileContents( "jp/ac/nii/basexReferenceQueries.txt" );
-		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
-		tr.setHeader( BASEX_HEADER );
-		tr.setFooter( BASEX_FOOTER );
+		final NtcirTopicReader tr = new NtcirTopicReader( getResourceAsFile( WIKIPEDIA_RESOURCE ), BASEX_HEADER,
+				BASEX_FOOTER, true );
 		final StringBuilder sb = new StringBuilder();
 		for ( final NtcirPattern ntcirPattern : tr.extractPatterns() ) {
 			sb.append( ntcirPattern.getxQueryExpression() );
@@ -62,9 +74,8 @@ public class NtcirTopicReaderTest {
 
 	@Test
 	public void extractPattern() throws Exception {
-		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
-		tr.setHeader( BASEX_HEADER );
-		tr.setFooter( BASEX_FOOTER );
+		final NtcirTopicReader tr = new NtcirTopicReader( getResourceAsFile( WIKIPEDIA_RESOURCE ), BASEX_HEADER,
+				BASEX_FOOTER, true );
 		for ( final NtcirPattern ntcirPattern : tr.extractPatterns() ) {
 			if ( ntcirPattern.getNum().endsWith( "29" ) ) {
 				System.out.println( ntcirPattern.getxQueryExpression() );
@@ -75,8 +86,9 @@ public class NtcirTopicReaderTest {
 
 	@Test
 	public void testSetRestricLength() throws Exception {
-		final String NoLenghtxQuery = getTopicReader( WIKIPEDIA_RESOURCE ).setRestrictLength( false )
-			.extractPatterns().get( 0 ).getxQueryExpression();
+		final String NoLenghtxQuery = new NtcirTopicReader( getResourceAsFile( WIKIPEDIA_RESOURCE ), DB2_HEADER,
+				DB2_FOOTER, false )
+					.extractPatterns().get( 0 ).getxQueryExpression();
 		assertEquals( "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
 			"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n" +
 			"for $x in $m//*:apply\n" +
@@ -90,6 +102,6 @@ public class NtcirTopicReaderTest {
 		final URL resource = getClass().getClassLoader().getResource( ARXIV_RESOURCE );
 		DocumentBuilder documentBuilder = DomDocumentHelper.getDocumentBuilderFactory().newDocumentBuilder();
 		Document topics = documentBuilder.parse( new File( resource.toURI() ) );
-		new NtcirTopicReader( topics );
+		new NtcirTopicReader( topics, DB2_HEADER, DB2_FOOTER, true );
 	}
 }

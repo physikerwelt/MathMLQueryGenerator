@@ -18,23 +18,26 @@ import java.util.Map;
 import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
+ * Converts MathML queries into XQueries.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
 @SuppressWarnings("WeakerAccess")
 public class XQueryGenerator {
-	private final Document xml;
 	private Map<String, ArrayList<String>> qvar = new HashMap<>();
 	private String relativeXPath = "";
 	private String lengthConstraint = "";
-	private String header = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-		"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
-	private String footer = "data($m/*[1]/@alttext)";
-	private Node mainElement = null;
+	private String queryID = "";
+	private Node mainElement;
+	private boolean restrictLength = true;
 
-	public XQueryGenerator( String input )
-		throws IOException, SAXException, ParserConfigurationException {
-		xml = DomDocumentHelper.String2Doc( input );
+	public XQueryGenerator( Node mainElement, String queryID ) {
+		this.mainElement = mainElement;
+		this.queryID = queryID;
+	}
+
+	public XQueryGenerator( Node mainElement ) {
+		this( mainElement, "f1.0" );
 	}
 
 	public boolean isRestrictLength() {
@@ -43,20 +46,17 @@ public class XQueryGenerator {
 
 	/**
 	 * If set to true a query like $x+y$ does not match $x+y+z$.
-	 *
-	 * @param restrictLength
+	 * @param restrictLength Whether or not to restrict the match length
 	 */
-	public XQueryGenerator setRestrictLength( boolean restrictLength ) {
+	public void setRestrictLength( boolean restrictLength ) {
 		this.restrictLength = restrictLength;
-		return this;
 	}
 
-	private boolean restrictLength = true;
-
-	public XQueryGenerator( Document xml ) {
-		this.xml = xml;
-	}
-
+	/**
+	 * Finds the main element of an MathML harvest query that can be the root of the conversion to XQuery.
+	 * @param xml Document to find the element of
+	 * @return The main element of the query
+	 */
 	public static Node getMainElement( Document xml ) {
 		// Try to get main mws:expr first
 		NodeList expr = xml.getElementsByTagName( "mws:expr" );
@@ -86,34 +86,6 @@ public class XQueryGenerator {
 		return null;
 	}
 
-	public String getFooter() {
-		return footer;
-	}
-
-	public XQueryGenerator setFooter( String footer ) {
-		this.footer = footer;
-		return this;
-	}
-
-	public String getHeader() {
-		return header;
-	}
-
-	public XQueryGenerator setHeader( String header ) {
-		this.header = header;
-		return this;
-	}
-
-
-	private Node getMainElement() {
-		if ( mainElement == null ) {
-			return getMainElement( xml );
-		} else {
-			return mainElement;
-		}
-
-	}
-
 	/**
 	 * Resets the current xQuery expression and sets a new main element.
 	 *
@@ -127,7 +99,6 @@ public class XQueryGenerator {
 	}
 
 	public String toString() {
-		Node mainElement = getMainElement();
 		if ( mainElement == null ) {
 			return null;
 		}
@@ -159,19 +130,15 @@ public class XQueryGenerator {
 			}
 
 		}
-
-
 		return getString( mainElement, fixedConstraints, qvarConstraintString );
-
 	}
 
-	public String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
-		String out = getHeader();
-		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
+	private String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
+		String out = "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
 			fixedConstraints + "\n";
 		out += getConstraints( qvarConstraintString );
 		out +=
-			"return" + "\n" + getFooter();
+			"return" + "\n";
 		return out;
 	}
 

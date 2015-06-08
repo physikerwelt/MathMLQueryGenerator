@@ -18,60 +18,63 @@ import java.util.List;
 import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
- * Created by Moritz on 08.11.2014.
- * <p/>
  * Reads the topic format specified in
  * http://ntcir-math.nii.ac.jp/wp-content/blogs.dir/13/files/2014/05/NTCIR11-Math-topics.pdf
+ * Converts each query into an XQuery using XQueryGenerator and then into a NtcirPattern.
+ * Created by Moritz on 08.11.2014.
  */
 public class NtcirTopicReader {
 	public static final String NS_NII = "http://ntcir-math.nii.ac.jp/";
 	private final Document topics;
-	private final List<NtcirPattern> patterns = new ArrayList<>();
-	private final XQueryGenerator queryGenerator;
+	private String header;
+	private String footer;
+	private final boolean restrictLength;
 
-	public NtcirTopicReader( Document topics ) {
+
+	public NtcirTopicReader( Document topics, String header, String footer, boolean restrictLength ) {
 		this.topics = topics;
-		queryGenerator = new XQueryGenerator( topics );
+		this.header = header;
+		this.footer = footer;
+		this.restrictLength = restrictLength;
 	}
 
-	public NtcirTopicReader( File topicFile ) throws ParserConfigurationException, IOException, SAXException {
-		DocumentBuilder documentBuilder = DomDocumentHelper.getDocumentBuilderFactory().newDocumentBuilder();
-		topics = documentBuilder.parse( topicFile );
-
-		//TODO: Find out how this code duplication can be avoided in Java.
-		queryGenerator = new XQueryGenerator( topics );
+	public void setHeader( String header ) {
+		this.header = header;
 	}
 
-	public final NtcirTopicReader setFooter( String footer ) {
-		queryGenerator.setFooter( footer );
-		return this;
+	public void setFooter( String footer ) {
+		this.footer = footer;
 	}
 
-	public final NtcirTopicReader setHeader( String header ) {
-		queryGenerator.setHeader( header );
-		return this;
+	public NtcirTopicReader( File topicFile, String header, String footer, boolean restrictLength )
+			throws ParserConfigurationException, IOException, SAXException {
+		this(DomDocumentHelper.getDocumentBuilderFactory().newDocumentBuilder().parse( topicFile ), header, footer,
+				restrictLength);
 	}
 
-	public final NtcirTopicReader setRestrictLength( boolean restrictLength ) {
-		queryGenerator.setRestrictLength( restrictLength );
-		return this;
-	}
-
+	/**
+	 * Splits the given NTCIR query file into individual queries, converts each query into an XQuery using
+	 * XQueryGenerator, and returns the result as a list of NtcirPatterns for each individual query.
+	 * @return List of NtcirPatterns for each query
+	 * @throws XPathExpressionException Thrown if xpaths fail to compile or fail to evaluate
+	 */
 	public final List<NtcirPattern> extractPatterns() throws XPathExpressionException {
+		final List<NtcirPattern> patterns = new ArrayList<>();
 		final XPath xpath = DomDocumentHelper.namespaceAwareXpath( "t", NS_NII );
 		final XPathExpression xNum = xpath.compile( "./t:num" );
 		final XPathExpression xFormula = xpath.compile( "./t:query/t:formula" );
 		final NonWhitespaceNodeList topicList = new NonWhitespaceNodeList(
 			topics.getElementsByTagNameNS( NS_NII, "topic" ) );
-		for ( Node node : topicList ) {
+		for ( final Node node : topicList ) {
 			final String num = xNum.evaluate( node );
-			final NonWhitespaceNodeList formulae = new NonWhitespaceNodeList( (NodeList)
-				xFormula.evaluate( node, XPathConstants.NODESET ) );
+			final NonWhitespaceNodeList formulae = new NonWhitespaceNodeList(
+					(NodeList) xFormula.evaluate( node, XPathConstants.NODESET ) );
 			for ( final Node formula : formulae ) {
 				final String id = formula.getAttributes().getNamedItem( "id" ).getTextContent();
 				final Node mathMLNode = getFirstChild( formula );
-				queryGenerator.setMainElement( getFirstChild( mathMLNode ) );
-				patterns.add( new NtcirPattern( num, id, queryGenerator.toString(), mathMLNode ) );
+				final XQueryGenerator queryGenerator = new XQueryGenerator( getFirstChild( mathMLNode ) );
+				queryGenerator.setRestrictLength(restrictLength);
+				patterns.add(new NtcirPattern(num, id, header + queryGenerator.toString() + footer, mathMLNode));
 			}
 		}
 		return patterns;

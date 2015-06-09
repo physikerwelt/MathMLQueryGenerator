@@ -91,5 +91,6 @@ public class NtcirTopicReaderTest {
 		DocumentBuilder documentBuilder = DomDocumentHelper.getDocumentBuilderFactory().newDocumentBuilder();
 		Document topics = documentBuilder.parse( new File( resource.toURI() ) );
 		new NtcirTopicReader( topics );
+		new NtcirTopicReader( topics, "", "" , false );
 	}
 }

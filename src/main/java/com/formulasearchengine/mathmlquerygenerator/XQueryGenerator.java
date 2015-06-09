@@ -18,12 +18,12 @@ import java.util.Map;
 import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
+ * Converts MathML queries into XQueries.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
 @SuppressWarnings("WeakerAccess")
 public class XQueryGenerator {
-	private final Document xml;
 	private Map<String, ArrayList<String>> qvar = new HashMap<>();
 	private String relativeXPath = "";
 	private String lengthConstraint = "";
@@ -34,7 +34,8 @@ public class XQueryGenerator {
 
 	public XQueryGenerator( String input )
 		throws IOException, SAXException, ParserConfigurationException {
-		xml = DomDocumentHelper.String2Doc( input );
+		Document xml = DomDocumentHelper.String2Doc(input);
+		this.mainElement = getMainElement( xml );
 	}
 
 	public boolean isRestrictLength() {
@@ -54,7 +55,7 @@ public class XQueryGenerator {
 	private boolean restrictLength = true;
 
 	public XQueryGenerator( Document xml ) {
-		this.xml = xml;
+		this.mainElement = getMainElement( xml );
 	}
 
 	public static Node getMainElement( Document xml ) {
@@ -104,16 +105,6 @@ public class XQueryGenerator {
 		return this;
 	}
 
-
-	private Node getMainElement() {
-		if ( mainElement == null ) {
-			return getMainElement( xml );
-		} else {
-			return mainElement;
-		}
-
-	}
-
 	/**
 	 * Resets the current xQuery expression and sets a new main element.
 	 *
@@ -127,7 +118,6 @@ public class XQueryGenerator {
 	}
 
 	public String toString() {
-		Node mainElement = getMainElement();
 		if ( mainElement == null ) {
 			return null;
 		}
@@ -155,14 +145,9 @@ public class XQueryGenerator {
 				if ( newContent ) {
 					qvarConstraintString += addString;
 				}
-
 			}
-
 		}
-
-
 		return getString( mainElement, fixedConstraints, qvarConstraintString );
-
 	}
 
 	public String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
@@ -230,7 +215,6 @@ public class XQueryGenerator {
 							out += "[" + constraint + "]";
 						}
 					}
-
 				} else if ( child.getNodeType() == Node.TEXT_NODE ) {
 					out = "./text() = '" + child.getNodeValue().trim() + "'";
 				}

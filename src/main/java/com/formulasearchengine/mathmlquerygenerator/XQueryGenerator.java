@@ -19,6 +19,8 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
 
 /**
  * Converts MathML queries into XQueries.
+ * The result is then wrapped around with a header and a footer (defaults to a DB2 header/footer if not given).
+ * The variable $x always represents a hit, so you can refer to $x in the footer as the result node.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
@@ -31,10 +33,23 @@ public class XQueryGenerator {
 		"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
 	private String footer = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
+	private boolean restrictLength = true;
 
+	/**
+	 * Constructs a basic generator from an XML document given as a string.
+	 * @param input XML Document as a string
+	 */
 	public XQueryGenerator( String input )
 		throws IOException, SAXException, ParserConfigurationException {
-		Document xml = DomDocumentHelper.String2Doc(input);
+		final Document xml = DomDocumentHelper.String2Doc(input);
+		this.mainElement = getMainElement( xml );
+	}
+
+	/**
+	 * Constructs a generator from a Document XML object.
+	 * @param xml Document XML object
+	 */
+	public XQueryGenerator( Document xml ) {
 		this.mainElement = getMainElement( xml );
 	}
 
@@ -44,7 +59,6 @@ public class XQueryGenerator {
 
 	/**
 	 * If set to true a query like $x+y$ does not match $x+y+z$.
-	 *
 	 * @param restrictLength
 	 */
 	public XQueryGenerator setRestrictLength( boolean restrictLength ) {
@@ -52,12 +66,11 @@ public class XQueryGenerator {
 		return this;
 	}
 
-	private boolean restrictLength = true;
-
-	public XQueryGenerator( Document xml ) {
-		this.mainElement = getMainElement( xml );
-	}
-
+	/**
+	 * Returns the main element for which to begin generating the XQuery
+	 * @param xml XML Document to find main element of
+	 * @return Node for main element
+	 */
 	public static Node getMainElement( Document xml ) {
 		// Try to get main mws:expr first
 		NodeList expr = xml.getElementsByTagName( "mws:expr" );
@@ -117,6 +130,10 @@ public class XQueryGenerator {
 		lengthConstraint = "";
 	}
 
+	/**
+	 * Generates the constraints of the XQuery and then builds the XQuery and returns it as a string
+	 * @return XQuery as string
+	 */
 	public String toString() {
 		if ( mainElement == null ) {
 			return null;
@@ -150,6 +167,13 @@ public class XQueryGenerator {
 		return getString( mainElement, fixedConstraints, qvarConstraintString );
 	}
 
+	/**
+	 * Builds the XQuery as a string with the set header and footer, given constraint strings and the main element.
+	 * @param mainElement Node from which to build XQuery
+	 * @param fixedConstraints Constraint string for basic exact formula matching
+	 * @param qvarConstraintString Constraint string for qvar matching
+	 * @return XQuery as string
+	 */
 	public String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
 		String out = getHeader();
 		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +

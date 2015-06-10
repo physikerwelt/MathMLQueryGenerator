@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
@@ -26,11 +27,12 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
  */
 @SuppressWarnings("WeakerAccess")
 public class XQueryGenerator {
+	private static final Pattern ANNOTATION_XML_PATTERN = Pattern.compile( "annotation(-xml)?" );
 	private Map<String, ArrayList<String>> qvar = new HashMap<>();
 	private String relativeXPath = "";
 	private String lengthConstraint = "";
 	private String header = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-		"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
+			"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
 	private String footer = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
 	private boolean restrictLength = true;
@@ -40,8 +42,8 @@ public class XQueryGenerator {
 	 * @param input XML Document as a string
 	 */
 	public XQueryGenerator( String input )
-		throws IOException, SAXException, ParserConfigurationException {
-		final Document xml = DomDocumentHelper.String2Doc(input);
+			throws IOException, SAXException, ParserConfigurationException {
+		final Document xml = DomDocumentHelper.String2Doc( input );
 		this.mainElement = getMainElement( xml );
 	}
 
@@ -82,7 +84,7 @@ public class XQueryGenerator {
 		expr = xml.getElementsByTagName( "annotation-xml" );
 		for ( Node node : new NonWhitespaceNodeList( expr ) ) {
 			if ( node.hasAttributes() &&
-				node.getAttributes().getNamedItem( "encoding" ).getNodeValue().equals( "MathML-Content" ) ) {
+					node.getAttributes().getNamedItem( "encoding" ).getNodeValue().equals( "MathML-Content" ) ) {
 				return node;
 			}
 		}
@@ -120,7 +122,6 @@ public class XQueryGenerator {
 
 	/**
 	 * Resets the current xQuery expression and sets a new main element.
-	 *
 	 * @param mainElement
 	 */
 	public void setMainElement( Node mainElement ) {
@@ -138,7 +139,7 @@ public class XQueryGenerator {
 		if ( mainElement == null ) {
 			return null;
 		}
-		String fixedConstraints = generateConstraint( mainElement, true );
+		String fixedConstraints = generateConstraints( mainElement, true );
 		String qvarConstraintString = "";
 		for ( Map.Entry<String, ArrayList<String>> entry : qvar.entrySet() ) {
 			String addString = "";
@@ -169,25 +170,30 @@ public class XQueryGenerator {
 
 	/**
 	 * Builds the XQuery as a string with the set header and footer, given constraint strings and the main element.
-	 * @param mainElement Node from which to build XQuery
-	 * @param fixedConstraints Constraint string for basic exact formula matching
+	 * @param mainElement          Node from which to build XQuery
+	 * @param fixedConstraints     Constraint string for basic exact formula matching
 	 * @param qvarConstraintString Constraint string for qvar matching
 	 * @return XQuery as string
 	 */
 	public String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
-		String out = getHeader();
+		String out = header;
 		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
-			fixedConstraints + "\n";
+				fixedConstraints + "\n";
 		out += getConstraints( qvarConstraintString );
 		out +=
-			"return" + "\n" + getFooter();
+				"return" + "\n" + getFooter();
 		return out;
 	}
 
+	/**
+	 * Appends constraint strings together
+	 * @param qvarConstraintString Qvar constraint portion of query
+	 * @return All constraint strings appended together
+	 */
 	private String getConstraints( String qvarConstraintString ) {
 		String out = lengthConstraint +
-			(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
-			qvarConstraintString;
+				(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
+				qvarConstraintString;
 		if ( out.trim().length() > 0 ) {
 			return "where" + "\n" + out + "\n";
 		} else {
@@ -196,65 +202,91 @@ public class XQueryGenerator {
 	}
 
 	private String generateConstraint( Node node ) {
-		return generateConstraint( node, false );
+		return generateConstraints( node, false );
 	}
 
-	private String generateConstraint( Node node, boolean isRoot ) {
-		int i = 0;
-		String out = "";
-		boolean hasText = false;
-		NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList( node.getChildNodes() );
-		for ( Node child : nodeList ) {
-			if ( child.getNodeName().equals( "mws:qvar" ) ) {
-				i++;
-				String qvarName = child.getTextContent();
-				if ( qvarName.equals( "" ) ) {
-					qvarName = child.getAttributes().getNamedItem( "name" ).getTextContent();
-				}
-				if ( qvar.containsKey( qvarName ) ) {
-					qvar.get( qvarName ).add( relativeXPath + "/*[" + i + "]" );
+	/**
+	 * Generates qvar map, length constraint, and returns exact match XQuery query for all child nodes of the given node.
+	 * Called recursively to generate the query for the entire query document.
+	 * @param node   Element from which to get children to generate constraints.
+	 * @param isRoot Whether or not node should be treated as the root element of the document (the root element
+	 *               is not added as a constraint here, but in getString())
+	 * @return Exact match XQuery string
+	 */
+	private String generateConstraints( Node node, boolean isRoot ) {
+		//Index of child node
+		int childElementIndex = 0;
+		final StringBuilder out = new StringBuilder();
+		boolean queryHasText = false;
+		final NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList( node.getChildNodes() );
+
+		for ( final Node child : nodeList ) {
+			if ( child.getNodeType() == Node.ELEMENT_NODE ) {
+				//If an element node and not an attribute or text node, add to xquery and increment index
+				childElementIndex++;
+
+				if ( child.getNodeName().equals( "mws:qvar" ) ) {
+					//If qvar, add to qvar map
+					String qvarName = child.getTextContent();
+					if ( qvarName.isEmpty() ) {
+						qvarName = child.getAttributes().getNamedItem( "name" ).getTextContent();
+					}
+					if ( qvar.containsKey( qvarName ) ) {
+						qvar.get( qvarName ).add( relativeXPath + "/*[" + childElementIndex + "]" );
+					} else {
+						qvar.put( qvarName, Lists.newArrayList( relativeXPath + "/*[" + childElementIndex + "]" ) );
+					}
+				} else if ( ANNOTATION_XML_PATTERN.matcher( child.getLocalName() ).matches() ) {
+					//Ignore annotations and presentation mathml
 				} else {
-					qvar.put( qvarName, Lists.newArrayList( relativeXPath + "/*[" + i + "]" ) );
-				}
-			} else {
-				if ( child.getNodeType() == Node.ELEMENT_NODE ) {
-					if ( child.getLocalName().matches( "annotation(-xml)?" ) ) {
-						continue;
+					if ( queryHasText ) {
+						//Add another condition on top of existing condition in query
+						out.append( " and " );
+					} else {
+						queryHasText = true;
 					}
-					i++;
-					if ( hasText ) {
-						out += " and ";
-					}
+
+					//The first direct child of the root element is added as a constraint in getString()
+					//so ignore it here
 					if ( !isRoot ) {
-						out += "*[" + i + "]/name() = '" + child.getLocalName() + "'";
+						//Add constraint for current child element
+						out.append( "*[" ).append( childElementIndex ).append( "]/name() = '" ).
+								append( child.getLocalName() ).append( "'" );
 					}
-					hasText = true;
 					if ( child.hasChildNodes() ) {
 						if ( !isRoot ) {
-							relativeXPath += "/*[" + i + "]";
-							out += " and *[" + i + "]";
+							relativeXPath += "/*[" + childElementIndex + "]";
+							//Add relative constraint so this can be recursively called
+							out.append( " and *[" ).append( childElementIndex ).append( "]" );
 						}
 						final String constraint = generateConstraint( child );
-						if ( constraint.length() > 0 ) {
-							out += "[" + constraint + "]";
+						if ( !constraint.isEmpty() ) {
+							//This constraint appears as a child of the relative constraint above (e.g. [*1][constraint])
+							out.append( "[" ).append( constraint ).append( "]");
 						}
 					}
-				} else if ( child.getNodeType() == Node.TEXT_NODE ) {
-					out = "./text() = '" + child.getNodeValue().trim() + "'";
 				}
+			} else if ( child.getNodeType() == Node.TEXT_NODE ) {
+				//Text nodes are always leaf nodes
+				out.append( "./text() = '" ).append( child.getNodeValue().trim() ).append( "'" );
 			}
-		}
+		}//for child : nodelist
+
 		if ( !isRoot && restrictLength ) {
-			if ( lengthConstraint.equals( "" ) ) {
-				lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + i + "\n";
+			if ( lengthConstraint.isEmpty() ) {
+				//Initialize constraint
+				lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + childElementIndex + "\n";
 			} else {
-				lengthConstraint += " and fn:count($x" + relativeXPath + "/*) = " + i + "\n";
+				//Add as additional constraint
+				lengthConstraint += " and fn:count($x" + relativeXPath + "/*) = " + childElementIndex + "\n";
 			}
 		}
-		if ( relativeXPath.length() > 0 ) {
+
+		if ( !relativeXPath.isEmpty() ) {
 			relativeXPath = relativeXPath.substring( 0, relativeXPath.lastIndexOf( "/" ) );
 		}
-		return out;
+
+		return out.toString();
 	}
 
 }

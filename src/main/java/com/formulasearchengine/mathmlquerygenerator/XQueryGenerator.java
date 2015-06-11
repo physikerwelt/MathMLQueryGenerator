@@ -28,6 +28,7 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
 @SuppressWarnings("WeakerAccess")
 public class XQueryGenerator {
 	private static final Pattern ANNOTATION_XML_PATTERN = Pattern.compile( "annotation(-xml)?" );
+	//Qvar map of qvar name to XPaths referenced by each qvar
 	private Map<String, ArrayList<String>> qvar = new HashMap<>();
 	private String relativeXPath = "";
 	private String lengthConstraint = "";
@@ -139,33 +140,37 @@ public class XQueryGenerator {
 		if ( mainElement == null ) {
 			return null;
 		}
-		String fixedConstraints = generateConstraints( mainElement, true );
-		String qvarConstraintString = "";
+		final String fixedConstraints = generateConstraints( mainElement, true );
+		final StringBuilder qvarConstraintString = new StringBuilder();
+		//Generate qvar constraint string
+		//This specifies that the same qvars must refer to the same nodes, using the XQuery "=" equality
+		//This is equality based on: same text, same node names, and same children by the "=" equality
 		for ( Map.Entry<String, ArrayList<String>> entry : qvar.entrySet() ) {
-			String addString = "";
-			boolean newContent = false;
+			final StringBuilder addString = new StringBuilder();
 			if ( entry.getValue().size() > 1 ) {
-				String first = entry.getValue().get( 0 );
-				if ( qvarConstraintString.length() > 0 ) {
-					addString += "\n  and ";
+				final String firstEntry = entry.getValue().get( 0 );
+				if ( qvarConstraintString.length() != 0 ) {
+					addString.append("\n  and ");
 				}
-				String lastSecond = "";
-				for ( String second : entry.getValue() ) {
-					if ( !second.equals( first ) ) {
-						if ( lastSecond.length() > 0 ) {
-							addString += " and ";
+				String lastEntry = "";
+				boolean newContent = false;
+				//begins at second entry
+				for ( final String currentEntry : entry.getValue() ) {
+					if ( !currentEntry.equals( firstEntry ) ) {
+						if ( !lastEntry.isEmpty() ) {
+							addString.append(" and ");
 						}
-						addString += "$x" + first + " = $x" + second;
-						lastSecond = second;
+						addString.append("$x").append(firstEntry).append(" = $x").append(currentEntry);
+						lastEntry = currentEntry;
 						newContent = true;
 					}
 				}
 				if ( newContent ) {
-					qvarConstraintString += addString;
+					qvarConstraintString.append(addString);
 				}
 			}
 		}
-		return getString( mainElement, fixedConstraints, qvarConstraintString );
+		return getString( mainElement, fixedConstraints, qvarConstraintString.toString() );
 	}
 
 	/**

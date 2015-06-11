@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class XQueryGeneratorTest extends TestCase {
@@ -117,6 +119,7 @@ public class XQueryGeneratorTest extends TestCase {
 		xQueryGenerator.setRestrictLength( false );
 		assertEquals( expectedOutput, xQueryGenerator.toString() );
 		assertFalse( xQueryGenerator.isRestrictLength() );
+		assertNull( xQueryGenerator.getQvar() );
 	}
 
 	public void testNoMath() throws Exception {
@@ -125,4 +128,19 @@ public class XQueryGeneratorTest extends TestCase {
 		assertNull( "Input without math should return null", qg.toString() );
 	}
 
+	public void testqVarGetter() throws Exception {
+		final String expectedVariableName = "x";
+		final String firstExpectedLocation = "/*[2]/*[2]";
+		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/mws/qqx2x.xml" );
+		Document query = XMLHelper.String2Doc( testInput );
+		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
+		xQueryGenerator.toString(); //TODO: Reconsider lazy evaluation!
+		Map<String, ArrayList<String>> qVars = xQueryGenerator.getQvar();
+		assertEquals( 1, qVars.entrySet().size() );
+		Map.Entry<String, ArrayList<String>> firstEntry = qVars.entrySet().iterator().next();
+		assertEquals( expectedVariableName, firstEntry.getKey() );
+		ArrayList<String> xPaths = firstEntry.getValue();
+		assertEquals( 2, xPaths.size() );
+		assertEquals( firstExpectedLocation, xPaths.get(0) );
+	}
 }

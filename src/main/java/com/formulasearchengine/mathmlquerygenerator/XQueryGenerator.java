@@ -233,4 +233,11 @@ public class XQueryGenerator {
 		return out;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
+	public Map<String, ArrayList<String>> getQvar() {
+		return qvar;
+	}
 }

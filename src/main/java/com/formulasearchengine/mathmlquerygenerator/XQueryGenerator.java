@@ -72,6 +72,9 @@ public class XQueryGenerator {
 	 */
 	public XQueryGenerator setRestrictLength( boolean restrictLength ) {
 		this.restrictLength = restrictLength;
+		this.lengthConstraint = "";
+		this.relativeXPath = "";
+		qvar = new HashMap<>();
 		return this;
 	}
 
@@ -161,8 +164,7 @@ public class XQueryGenerator {
 		this.mainElement = mainElement;
 		qvar = new LinkedHashMap<>();
 		relativeXPath = "";
-		lengthConstraint = "";
-	}
+		lengthConstraint = "";}
 
 	/**
 	 * Generates the constraints of the XQuery and then builds the XQuery and returns it as a string
@@ -172,13 +174,18 @@ public class XQueryGenerator {
 		if ( mainElement == null ) {
 			return null;
 		}
-		exactMatchXQuery = generateSimpleConstraints( mainElement, true );
-		generateQvarConstraints();
+		generateConstraints();
 		if ( findRootApply ) {
 			return getRecursiveString();
 		} else {
 			return getDefaultString();
 		}
+	}
+
+	private void generateConstraints() {
+		qvar = new LinkedHashMap<>();
+		exactMatchXQuery = generateSimpleConstraints(mainElement, true);
+		generateQvarConstraints();
 	}
 
 	/**
@@ -331,7 +338,7 @@ public class XQueryGenerator {
 					} else {
 						qvar.put( qvarName, Lists.newArrayList( relativeXPath + "/*[" + childElementIndex + "]" ) );
 					}
-				} else if ( ANNOTATION_XML_PATTERN.matcher( child.getLocalName() ).matches() ) {
+				} else if ( child.getLocalName() != null && ANNOTATION_XML_PATTERN.matcher( child.getLocalName() ).matches() ) {
 					//Ignore annotations and presentation mathml
 				} else {
 					if ( queryHasText ) {
@@ -382,6 +389,13 @@ public class XQueryGenerator {
 		}
 
 		return out.toString();
+	}
+
+	public Map<String, ArrayList<String>> getQvar() {
+		if (qvar.isEmpty()){
+			generateConstraints();
+		}
+		return qvar;
 	}
 
 }

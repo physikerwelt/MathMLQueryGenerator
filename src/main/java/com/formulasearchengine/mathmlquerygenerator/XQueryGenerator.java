@@ -31,11 +31,13 @@ public class XQueryGenerator {
 		"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
 	private String footer = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
+	private String fixedConstraints;
 
 	public XQueryGenerator( String input )
 		throws IOException, SAXException, ParserConfigurationException {
 		Document xml = DomDocumentHelper.String2Doc(input);
 		this.mainElement = getMainElement( xml );
+		fixedConstraints = generateConstraint( mainElement, true );
 	}
 
 	public boolean isRestrictLength() {
@@ -49,6 +51,11 @@ public class XQueryGenerator {
 	 */
 	public XQueryGenerator setRestrictLength( boolean restrictLength ) {
 		this.restrictLength = restrictLength;
+		this.fixedConstraints = "";
+		this.lengthConstraint = "";
+		this.relativeXPath = "";
+		qvar = new HashMap<>();
+		fixedConstraints = this.generateConstraint( mainElement, true );
 		return this;
 	}
 
@@ -56,6 +63,7 @@ public class XQueryGenerator {
 
 	public XQueryGenerator( Document xml ) {
 		this.mainElement = getMainElement( xml );
+		fixedConstraints = generateConstraint( mainElement, true );
 	}
 
 	public static Node getMainElement( Document xml ) {
@@ -115,13 +123,13 @@ public class XQueryGenerator {
 		qvar = new HashMap<>();
 		relativeXPath = "";
 		lengthConstraint = "";
+		fixedConstraints = generateConstraint( mainElement, true );
 	}
 
 	public String toString() {
 		if ( mainElement == null ) {
 			return null;
 		}
-		String fixedConstraints = generateConstraint( mainElement, true );
 		String qvarConstraintString = "";
 		for ( Map.Entry<String, ArrayList<String>> entry : qvar.entrySet() ) {
 			String addString = "";
@@ -179,6 +187,9 @@ public class XQueryGenerator {
 		int i = 0;
 		String out = "";
 		boolean hasText = false;
+		if ( node == null ) {
+			return null;
+		}
 		NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList( node.getChildNodes() );
 		for ( Node child : nodeList ) {
 			if ( child.getNodeName().equals( "mws:qvar" ) ) {
@@ -231,6 +242,10 @@ public class XQueryGenerator {
 			relativeXPath = relativeXPath.substring( 0, relativeXPath.lastIndexOf( "/" ) );
 		}
 		return out;
+	}
+
+	public Map<String, ArrayList<String>> getQvar() {
+		return qvar;
 	}
 
 }

@@ -8,5 +8,6 @@ fn:count($x/*[2]/*[1]/*) = 0
  and fn:count($x/*[2]/*) = 3
  and fn:count($x/*) = 3
  and $x/*[2]/*[2] = $x/*[3]
+let $q := map {"x" : (data($x/*[2]/*[2]/@xml:id),data($x/*[3]/@xml-id))}
 return
 data($m/*[1]/@alttext)

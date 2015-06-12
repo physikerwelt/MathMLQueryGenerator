@@ -109,6 +109,7 @@ public class XQueryGeneratorTest extends TestCase {
 			"[*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]\n" +
 			"where\n" +
 			"$x/*[2]/*[2] = $x/*[3]\n" +
+			"let $q := map {\"x\" : (data($x/*[2]/*[2]/@xml:id),data($x/*[3]/@xml-id))}\n" +
 			"return\n";
 		Document query = XMLHelper.String2Doc( testInput );
 		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );

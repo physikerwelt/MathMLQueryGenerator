@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,8 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
  * Converts MathML queries into XQueries.
  * The result is then wrapped around with a header and a footer (defaults to a DB2 header/footer if not given).
  * The variable $x always represents a hit, so you can refer to $x in the footer as the result node.
+ * The variable $q always represents a map of qvars to their respective formula ID, so you can refer to $q in the footer
+ * to return qvar results.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
@@ -31,7 +34,10 @@ public class XQueryGenerator {
 	//Qvar map of qvar name to XPaths referenced by each qvar
 	private Map<String, ArrayList<String>> qvar = new HashMap<>();
 	private String relativeXPath = "";
+	private String exactMatchXQuery = "";
 	private String lengthConstraint = "";
+	private String qvarConstraint = "";
+	private String qvarMapVariable = "";
 	private String header = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
 			"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
 	private String footer = "data($m/*[1]/@alttext)";
@@ -134,80 +140,101 @@ public class XQueryGenerator {
 
 	/**
 	 * Generates the constraints of the XQuery and then builds the XQuery and returns it as a string
-	 * @return XQuery as string
+	 * @return XQuery as string. Returns null if no main element set.
 	 */
 	public String toString() {
 		if ( mainElement == null ) {
 			return null;
 		}
-		final String fixedConstraints = generateConstraints( mainElement, true );
-		final StringBuilder qvarConstraintString = new StringBuilder();
-		//Generate qvar constraint string
-		//This specifies that the same qvars must refer to the same nodes, using the XQuery "=" equality
-		//This is equality based on: same text, same node names, and same children by the "=" equality
-		for ( Map.Entry<String, ArrayList<String>> entry : qvar.entrySet() ) {
-			final StringBuilder addString = new StringBuilder();
-			if ( entry.getValue().size() > 1 ) {
-				final String firstEntry = entry.getValue().get( 0 );
-				if ( qvarConstraintString.length() != 0 ) {
-					addString.append("\n  and ");
-				}
-				String lastEntry = "";
-				boolean newContent = false;
-				//begins at second entry
-				for ( final String currentEntry : entry.getValue() ) {
-					if ( !currentEntry.equals( firstEntry ) ) {
-						if ( !lastEntry.isEmpty() ) {
-							addString.append(" and ");
-						}
-						addString.append("$x").append(firstEntry).append(" = $x").append(currentEntry);
-						lastEntry = currentEntry;
-						newContent = true;
-					}
-				}
-				if ( newContent ) {
-					qvarConstraintString.append(addString);
-				}
-			}
-		}
-		return getString( mainElement, fixedConstraints, qvarConstraintString.toString() );
+		exactMatchXQuery = generateSimpleConstraints( mainElement, true );
+		generateQvarConstraints();
+
+		return getString( mainElement, exactMatchXQuery, lengthConstraint, qvarConstraint, qvarMapVariable, header, footer );
 	}
 
 	/**
-	 * Builds the XQuery as a string with the set header and footer, given constraint strings and the main element.
+	 * Builds the XQuery as a string given constraint strings, header, footer, qvar map, and the main element.
 	 * @param mainElement          Node from which to build XQuery
 	 * @param fixedConstraints     Constraint string for basic exact formula matching
+	 * @param lengthConstraint     Constraint string for length of variables
 	 * @param qvarConstraintString Constraint string for qvar matching
+	 * @param qvarMapVariable      Qvar map variable
+	 * @param header               Header
+	 * @param footer               Footer
 	 * @return XQuery as string
 	 */
-	public String getString( Node mainElement, String fixedConstraints, String qvarConstraintString ) {
+	public static String getString( Node mainElement, String fixedConstraints, String lengthConstraint,
+									String qvarConstraintString, String qvarMapVariable, String header, String footer ) {
 		String out = header;
 		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
 				fixedConstraints + "\n";
-		out += getConstraints( qvarConstraintString );
-		out +=
-				"return" + "\n" + getFooter();
+		if ( !lengthConstraint.isEmpty() || !qvarConstraintString.isEmpty() ) {
+			out += "where" + "\n";
+			if ( lengthConstraint.isEmpty() ) {
+				out += qvarConstraintString;
+			} else {
+				out += lengthConstraint + (qvarConstraintString.isEmpty() ? "" : " and " + qvarConstraintString);
+			}
+		}
+		out += qvarMapVariable;
+		out += "\n";
+		out += "return" + "\n" + footer;
 		return out;
 	}
 
 	/**
-	 * Appends constraint strings together
-	 * @param qvarConstraintString Qvar constraint portion of query
-	 * @return All constraint strings appended together
+	 * Uses the qvar map to generate a XQuery string containing qvar constraints,
+	 * and the qvar map variable which maps qvar names to their respective formula ID's in the result.
 	 */
-	private String getConstraints( String qvarConstraintString ) {
-		String out = lengthConstraint +
-				(((qvarConstraintString.length() > 0) && (lengthConstraint.length() > 0)) ? " and " : "") +
-				qvarConstraintString;
-		if ( out.trim().length() > 0 ) {
-			return "where" + "\n" + out + "\n";
-		} else {
-			return "";
+	private void generateQvarConstraints() {
+		final StringBuilder qvarConstrBuilder = new StringBuilder();
+		final StringBuilder qvarMapStrBuilder = new StringBuilder();
+		final Iterator<Map.Entry<String, ArrayList<String>>> entryIterator = qvar.entrySet().iterator();
+		if ( entryIterator.hasNext() ) {
+			qvarMapStrBuilder.append( "\nlet $q := map {" );
+
+			while ( entryIterator.hasNext() ) {
+				final Map.Entry<String, ArrayList<String>> currentEntry = entryIterator.next();
+
+				final Iterator<String> valueIterator = currentEntry.getValue().iterator();
+				final String firstValue = valueIterator.next();
+
+				qvarMapStrBuilder.append( '"' ).append( currentEntry.getKey() ).append( '"' )
+						.append( " : (data($x" ).append( firstValue ).append( "/@xml:id)" );
+
+				//check if there are additional values that we need to constrain
+				if ( valueIterator.hasNext() ) {
+					if ( qvarConstrBuilder.length() > 0 ) {
+						//only add beginning and if it's an additional constraint in the aggregate qvar string
+						qvarConstrBuilder.append( "\n and " );
+					}
+					while ( valueIterator.hasNext() ) {
+						//process second value onwards
+						final String currentValue = valueIterator.next();
+						qvarMapStrBuilder.append( ",data($x" ).append( currentValue ).append( "/@xml-id)" );
+						//These constraints specify that the same qvars must refer to the same nodes,
+						//using the XQuery "=" equality
+						//This is equality based on: same text, same node names, and same children nodes
+						qvarConstrBuilder.append( "$x" ).append( firstValue ).append( " = $x" ).append( currentValue );
+						if ( valueIterator.hasNext() ) {
+							qvarConstrBuilder.append( " and " );
+						}
+					}
+				}
+				qvarMapStrBuilder.append( ')' );
+				if ( entryIterator.hasNext() ) {
+					qvarMapStrBuilder.append( ',' );
+				}
+			}
+			qvarMapStrBuilder.append( '}' );
 		}
+		qvarMapVariable = qvarMapStrBuilder.toString();
+		qvarConstraint = qvarConstrBuilder.toString();
 	}
 
-	private String generateConstraint( Node node ) {
-		return generateConstraints( node, false );
+
+	private String generateSimpleConstraints( Node node ) {
+		return generateSimpleConstraints( node, false );
 	}
 
 	/**
@@ -218,7 +245,7 @@ public class XQueryGenerator {
 	 *               is not added as a constraint here, but in getString())
 	 * @return Exact match XQuery string
 	 */
-	private String generateConstraints( Node node, boolean isRoot ) {
+	private String generateSimpleConstraints( Node node, boolean isRoot ) {
 		//Index of child node
 		int childElementIndex = 0;
 		final StringBuilder out = new StringBuilder();
@@ -264,10 +291,10 @@ public class XQueryGenerator {
 							//Add relative constraint so this can be recursively called
 							out.append( " and *[" ).append( childElementIndex ).append( "]" );
 						}
-						final String constraint = generateConstraint( child );
+						final String constraint = generateSimpleConstraints( child );
 						if ( !constraint.isEmpty() ) {
 							//This constraint appears as a child of the relative constraint above (e.g. [*1][constraint])
-							out.append( "[" ).append( constraint ).append( "]");
+							out.append( "[" ).append( constraint ).append( "]" );
 						}
 					}
 				}

@@ -6,7 +6,7 @@ where
 fn:count($x/*[1]/*) = 0
  and fn:count($x/*[3]/*) = 0
  and fn:count($x/*) = 3
-
 let $q := map {"x" : (data($x/*[2]/@xml:id))}
+
 return
 data($m/*[1]/@alttext)

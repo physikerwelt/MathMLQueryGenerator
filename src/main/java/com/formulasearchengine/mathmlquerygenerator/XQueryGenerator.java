@@ -23,8 +23,8 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
  * Converts MathML queries into XQueries.
  * The result is then wrapped around with a header and a footer (defaults to a DB2 header/footer if not given).
  * The variable $x always represents a hit, so you can refer to $x in the footer as the result node.
- * The variable $q always represents a map of qvars to their respective formula ID, so you can refer to $q in the footer
- * to return qvar results.
+ * If addQvarMap is turned on, the variable $q always represents a map of qvars to their respective formula ID,
+ * so you can refer to $q in the footer to return qvar results.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
@@ -43,6 +43,7 @@ public class XQueryGenerator {
 	private String footer = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
 	private boolean restrictLength = true;
+	private boolean addQvarMap = true;
 
 	/**
 	 * Constructs a basic generator from an XML document given as a string.
@@ -72,6 +73,17 @@ public class XQueryGenerator {
 	 */
 	public XQueryGenerator setRestrictLength( boolean restrictLength ) {
 		this.restrictLength = restrictLength;
+		return this;
+	}
+
+	public boolean isAddQvarMap() {
+		return addQvarMap;
+	}
+	/**
+	 * Determines whether or not the $q variable is generated with a map of qvar names to their respective xml:id
+	 */
+	public XQueryGenerator setAddQvarMap( boolean addQvarMap ) {
+		this.addQvarMap = addQvarMap;
 		return this;
 	}
 
@@ -149,7 +161,11 @@ public class XQueryGenerator {
 		exactMatchXQuery = generateSimpleConstraints( mainElement, true );
 		generateQvarConstraints();
 
-		return getString( mainElement, exactMatchXQuery, lengthConstraint, qvarConstraint, qvarMapVariable, header, footer );
+		if (addQvarMap) {
+			return getString( mainElement, exactMatchXQuery, lengthConstraint, qvarConstraint, qvarMapVariable, header, footer );
+		} else {
+			return getString( mainElement, exactMatchXQuery, lengthConstraint, qvarConstraint, "", header, footer );
+		}
 	}
 
 	/**
@@ -167,18 +183,19 @@ public class XQueryGenerator {
 									String qvarConstraintString, String qvarMapVariable, String header, String footer ) {
 		String out = header;
 		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
-				fixedConstraints + "\n";
+				fixedConstraints;
 		if ( !lengthConstraint.isEmpty() || !qvarConstraintString.isEmpty() ) {
-			out += "where" + "\n";
+			out += "\n" + "where" + "\n";
 			if ( lengthConstraint.isEmpty() ) {
 				out += qvarConstraintString;
 			} else {
-				out += lengthConstraint + (qvarConstraintString.isEmpty() ? "" : " and " + qvarConstraintString);
+				out += lengthConstraint + (qvarConstraintString.isEmpty() ? "" : "\n and " + qvarConstraintString);
 			}
 		}
-		out += qvarMapVariable;
-		out += "\n";
-		out += "return" + "\n" + footer;
+		if (!qvarMapVariable.isEmpty()) {
+			out += "\n" + qvarMapVariable;
+		}
+		out += "\n" + "\n" + "return" + "\n" + footer;
 		return out;
 	}
 
@@ -191,7 +208,7 @@ public class XQueryGenerator {
 		final StringBuilder qvarMapStrBuilder = new StringBuilder();
 		final Iterator<Map.Entry<String, ArrayList<String>>> entryIterator = qvar.entrySet().iterator();
 		if ( entryIterator.hasNext() ) {
-			qvarMapStrBuilder.append( "\nlet $q := map {" );
+			qvarMapStrBuilder.append( "let $q := map {" );
 
 			while ( entryIterator.hasNext() ) {
 				final Map.Entry<String, ArrayList<String>> currentEntry = entryIterator.next();
@@ -307,10 +324,10 @@ public class XQueryGenerator {
 		if ( !isRoot && restrictLength ) {
 			if ( lengthConstraint.isEmpty() ) {
 				//Initialize constraint
-				lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + childElementIndex + "\n";
+				lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + childElementIndex;
 			} else {
 				//Add as additional constraint
-				lengthConstraint += " and fn:count($x" + relativeXPath + "/*) = " + childElementIndex + "\n";
+				lengthConstraint += "\n" + " and fn:count($x" + relativeXPath + "/*) = " + childElementIndex;
 			}
 		}
 

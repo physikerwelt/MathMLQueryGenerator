@@ -11,10 +11,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstChild;
@@ -32,7 +29,7 @@ import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstCh
 public class XQueryGenerator {
 	private static final Pattern ANNOTATION_XML_PATTERN = Pattern.compile( "annotation(-xml)?" );
 	//Qvar map of qvar name to XPaths referenced by each qvar
-	private Map<String, ArrayList<String>> qvar = new HashMap<>();
+	private Map<String, ArrayList<String>> qvar = new LinkedHashMap<>();
 	private String relativeXPath = "";
 	private String exactMatchXQuery = "";
 	private String lengthConstraint = "";

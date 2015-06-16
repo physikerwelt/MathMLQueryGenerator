@@ -1,7 +1,7 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
 
-import com.formulasearchengine.xmlhelper.DomDocumentHelper;
+import com.formulasearchengine.mathosphere.utils.XMLHelper;
 import com.formulasearchengine.xmlhelper.NonWhitespaceNodeList;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
@@ -48,7 +48,7 @@ public class XQueryGenerator {
 	 */
 	public XQueryGenerator( String input )
 			throws IOException, SAXException, ParserConfigurationException {
-		final Document xml = DomDocumentHelper.String2Doc( input );
+		final Document xml = XMLHelper.String2Doc( input, true );
 		this.mainElement = getMainElement( xml );
 	}
 

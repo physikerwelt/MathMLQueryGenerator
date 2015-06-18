@@ -1,4 +1,4 @@
-package com.formulasearchengine.xmlhelper;
+package com.formulasearchengine.mathmlquerygenerator.xmlhelper;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

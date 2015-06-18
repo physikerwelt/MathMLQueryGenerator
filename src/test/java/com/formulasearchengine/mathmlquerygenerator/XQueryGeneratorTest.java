@@ -3,6 +3,8 @@ package com.formulasearchengine.mathmlquerygenerator;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
+import com.formulasearchengine.mathmlquerygenerator.xmlhelper.XMLHelper;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +56,7 @@ public class XQueryGeneratorTest extends TestCase {
 					fail( "Cannot load test tuple (" + resultPath + ", ... " + nextFile.getName() + " )" );
 				}
 				try {
-					query = XMLHelper.String2Doc( queryString );
+					query = XMLHelper.String2Doc( queryString, true );
 				} catch ( Exception e ) {
 					e.printStackTrace();
 					fail( "Cannot parse reference document " + nextFile.getName() );
@@ -94,7 +96,7 @@ public class XQueryGeneratorTest extends TestCase {
 			"return\n" +
 			"$x}\n" +
 			"</result>";
-		Document query = XMLHelper.String2Doc( testInput );
+		Document query = XMLHelper.String2Doc( testInput, true );
 		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
 		xQueryGenerator.setFooter( testFooter );
 		xQueryGenerator.setHeader( testHead );
@@ -111,7 +113,7 @@ public class XQueryGeneratorTest extends TestCase {
 			"$x/*[2]/*[2] = $x/*[3]\n" +
 			"let $q := map {\"x\" : (data($x/*[2]/*[2]/@xml:id),data($x/*[3]/@xml-id))}\n\n" +
 			"return\n";
-		Document query = XMLHelper.String2Doc( testInput );
+		Document query = XMLHelper.String2Doc( testInput, true );
 		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
 		xQueryGenerator.setFooter( testFooter );
 		xQueryGenerator.setHeader( testHead );

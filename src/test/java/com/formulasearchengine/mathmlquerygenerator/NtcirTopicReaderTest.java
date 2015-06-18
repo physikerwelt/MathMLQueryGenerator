@@ -1,6 +1,6 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
-import com.formulasearchengine.xmlhelper.DomDocumentHelper;
+import com.formulasearchengine.mathmlquerygenerator.xmlhelper.XMLHelper;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -88,7 +88,7 @@ public class NtcirTopicReaderTest {
 	@Test
 	public void testAlternativeConstructor() throws Exception{
 		final URL resource = getClass().getClassLoader().getResource( ARXIV_RESOURCE );
-		DocumentBuilder documentBuilder = DomDocumentHelper.getDocumentBuilderFactory().newDocumentBuilder();
+		DocumentBuilder documentBuilder = XMLHelper.getDocumentBuilder( true );
 		Document topics = documentBuilder.parse( new File( resource.toURI() ) );
 		new NtcirTopicReader( topics );
 		new NtcirTopicReader( topics, "", "" , false );

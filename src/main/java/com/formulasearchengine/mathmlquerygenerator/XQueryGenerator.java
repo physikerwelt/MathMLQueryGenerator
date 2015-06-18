@@ -1,8 +1,8 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
 
-import com.formulasearchengine.xmlhelper.DomDocumentHelper;
-import com.formulasearchengine.xmlhelper.NonWhitespaceNodeList;
+import com.formulasearchengine.mathmlquerygenerator.xmlhelper.XMLHelper;
+import com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespaceNodeList;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static com.formulasearchengine.xmlhelper.NonWhitespaceNodeList.getFirstChild;
+import static com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
  * Converts MathML queries into XQueries.
@@ -48,7 +48,7 @@ public class XQueryGenerator {
 	 */
 	public XQueryGenerator( String input )
 			throws IOException, SAXException, ParserConfigurationException {
-		final Document xml = DomDocumentHelper.String2Doc( input );
+		final Document xml = XMLHelper.String2Doc( input, true );
 		this.mainElement = getMainElement( xml );
 	}
 

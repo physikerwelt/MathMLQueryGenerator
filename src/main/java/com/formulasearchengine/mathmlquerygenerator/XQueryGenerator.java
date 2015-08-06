@@ -178,22 +178,23 @@ public class XQueryGenerator {
 	 */
 	public static String getString( Node mainElement, String fixedConstraints, String lengthConstraint,
 									String qvarConstraintString, String qvarMapVariable, String header, String footer ) {
-		String out = header;
-		out += "for $x in $m//*:" + getFirstChild( mainElement ).getLocalName() + "\n" +
-				fixedConstraints;
+		StringBuilder outBuilder = new StringBuilder();
+		outBuilder.append( header ).append( "for $x in $m//*:" ).append( getFirstChild( mainElement ).getLocalName() )
+				.append( "\n" ).append( fixedConstraints );
 		if ( !lengthConstraint.isEmpty() || !qvarConstraintString.isEmpty() ) {
-			out += "\n" + "where" + "\n";
+			outBuilder.append( "\n" ).append( "where" ).append( "\n" );
 			if ( lengthConstraint.isEmpty() ) {
-				out += qvarConstraintString;
+				outBuilder.append( qvarConstraintString );
 			} else {
-				out += lengthConstraint + (qvarConstraintString.isEmpty() ? "" : "\n and " + qvarConstraintString);
+				outBuilder.append( lengthConstraint )
+						.append( qvarConstraintString.isEmpty() ? "" : "\n and " ).append( qvarConstraintString );
 			}
 		}
 		if (!qvarMapVariable.isEmpty()) {
-			out += "\n" + qvarMapVariable;
+			outBuilder.append( "\n" ).append( qvarMapVariable );
 		}
-		out += "\n" + "\n" + "return" + "\n" + footer;
-		return out;
+		outBuilder.append( "\n" ).append( "\n" ).append( "return" ).append( "\n" ).append( footer );
+		return outBuilder.toString();
 	}
 
 	/**

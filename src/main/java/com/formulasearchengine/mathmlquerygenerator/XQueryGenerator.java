@@ -142,7 +142,7 @@ public class XQueryGenerator {
 	 */
 	public void setMainElement( Node mainElement ) {
 		this.mainElement = mainElement;
-		qvar = new HashMap<>();
+		qvar = new LinkedHashMap<>();
 		relativeXPath = "";
 		lengthConstraint = "";
 	}

@@ -157,40 +157,27 @@ public class XQueryGenerator {
 		}
 		exactMatchXQuery = generateSimpleConstraints( mainElement, true );
 		generateQvarConstraints();
-
-		if (addQvarMap) {
-			return getString( mainElement, exactMatchXQuery, lengthConstraint, qvarConstraint, qvarMapVariable, header, footer );
-		} else {
-			return getString( mainElement, exactMatchXQuery, lengthConstraint, qvarConstraint, "", header, footer );
-		}
+        return getDefaultString();
 	}
 
 	/**
-	 * Builds the XQuery as a string given constraint strings, header, footer, qvar map, and the main element.
-	 * @param mainElement          Node from which to build XQuery
-	 * @param fixedConstraints     Constraint string for basic exact formula matching
-	 * @param lengthConstraint     Constraint string for length of variables
-	 * @param qvarConstraintString Constraint string for qvar matching
-	 * @param qvarMapVariable      Qvar map variable
-	 * @param header               Header
-	 * @param footer               Footer
+	 * Builds the XQuery as a string. Uses the default format of looping through all apply nodes.
 	 * @return XQuery as string
 	 */
-	public static String getString( Node mainElement, String fixedConstraints, String lengthConstraint,
-									String qvarConstraintString, String qvarMapVariable, String header, String footer ) {
-		StringBuilder outBuilder = new StringBuilder();
+	private String getDefaultString() {
+		final StringBuilder outBuilder = new StringBuilder();
 		outBuilder.append( header ).append( "for $x in $m//*:" ).append( getFirstChild( mainElement ).getLocalName() )
-				.append( "\n" ).append( fixedConstraints );
-		if ( !lengthConstraint.isEmpty() || !qvarConstraintString.isEmpty() ) {
+				.append( "\n" ).append( exactMatchXQuery );
+		if ( !lengthConstraint.isEmpty() || !qvarConstraint.isEmpty() ) {
 			outBuilder.append( "\n" ).append( "where" ).append( "\n" );
 			if ( lengthConstraint.isEmpty() ) {
-				outBuilder.append( qvarConstraintString );
+				outBuilder.append( qvarConstraint );
 			} else {
 				outBuilder.append( lengthConstraint )
-						.append( qvarConstraintString.isEmpty() ? "" : "\n and " ).append( qvarConstraintString );
+						.append( qvarConstraint.isEmpty() ? "" : "\n and " ).append( qvarConstraint );
 			}
 		}
-		if (!qvarMapVariable.isEmpty()) {
+		if (!qvarMapVariable.isEmpty() && addQvarMap) {
 			outBuilder.append( "\n" ).append( qvarMapVariable );
 		}
 		outBuilder.append( "\n" ).append( "\n" ).append( "return" ).append( "\n" ).append( footer );

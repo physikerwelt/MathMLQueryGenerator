@@ -19,8 +19,8 @@ import static com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespa
 /**
  * Converts MathML queries into XQueries, given a namespace, a xquery/xpath to the root elements, and a xquery return format.
  * The variable $x always represents a hit, so you can refer to $x in the return format as the result node.
- * If addQvarMap is turned on, the variable $q always represents a map of qvars to their respective formula ID,
- * so you can refer to $q in the returnFormat to return qvar results.
+ * If addQvarMap is turned on, the function local:qvarMap($parentNode) always represents a map of qvars to their
+ * respective formula ID, so you can refer to local:qvarMap($parentNode) in the footer to return qvar results.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
@@ -75,6 +75,7 @@ public class XQueryGenerator {
 	public boolean isAddQvarMap() {
 		return addQvarMap;
 	}
+
 	/**
 	 * Determines whether or not the $q variable is generated with a map of qvar names to their respective xml:id
 	 */
@@ -173,6 +174,9 @@ public class XQueryGenerator {
 		if (!namespace.isEmpty()) {
 			outBuilder.append(namespace).append("\n");
 		}
+		if (!qvarMapVariable.isEmpty() && addQvarMap) {
+			outBuilder.append(qvarMapVariable).append("\n");
+		}
 		outBuilder.append("for $m in ").append(pathToRoot).append(" return\n")
 				.append( "for $x in $m//*:" ).append( getFirstChild( mainElement ).getLocalName() )
 				.append( "\n" ).append( exactMatchXQuery );
@@ -185,10 +189,7 @@ public class XQueryGenerator {
 						.append( qvarConstraint.isEmpty() ? "" : "\n and " ).append( qvarConstraint );
 			}
 		}
-		if (!qvarMapVariable.isEmpty() && addQvarMap) {
-			outBuilder.append( "\n" ).append( qvarMapVariable );
-		}
-		outBuilder.append( "\n" ).append( "\n" ).append( "return" ).append( "\n" ).append(returnFormat);
+		outBuilder.append( "\n\n" ).append( "return" ).append( "\n" ).append(returnFormat);
 		return outBuilder.toString();
 	}
 
@@ -201,7 +202,7 @@ public class XQueryGenerator {
 		final StringBuilder qvarMapStrBuilder = new StringBuilder();
 		final Iterator<Map.Entry<String, ArrayList<String>>> entryIterator = qvar.entrySet().iterator();
 		if ( entryIterator.hasNext() ) {
-			qvarMapStrBuilder.append( "let $q := map {" );
+			qvarMapStrBuilder.append( "declare function local:qvarMap($x) {\n map {" );
 
 			while ( entryIterator.hasNext() ) {
 				final Map.Entry<String, ArrayList<String>> currentEntry = entryIterator.next();
@@ -236,7 +237,7 @@ public class XQueryGenerator {
 					qvarMapStrBuilder.append( ',' );
 				}
 			}
-			qvarMapStrBuilder.append( '}' );
+			qvarMapStrBuilder.append( "}\n};" );
 		}
 		qvarMapVariable = qvarMapStrBuilder.toString();
 		qvarConstraint = qvarConstrBuilder.toString();

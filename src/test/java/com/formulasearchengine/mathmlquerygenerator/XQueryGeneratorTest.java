@@ -76,7 +76,7 @@ public class XQueryGeneratorTest extends TestCase {
 	}
 
 	public void testFormatsConversion() {
-		runTestCollection( "com/formulasearchengine/mathmlquerygenerator/formats" );
+		runTestCollection("com/formulasearchengine/mathmlquerygenerator/formats");
 	}
 
 	public void testCustomization() throws Exception {
@@ -102,23 +102,28 @@ public class XQueryGeneratorTest extends TestCase {
 
 	public void testNoRestriction() throws Exception {
 		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/mws/qqx2x.xml" );
-		final String expectedOutput = "for $m in //*:root return\n" + "for $x in $m//*:apply\n" +
+		final String expectedOutput = "declare function local:qvarMap($x) {\n" +
+            " map {\"x\" : (data($x/*[2]/*[2]/@xml:id),data($x/*[3]/@xml-id))}\n" + "};\n" +
+            "for $m in //*:root return\n" + "for $x in $m//*:apply\n" +
 			"[*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]\n" +
 			"where\n" +
-			"$x/*[2]/*[2] = $x/*[3]\n" +
-			"let $q := map {\"x\" : (data($x/*[2]/*[2]/@xml:id),data($x/*[3]/@xml-id))}\n\n" +
+			"$x/*[2]/*[2] = $x/*[3]\n\n" +
 			"return\n";
 		Document query = XMLHelper.String2Doc( testInput, true );
 		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
 		xQueryGenerator.setReturnFormat("").setNamespace("").setPathToRoot("//*:root").setRestrictLength( false );
 		assertEquals( expectedOutput, xQueryGenerator.toString() );
-		assertFalse( xQueryGenerator.isRestrictLength() );
+		assertFalse(xQueryGenerator.isRestrictLength());
 	}
 
 	public void testNoMath() throws Exception {
 		final String input = "<?xml version=\"1.0\"?>\n<noMath />";
 		XQueryGenerator qg = new XQueryGenerator( input );
 		assertNull( "Input without math should return null", qg.toString() );
+	}
+
+	public void testRecursion() throws Exception {
+
 	}
 
 }

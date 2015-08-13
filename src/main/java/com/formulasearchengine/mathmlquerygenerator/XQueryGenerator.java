@@ -17,11 +17,10 @@ import java.util.regex.Pattern;
 import static com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
- * Converts MathML queries into XQueries.
- * The result is then wrapped around with a header and a footer (defaults to a DB2 header/footer if not given).
- * The variable $x always represents a hit, so you can refer to $x in the footer as the result node.
+ * Converts MathML queries into XQueries, given a namespace, a xquery/xpath to the root elements, and a xquery return format.
+ * The variable $x always represents a hit, so you can refer to $x in the return format as the result node.
  * If addQvarMap is turned on, the variable $q always represents a map of qvars to their respective formula ID,
- * so you can refer to $q in the footer to return qvar results.
+ * so you can refer to $q in the returnFormat to return qvar results.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
@@ -35,9 +34,9 @@ public class XQueryGenerator {
 	private String lengthConstraint = "";
 	private String qvarConstraint = "";
 	private String qvarMapVariable = "";
-	private String header = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-			"for $m in db2-fn:xmlcolumn(\"math.math_mathml\") return\n";
-	private String footer = "data($m/*[1]/@alttext)";
+	private String namespace = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";";
+	private String pathToRoot = "db2-fn:xmlcolumn(\"math.math_mathml\")";
+	private String returnFormat = "data($m/*[1]/@alttext)";
 	private Node mainElement = null;
 	private boolean restrictLength = true;
 	private boolean addQvarMap = true;
@@ -118,21 +117,26 @@ public class XQueryGenerator {
 		return null;
 	}
 
-	public String getFooter() {
-		return footer;
+	public String getReturnFormat() {
+		return returnFormat;
 	}
 
-	public XQueryGenerator setFooter( String footer ) {
-		this.footer = footer;
+	public XQueryGenerator setReturnFormat(String returnFormat) {
+		this.returnFormat = returnFormat;
 		return this;
 	}
 
-	public String getHeader() {
-		return header;
+	public String getNamespace() {
+		return namespace;
 	}
 
-	public XQueryGenerator setHeader( String header ) {
-		this.header = header;
+	public XQueryGenerator setNamespace(String namespace) {
+		this.namespace = namespace;
+		return this;
+	}
+
+	public XQueryGenerator setPathToRoot(String pathToRoot) {
+		this.pathToRoot = pathToRoot;
 		return this;
 	}
 
@@ -166,10 +170,14 @@ public class XQueryGenerator {
 	 */
 	private String getDefaultString() {
 		final StringBuilder outBuilder = new StringBuilder();
-		outBuilder.append( header ).append( "for $x in $m//*:" ).append( getFirstChild( mainElement ).getLocalName() )
+		if (!namespace.isEmpty()) {
+			outBuilder.append(namespace).append("\n");
+		}
+		outBuilder.append("for $m in ").append(pathToRoot).append(" return\n")
+				.append( "for $x in $m//*:" ).append( getFirstChild( mainElement ).getLocalName() )
 				.append( "\n" ).append( exactMatchXQuery );
 		if ( !lengthConstraint.isEmpty() || !qvarConstraint.isEmpty() ) {
-			outBuilder.append( "\n" ).append( "where" ).append( "\n" );
+			outBuilder.append( "\n" ).append("where").append( "\n" );
 			if ( lengthConstraint.isEmpty() ) {
 				outBuilder.append( qvarConstraint );
 			} else {
@@ -180,7 +188,7 @@ public class XQueryGenerator {
 		if (!qvarMapVariable.isEmpty() && addQvarMap) {
 			outBuilder.append( "\n" ).append( qvarMapVariable );
 		}
-		outBuilder.append( "\n" ).append( "\n" ).append( "return" ).append( "\n" ).append( footer );
+		outBuilder.append( "\n" ).append( "\n" ).append( "return" ).append( "\n" ).append(returnFormat);
 		return outBuilder.toString();
 	}
 

@@ -79,35 +79,30 @@ public class XQueryGeneratorTest extends TestCase {
 		runTestCollection( "com/formulasearchengine/mathmlquerygenerator/formats" );
 	}
 
-	public void testHeaderAndFooter() throws Exception {
-		final String testHead = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-			"<result>{\n" +
-			"let $m := .";
-		final String testFooter = "$x}\n" +
-			"</result>";
+	public void testCustomization() throws Exception {
+		final String testNamespace = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";";
+		final String testPathToRoot = "//*:root";
+		final String testResultFormat = "<hit>{$x}</hit>";
 		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/cmml/q1.xml" );
 		final String expectedOutput = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-			"<result>{\n" +
-			"let $m := .for $x in $m//*:ci\n" +
+			"for $m in //*:root return\n" +
+			"for $x in $m//*:ci\n" +
 			"[./text() = 'E']\n" +
 			"where\n" +
 			"fn:count($x/*) = 0\n" +
 			"\n" +
 			"return\n" +
-			"$x}\n" +
-			"</result>";
+			"<hit>{$x}</hit>";
 		Document query = XMLHelper.String2Doc( testInput, true );
 		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
-		xQueryGenerator.setFooter( testFooter );
-		xQueryGenerator.setHeader( testHead );
-		assertEquals( expectedOutput, xQueryGenerator.toString() );
+		xQueryGenerator.setReturnFormat(testResultFormat).setNamespace(testNamespace)
+			.setPathToRoot(testPathToRoot);
+		assertEquals(expectedOutput, xQueryGenerator.toString());
 	}
 
 	public void testNoRestriction() throws Exception {
-		final String testHead = "";
-		final String testFooter = "";
 		final String testInput = getFileContents( "com/formulasearchengine/mathmlquerygenerator/mws/qqx2x.xml" );
-		final String expectedOutput = "for $x in $m//*:apply\n" +
+		final String expectedOutput = "for $m in //*:root return\n" + "for $x in $m//*:apply\n" +
 			"[*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]\n" +
 			"where\n" +
 			"$x/*[2]/*[2] = $x/*[3]\n" +
@@ -115,9 +110,7 @@ public class XQueryGeneratorTest extends TestCase {
 			"return\n";
 		Document query = XMLHelper.String2Doc( testInput, true );
 		XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
-		xQueryGenerator.setFooter( testFooter );
-		xQueryGenerator.setHeader( testHead );
-		xQueryGenerator.setRestrictLength( false );
+		xQueryGenerator.setReturnFormat("").setNamespace("").setPathToRoot("//*:root").setRestrictLength( false );
 		assertEquals( expectedOutput, xQueryGenerator.toString() );
 		assertFalse( xQueryGenerator.isRestrictLength() );
 	}

@@ -1,5 +1,5 @@
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'gt' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'W'] and *[3]/name() = 'interval' and *[3][*[1]/name() = 'cn' and *[1][./text() = '2'] and *[2]/name() = 'ci' and *[2][./text() = 'k']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'cn' and *[2][./text() = '2'] and *[3]/name() = 'ci' and *[3][./text() = 'k']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'ci' and *[3][./text() = 'ε']]]]
 where
@@ -22,7 +22,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:interval
 [*[1]/name() = 'ci' and *[1][./text() = 'X'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-Σ']]
 where
@@ -33,7 +33,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'factorial' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'cn' and *[3][./text() = '1']]] and *[3]/name() = 'ci' and *[3][./text() = 'n']]
 where
@@ -48,7 +48,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'f']] and *[3]/name() = 'ci' and *[3][./text() = 'z']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'ci' and *[3][./text() = 'c']]]
 where
@@ -68,7 +68,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'ci' and *[1][./text() = 'normal-⇔'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'for-all'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'for-all'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'y'] and *[3]/name() = 'ci' and *[3][./text() = 'P'] and *[4]/name() = 'interval' and *[4][*[1]/name() = 'ci' and *[1][./text() = 'x'] and *[2]/name() = 'ci' and *[2][./text() = 'y']]]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'for-all'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'y'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'for-all'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'ci' and *[3][./text() = 'P'] and *[4]/name() = 'interval' and *[4][*[1]/name() = 'ci' and *[1][./text() = 'x'] and *[2]/name() = 'ci' and *[2][./text() = 'y']]]]]]]
 where
@@ -102,7 +102,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]
 where
@@ -113,7 +113,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]
 where
@@ -124,7 +124,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]
 where
@@ -135,7 +135,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'ket'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-Ψ']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-Γ']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'cn' and *[2][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'λ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'cn' and *[3][./text() = '1']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'cn' and *[2][./text() = '1']]] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-Γ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'cn' and *[2][./text() = '2']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'i']]]] and *[5]/name() = 'apply' and *[5][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'λ']]] and *[6]/name() = 'apply' and *[6][*[1]/name() = 'csymbol' and *[1][./text() = 'ket'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]] and *[7]/name() = 'apply' and *[7][*[1]/name() = 'csymbol' and *[1][./text() = 'ket']]]]]
 where
@@ -214,7 +214,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'leq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[3]/name() = 'ci' and *[3][./text() = 'y']]
 where
@@ -227,7 +227,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'formulae-sequence'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'd'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'd'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'log' and *[3]/name() = 'ci' and *[3][./text() = 'c']] and *[2]/name() = 'ci' and *[2][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'ln' and *[2]/name() = 'ci' and *[2][./text() = 'c']]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'formulae-sequence'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'gt' and *[2]/name() = 'ci' and *[2][./text() = 'c'] and *[3]/name() = 'cn' and *[3][./text() = '0']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'neq' and *[2]/name() = 'ci' and *[2][./text() = 'c'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]]
 where
@@ -263,7 +263,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'θ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'cn' and *[2][./text() = '137.508'] and *[3]/name() = 'compose']]]
 where
@@ -278,7 +278,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 's'] and *[3]/name() = 'ci' and *[3][./text() = 'V']] and *[3]/name() = 'ci' and *[3][./text() = 'ℛ']]
 where
@@ -292,7 +292,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'normal-ℓ'] and *[3]/name() = 'ci' and *[3][./text() = 'm']]
 where
@@ -303,7 +303,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'b'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]
 where
@@ -319,7 +319,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'ω'] and *[3]/name() = 'ci' and *[3][./text() = 'k']]
 where
@@ -331,7 +331,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = '𝐦'] and *[3]/name() = 'cn' and *[3][./text() = '1']]
 where
@@ -343,7 +343,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'r'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'ci' and *[3][./text() = 'j']]]
 where
@@ -357,7 +357,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'Z'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum' and *[3]/name() = 'ci' and *[3][./text() = 'j']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⋅'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'g'] and *[3]/name() = 'ci' and *[3][./text() = 'j']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-e']]]]]
 where
@@ -380,7 +380,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'S'] and *[3]/name() = 'ci' and *[3][./text() = 'normal-′']]
 where
@@ -392,7 +392,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'S'] and *[3]/name() = 'ci' and *[3][./text() = 'normal-′']]
 where
@@ -404,7 +404,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'approx' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = 'Ker'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'times'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'l'] and *[3]/name() = 'times']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[3]/name() = 'interval' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'times'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'j'] and *[3]/name() = 'times']]]]
 where
@@ -430,7 +430,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'D'] and *[3]/name() = 'interval' and *[3][*[1]/name() = 'ci' and *[1][./text() = 'G'] and *[2]/name() = 'ci' and *[2][./text() = 'H']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'abs' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'F'] and *[3]/name() = 'ci' and *[3][./text() = 'i']] and *[3]/name() = 'ci' and *[3][./text() = 'G']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'F']] and *[3]/name() = 'ci' and *[3][./text() = 'H']]]]]]
 where
@@ -465,7 +465,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'E']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'E'] and *[3]/name() = 'ci' and *[3][./text() = 't']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'E']]]]
 where
@@ -485,7 +485,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'leq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'λ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'L'] and *[3]/name() = 'ci' and *[3][./text() = 'B']]] and *[3]/name() = 'ci' and *[3][./text() = 'd']]
 where
@@ -500,7 +500,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'leq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'L'] and *[3]/name() = 'ci' and *[3][./text() = 'C']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'L'] and *[3]/name() = 'ci' and *[3][./text() = 'T']]]
 where
@@ -515,7 +515,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'v'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'c'] and *[3]/name() = 'ci' and *[3][./text() = 'n']]]
 where
@@ -528,7 +528,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'σ'] and *[3]/name() = 'ci' and *[3][./text() = 'y']] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'ci' and *[3][./text() = 'τ']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'cn' and *[2][./text() = '2'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'π'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[4]/name() = 'ci' and *[4][./text() = 'τ']] and *[3]/name() = 'cn' and *[3][./text() = '3']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'h'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'cn' and *[2][./text() = '2']]]]]
 where
@@ -561,7 +561,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'R'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 's'] and *[3]/name() = 'ci' and *[3][./text() = 'n'] and *[4]/name() = 'ci' and *[4][./text() = 'o'] and *[5]/name() = 'ci' and *[5][./text() = 'r'] and *[6]/name() = 'ci' and *[6][./text() = 'm'] and *[7]/name() = 'ci' and *[7][./text() = 'a'] and *[8]/name() = 'ci' and *[8][./text() = 'l']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'root']]
 where
@@ -582,7 +582,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'ϕ'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'cn' and *[2][./text() = '30'] and *[3]/name() = 'compose'] and *[3]/name() = 'ci' and *[3][./text() = 'normal-…']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'cn' and *[2][./text() = '30']]]]
 where
@@ -605,7 +605,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'ci' and *[3][./text() = 'c']]
 where
@@ -617,7 +617,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'ci' and *[3][./text() = 'c']]
 where
@@ -629,7 +629,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'T']]
 where
@@ -640,7 +640,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'P'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'ci' and *[3][./text() = 'X']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'P'] and *[3]/name() = 'ci' and *[3][./text() = 'X']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α']]]]]
 where
@@ -664,7 +664,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'csymbol' and *[2][./text() = 'absent'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'ci' and *[3][./text() = 'n']]]
 where
@@ -677,7 +677,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'csymbol' and *[2][./text() = 'product'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'cn' and *[3][./text() = '1']]] and *[3]/name() = 'ci' and *[3][./text() = 'r']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'ci' and *[3][./text() = 'i']]]]]
 where
@@ -703,7 +703,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'H'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'j'] and *[3]/name() = 'ci' and *[3][./text() = 'ω']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'ℱ'] and *[3]/name() = 'set' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'h'] and *[3]/name() = 'ci' and *[3][./text() = 't']]]]]
 where
@@ -723,7 +723,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'π'] and *[3]/name() = 'cn' and *[3][./text() = '4']]
 where
@@ -734,7 +734,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'plus' and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'ci' and *[3][./text() = 'y']] and *[3]/name() = 'ci' and *[3][./text() = 'n']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum'] and *[3]/name() = 'ci' and *[3][./text() = 'n']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'binomial'] and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'ci' and *[3][./text() = 'k']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'ci' and *[3][./text() = 'k']]] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'y'] and *[3]/name() = 'ci' and *[3][./text() = 'k']]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum'] and *[3]/name() = 'ci' and *[3][./text() = 'n']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'binomial'] and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'ci' and *[3][./text() = 'k']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x']] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'y'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'ci' and *[3][./text() = 'k']]]]]]]
 where
@@ -792,7 +792,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'ci' and *[2][./text() = 'A']] and *[3]/name() = 'ci' and *[3][./text() = 't']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'ci' and *[3][./text() = 't']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'ci' and *[2][./text() = 'A']] and *[3]/name() = 'cn' and *[3][./text() = '0']]]]
 where
@@ -818,7 +818,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'q']]
 where
@@ -829,7 +829,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'leq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'ci' and *[3][./text() = 'd']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'root' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'cn' and *[2][./text() = '3'] and *[3]/name() = 'cn' and *[3][./text() = '2']]] and *[3]/name() = 'ci' and *[3][./text() = 'ε']] and *[3]/name() = 'ci' and *[3][./text() = 'd']]]
 where
@@ -850,7 +850,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'f'] and *[3]/name() = 'ci' and *[3][./text() = 'μ']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'cn' and *[2][./text() = '8'] and *[3]/name() = 'ci' and *[3][./text() = 'π'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'G'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'cn' and *[2][./text() = '3'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'c'] and *[3]/name() = 'cn' and *[3][./text() = '4']]]] and *[5]/name() = 'apply' and *[5][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'A'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'ci' and *[3][./text() = 'β']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'B'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'ci' and *[3][./text() = 'T'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'η'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'ci' and *[3][./text() = 'β']]]]] and *[6]/name() = 'apply' and *[6][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'δ'] and *[3]/name() = 'ci' and *[3][./text() = 'ν']] and *[3]/name() = 'ci' and *[3][./text() = 'μ']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'ci' and *[3][./text() = 'μ']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'ci' and *[3][./text() = 'ν']]]] and *[7]/name() = 'apply' and *[7][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'ci' and *[3][./text() = 'α']] and *[8]/name() = 'apply' and *[8][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'ci' and *[3][./text() = 'ν']] and *[9]/name() = 'apply' and *[9][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'ci' and *[3][./text() = 'β']]]]]
 where
@@ -926,7 +926,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'D'] and *[3]/name() = 'ci' and *[3][./text() = 'g']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'D'] and *[3]/name() = 'ci' and *[3][./text() = 't']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'f'] and *[3]/name() = 'cn' and *[3][./text() = '0']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'v'] and *[3]/name() = 'ci' and *[3][./text() = 'a']]] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'β'] and *[3]/name() = 'ci' and *[3][./text() = 'y'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'v'] and *[3]/name() = 'ci' and *[3][./text() = 'g']]]] and *[3]/name() = 'cn' and *[3][./text() = '0']]
 where
@@ -965,7 +965,7 @@ fn:count($x/*[2]/*[2]/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'I'] and *[3]/name() = 'ci' and *[3][./text() = 'c']]
 where
@@ -977,7 +977,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'maps-to'] and *[2]/name() = 'ci' and *[2][./text() = 'A'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'M'] and *[3]/name() = 'ci' and *[3][./text() = 'α'] and *[4]/name() = 'ci' and *[4][./text() = 'A'] and *[5]/name() = 'apply' and *[5][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'M'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'cn' and *[2][./text() = '1']]]]]
 where
@@ -997,7 +997,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-Γ'] and *[3]/name() = 'infinity']
 where
@@ -1008,7 +1008,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'Y'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'β'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'cn' and *[3][./text() = '8']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'I'] and *[3]/name() = 'ci' and *[3][./text() = 'X']]]]
 where
@@ -1028,7 +1028,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'μ'] and *[3]/name() = 'ci' and *[3][./text() = 'A']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'cases'] and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'mtext' and *[3][./text() = 'otherwise']] and *[3]/name() = 'mtext' and *[3][./text() = 'Align'] and *[4]/name() = 'mtext' and *[4][./text() = 'if'] and *[5]/name() = 'cn' and *[5][./text() = '0']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'in' and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'A'] and *[3]/name() = 'cn' and *[3][./text() = '0'] and *[4]/name() = 'mtext' and *[4][./text() = 'Align'] and *[5]/name() = 'mtext' and *[5][./text() = 'if'] and *[6]/name() = 'cn' and *[6][./text() = '0']]] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'notin' and *[2]/name() = 'share' and *[3]/name() = 'ci' and *[3][./text() = 'A']]]
 where
@@ -1058,7 +1058,7 @@ fn:count($x/*[2]/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'λ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'ci' and *[3][./text() = 'n']]]
 where
@@ -1072,7 +1072,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'r'] and *[3]/name() = 'ci' and *[3][./text() = 'p'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'm']]]
 where
@@ -1086,7 +1086,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⏟'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'interval' and *[3][*[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'v'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-˙'] and *[2]/name() = 'ci' and *[2][./text() = 'u']] and *[3]/name() = 'ci' and *[3][./text() = 'x']]]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⏞'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'partialdiff' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'V'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'g'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⏟'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[3]/name() = 'ci' and *[3][./text() = '𝐱']]]]]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'v'] and *[3]/name() = 'cn' and *[3][./text() = '1']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⏞'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⏟'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'f']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'g'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[3]/name() = 'mtext' and *[3][./text() = '(i.e.,'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = '\operatorname'] and *[3]/name() = 'ci' and *[3][./text() = 'd']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = '\operatorname'] and *[4]/name() = 'ci' and *[4][./text() = 't']]] and *[5]/name() = 'mtext' and *[5][./text() = '?
                                                             x13']]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[3]/name() = 'mtext' and *[3][./text() = '(i.e.,'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = '\operatorname'] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = '\operatorname'] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 't']]] and *[5]/name() = 'mtext' and *[5][./text() = ')']]]]]
@@ -1217,7 +1217,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'E'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-^'] and *[2]/name() = 'ci' and *[2][./text() = 'σ']] and *[3]/name() = 'cn' and *[3][./text() = '2']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'ci' and *[3][./text() = 'n']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'σ'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]]
 where
@@ -1246,7 +1246,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:ci
 [./text() = '𝖿𝗏']
 where
@@ -1255,7 +1255,7 @@ fn:count($x/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum' and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum' and *[3]/name() = 'ci' and *[3][./text() = 'y']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'I'] and *[3]/name() = 'interval' and *[3][*[1]/name() = 'ci' and *[1][./text() = 'x'] and *[2]/name() = 'ci' and *[2][./text() = 'y']]]]]
 where
@@ -1276,7 +1276,7 @@ fn:count($x/*[1]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = '\boldsymbol'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'F'] and *[3]/name() = 'ci' and *[3][./text() = 'r']]]
 where
@@ -1290,7 +1290,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-→'] and *[2]/name() = 'cn' and *[2][./text() = '0'] and *[3]/name() = 'ci' and *[3][./text() = 'B']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'ci' and *[1][./text() = 'normal-→'] and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'direct-sum'] and *[2]/name() = 'ci' and *[2][./text() = 'A'] and *[3]/name() = 'ci' and *[3][./text() = 'B']]] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'ci' and *[1][./text() = 'normal-→'] and *[2]/name() = 'share' and *[3]/name() = 'ci' and *[3][./text() = 'A']] and *[5]/name() = 'apply' and *[5][*[1]/name() = 'ci' and *[1][./text() = 'normal-→'] and *[2]/name() = 'share' and *[3]/name() = 'cn' and *[3][./text() = '0.']]]
 where
@@ -1315,7 +1315,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-∇'] and *[3]/name() = 'ci' and *[3][./text() = 'Y']] and *[2]/name() = 'ci' and *[2][./text() = 'T']] and *[3]/name() = 'vector' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'ci' and *[3][./text() = 'normal-…'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[5]/name() = 'apply' and *[5][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[6]/name() = 'ci' and *[6][./text() = 'normal-…']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'Y'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'vector' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'α'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'ci' and *[3][./text() = 'normal-…'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'X']] and *[5]/name() = 'apply' and *[5][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[6]/name() = 'ci' and *[6][./text() = 'normal-…']]]]]
 where
@@ -1372,7 +1372,7 @@ fn:count($x/*[2]/*[2]/*[1]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'leq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'sum' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'in' and *[2]/name() = 'ci' and *[2][./text() = 'n'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[3]/name() = 'ci' and *[3][./text() = 'd']]]] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'abs' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'ψ'] and *[3]/name() = 'interval' and *[3][*[1]/name() = 'ci' and *[1][./text() = 't'] and *[2]/name() = 'ci' and *[2][./text() = 'n']]]] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'abs' and *[2]/name() = 'ci' and *[2][./text() = 'n']]]] and *[3]/name() = 'ci' and *[3][./text() = 'C']]
 where
@@ -1402,7 +1402,7 @@ fn:count($x/*[2]/*[1]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'plus-or-minus'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'root' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'cn' and *[2][./text() = '4'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide'] and *[3]/name() = 'ci' and *[3][./text() = 'y']]]]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'cn' and *[2][./text() = '2'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'g'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]]]]]]
 where
@@ -1437,7 +1437,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'conditional-set'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'in' and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'ci' and *[3][./text() = 'H']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'formulae-sequence'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'gt' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'abs' and *[2]/name() = 'ci' and *[2][./text() = 'z']] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'lt' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'abs' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[3]/name() = 'ci' and *[3][./text() = 'z']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]]]
 where
@@ -1463,7 +1463,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'λ'] and *[3]/name() = 'ci' and *[3][./text() = 'I']]]
 where
@@ -1476,7 +1476,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'y'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'ρ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide'] and *[4]/name() = 'apply' and *[4][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'x']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'μ'] and *[3]/name() = 'ci' and *[3][./text() = 'y']]]]
 where
@@ -1499,7 +1499,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'x'] and *[3]/name() = 'ci' and *[3][./text() = 'b']]
 where
@@ -1510,7 +1510,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'H'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'ci' and *[3][./text() = 'K']]]
 where
@@ -1525,7 +1525,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'P']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'direct-sum'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[3]/name() = 'interval' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'E'] and *[3]/name() = 'ci' and *[3][./text() = 'K']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'S'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'i'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]] and *[2]/name() = 'ci' and *[2][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'C'] and *[3]/name() = 'ci' and *[3][./text() = 'i']]]]
 where
@@ -1557,7 +1557,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'f']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'f'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'partialdiff' and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[2]/name() = 'ci' and *[2][./text() = 'f']]]]
 where
@@ -1582,7 +1582,7 @@ fn:count($x/*[2]/*[2]/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'P'] and *[3]/name() = 'ci' and *[3][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 'P'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'conditional-set'] and *[2]/name() = 'ci' and *[2][./text() = 'a'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'geq' and *[2]/name() = 'ci' and *[2][./text() = 'a'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]]]]
 where
@@ -1603,7 +1603,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'η'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'w'] and *[3]/name() = 'ci' and *[3][./text() = 'o'] and *[4]/name() = 'ci' and *[4][./text() = 'r'] and *[5]/name() = 'ci' and *[5][./text() = 'k'] and *[6]/name() = 'ci' and *[6][./text() = 'd'] and *[7]/name() = 'ci' and *[7][./text() = 'o'] and *[8]/name() = 'ci' and *[8][./text() = 'n'] and *[9]/name() = 'ci' and *[9][./text() = 'e']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'h'] and *[3]/name() = 'ci' and *[3][./text() = 'e'] and *[4]/name() = 'ci' and *[4][./text() = 'a'] and *[5]/name() = 'ci' and *[5][./text() = 't'] and *[6]/name() = 'ci' and *[6][./text() = 'a'] and *[7]/name() = 'ci' and *[7][./text() = 'b'] and *[8]/name() = 'ci' and *[8][./text() = 's'] and *[9]/name() = 'ci' and *[9][./text() = 'o'] and *[10]/name() = 'ci' and *[10][./text() = 'r'] and *[11]/name() = 'ci' and *[11][./text() = 'b'] and *[12]/name() = 'ci' and *[12][./text() = 'e'] and *[13]/name() = 'ci' and *[13][./text() = 'd']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'Q'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'Q'] and *[3]/name() = 'cn' and *[3][./text() = '2']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'Q'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]]]
 where
@@ -1649,7 +1649,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'd'] and *[3]/name() = 'ci' and *[3][./text() = 'f']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'f']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'x']]] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'f']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'y']]] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'y']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'x']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'v'] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'y']]]]]
 where
@@ -1689,7 +1689,7 @@ fn:count($x/*[2]/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'h']]
 where
@@ -1700,7 +1700,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'assign'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'K']]] and *[3]/name() = 'ci' and *[3][./text() = 'k']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'T'] and *[3]/name() = 'times'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'times']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'tensor-product'] and *[2]/name() = 'ci' and *[2][./text() = 'a'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'ci' and *[3][./text() = 'a']]]]]
 where
@@ -1731,7 +1731,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'conditional-set'] and *[2]/name() = 'ci' and *[2][./text() = 'C'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-⋅'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'K'] and *[3]/name() = 'ci' and *[3][./text() = 'X']] and *[3]/name() = 'ci' and *[3][./text() = 'C']] and *[3]/name() = 'cn' and *[3][./text() = '0']]]
 where
@@ -1751,7 +1751,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'neq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'and' and *[2]/name() = 'ci' and *[2][./text() = 'normal-Θ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'd'] and *[3]/name() = 'ci' and *[3][./text() = 'normal-Θ']]]] and *[3]/name() = 'cn' and *[3][./text() = '0']]
 where
@@ -1768,7 +1768,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'approx' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'D'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'ρ'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'u'] and *[3]/name() = 'ci' and *[3][./text() = 'i']]]] and *[3]/name() = 'ci' and *[3][./text() = 'D']] and *[3]/name() = 'ci' and *[3][./text() = 't']] and *[3]/name() = 'cn' and *[3][./text() = '0']]
 where
@@ -1790,7 +1790,7 @@ fn:count($x/*[2]/*[2]/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'ci' and *[3][./text() = 't']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'plus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'λ'] and *[3]/name() = 'cn' and *[3][./text() = '1']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'z'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'ci' and *[2][./text() = 't'] and *[3]/name() = 'cn' and *[3][./text() = '1']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'ε'] and *[3]/name() = 'ci' and *[3][./text() = 't']]]]
 where
@@ -1819,7 +1819,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'b'] and *[3]/name() = 'cn' and *[3][./text() = '3']]
 where
@@ -1831,7 +1831,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'b'] and *[3]/name() = 'cn' and *[3][./text() = '3']]
 where
@@ -1843,7 +1843,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'normal-Δ'] and *[3]/name() = 'ci' and *[3][./text() = 'W']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'int' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'V']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'V'] and *[3]/name() = 'cn' and *[3][./text() = '2']]] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[4]/name() = 'ci' and *[4][./text() = 'V']]]]
 where
@@ -1870,7 +1870,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'gt' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'dimension'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'f'] and *[3]/name() = 'ci' and *[3][./text() = 'Z']]] and *[3]/name() = 'ci' and *[3][./text() = 'n']]
 where
@@ -1885,7 +1885,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'ci' and *[2][./text() = 'd'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'd'] and *[3]/name() = 'ci' and *[3][./text() = 't']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'log' and *[3]/name() = 'ci' and *[3][./text() = 'e']] and *[2]/name() = 'ci' and *[2][./text() = 't']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide']]
 where
@@ -1906,7 +1906,7 @@ fn:count($x/*[2]/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'ci' and *[1][./text() = 'normal-:'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'h'] and *[3]/name() = 'ci' and *[3][./text() = 'i']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'ci' and *[1][./text() = 'normal-→'] and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'set' and *[3]]]
 where
@@ -1924,7 +1924,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'leq' and *[2]/name() = 'cn' and *[2][./text() = '2'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 's'] and *[3]/name() = 'ci' and *[3][./text() = 'e'] and *[4]/name() = 'ci' and *[4][./text() = 'q'] and *[5]/name() = 'ci' and *[5][./text() = 's']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'leq' and *[2]/name() = 'share' and *[3]/name() = 'cn' and *[3][./text() = '6']]]
 where
@@ -1942,7 +1942,7 @@ fn:count($x/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'ci' and *[2][./text() = 'F'] and *[3]/name() = 'set' and *[3]]
 where
@@ -1953,7 +1953,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'ci' and *[3][./text() = 'i']] and *[3]/name() = 'ci' and *[3][./text() = 'ω']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'ω'] and *[3]/name() = 'ci' and *[3][./text() = 'i']]]
 where
@@ -1972,7 +1972,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'partialdiff' and *[2]/name() = 'ci' and *[2][./text() = 'L']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'q'] and *[3]/name() = 'ci' and *[3][./text() = 'i']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'partialdiff'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'partialdiff']]]]
 where
@@ -1993,7 +1993,7 @@ fn:count($x/*[2]/*[2]/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'x']]
 where
@@ -2004,7 +2004,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'normal-Π'] and *[3]/name() = 'ci' and *[3][./text() = 'n']]
 where
@@ -2016,7 +2016,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'σ'] and *[3]/name() = 'cn' and *[3][./text() = '2']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'X'] and *[3]/name() = 'ci' and *[3][./text() = 'T']] and *[3]/name() = 'ci' and *[3][./text() = 'V'] and *[4]/name() = 'ci' and *[4][./text() = 'X']]]
 where
@@ -2036,7 +2036,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'int' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = 'ℝ'] and *[3]/name() = 'ci' and *[3][./text() = 'n']]] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'f'] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'int' and *[3]/name() = 'cn' and *[3][./text() = '0']] and *[3]/name() = 'infinity'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'set' and *[2][*[1]/name() = 'apply' and *[1][*[1]/name() = 'apply' and *[1][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'int'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'f'] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'S']]]] and *[3]/name() = 'ci' and *[3][./text() = 'd'] and *[4]/name() = 'ci' and *[4][./text() = 'r']]]]
 where
@@ -2073,7 +2073,7 @@ fn:count($x/*[2]/*[1]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'and' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'set' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'x'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'ci' and *[3][./text() = 'x']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'D'] and *[3]/name() = 'ci' and *[3][./text() = 'B']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'set' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'y'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'ci' and *[3][./text() = 'y']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'D'] and *[3]/name() = 'ci' and *[3][./text() = 'B']]]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'eq' and *[2]/name() = 'share' and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'cn' and *[3][./text() = '2']]]]
 where
@@ -2109,7 +2109,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'G'] and *[3]/name() = 'list' and *[3][*[1]/name() = 'ci' and *[1][./text() = 'k'] and *[2]/name() = 'ci' and *[2][./text() = 'σ']]] and *[3]/name() = 'ci' and *[3][./text() = 'y']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'plus' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'divide' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'k'] and *[3]/name() = 'ci' and *[3][./text() = 'y']] and *[3]/name() = 'ci' and *[3][./text() = 'σ']]] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'minus' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'divide' and *[2]/name() = 'cn' and *[2][./text() = '1'] and *[3]/name() = 'ci' and *[3][./text() = 'k']]]]]]
 where
@@ -2141,7 +2141,7 @@ fn:count($x/*[2]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'tensor-product'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'times' and *[2]/name() = 'ci' and *[2][./text() = 'L'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'H'] and *[3]/name() = 'ci' and *[3][./text() = 'B']]] and *[3]/name() = 'ci' and *[3][./text() = 'C']] and *[3]/name() = 'ci' and *[3][./text() = 'X']]
 where
@@ -2160,7 +2160,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'eq' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'π'] and *[3]/name() = 'ci' and *[3][./text() = 'i']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'cn' and *[2][./text() = '2']] and *[3]/name() = 'mtext' and *[3][./text() = '\tbinom'] and *[4]/name() = 'ci' and *[4][./text() = 'N'] and *[5]/name() = 'ci' and *[5][./text() = 'i']]]
 where
@@ -2180,7 +2180,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:vector
 [*[1]/name() = 'apply' and *[1][*[1]/name() = 'root' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'cn' and *[3][./text() = '1']]] and *[2]/name() = 'ci' and *[2][./text() = 'normal-⋯'] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'root' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'p'] and *[3]/name() = 'ci' and *[3][./text() = 'n']]]]
 where
@@ -2200,7 +2200,7 @@ fn:count($x/*[1]/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'mtext' and *[2][./text() = '\boldsymbol'] and *[3]/name() = 'ci' and *[3][./text() = 's']]
 where
@@ -2211,7 +2211,7 @@ fn:count($x/*[2]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'ci' and *[2][./text() = '𝐉'] and *[3]/name() = 'ci' and *[3][./text() = '𝐓']] and *[3]/name() = 'ci' and *[3][./text() = '𝐖'] and *[4]/name() = 'ci' and *[4][./text() = '𝚫'] and *[5]/name() = 'ci' and *[5][./text() = '𝐲']]
 where
@@ -2227,7 +2227,7 @@ fn:count($x/*[2]/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'csymbol' and *[1][./text() = 'superscript'] and *[2]/name() = 'apply' and *[2][*[1]/name() = 'ci' and *[1][./text() = 'normal-¯'] and *[2]/name() = 'ci' and *[2][./text() = 'V']] and *[3]/name() = 'times']
 where
@@ -2240,7 +2240,7 @@ fn:count($x/*[1]/*) = 0
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'divide']
 where
@@ -2249,7 +2249,7 @@ fn:count($x/*) = 3
 return
 <a href="http://demo.formulasearchengine.com/index.php?curid={$m/@url}">result</a>
 declare default element namespace "http://www.w3.org/1998/Math/MathML";
-for $m in //*:expr return 
+for $m in //*:expr return
 for $x in $m//*:apply
 [*[1]/name() = 'times' and *[2]/name() = 'apply' and *[2][*[1]/name() = 'csymbol' and *[1][./text() = 'subscript'] and *[2]/name() = 'ci' and *[2][./text() = 'y'] and *[3]/name() = 'ci' and *[3][./text() = 'k']] and *[3]/name() = 'apply' and *[3][*[1]/name() = 'csymbol' and *[1][./text() = 'delimited-[]'] and *[2]/name() = 'ci' and *[2][./text() = 'n']]]
 where

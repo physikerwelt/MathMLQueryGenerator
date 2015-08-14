@@ -21,6 +21,8 @@ import static com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespa
  * The variable $x always represents a hit, so you can refer to $x in the return format as the result node.
  * If addQvarMap is turned on, the function local:qvarMap($parentNode) always represents a map of qvars to their
  * respective formula ID, so you can refer to local:qvarMap($parentNode) in the footer to return qvar results.
+ * If findRootApply is turned on, the xquery takes on a recursive format. The variable $rootApply represents the root
+ * apply node and the variable $depth represents the depth of the matched node. The root apply node has a depth of 0.
  * Created by Moritz Schubotz on 9/3/14.
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
@@ -40,6 +42,7 @@ public class XQueryGenerator {
 	private Node mainElement = null;
 	private boolean restrictLength = true;
 	private boolean addQvarMap = true;
+	private boolean findRootApply = false;
 
 	/**
 	 * Constructs a basic generator from an XML document given as a string.
@@ -81,6 +84,15 @@ public class XQueryGenerator {
 	 */
 	public XQueryGenerator setAddQvarMap( boolean addQvarMap ) {
 		this.addQvarMap = addQvarMap;
+		return this;
+	}
+
+	/**
+	 * Determines whether or not the $rootApply and the $depth variables are generated using recursion to find the root
+	 * node of the matched equation and the depth of the hit.
+	 */
+	public XQueryGenerator setFindRootApply( boolean findRootApply ) {
+		this.findRootApply = findRootApply;
 		return this;
 	}
 
@@ -162,7 +174,11 @@ public class XQueryGenerator {
 		}
 		exactMatchXQuery = generateSimpleConstraints( mainElement, true );
 		generateQvarConstraints();
-        return getDefaultString();
+		if ( findRootApply ) {
+			return getRecursiveString();
+		} else {
+			return getDefaultString();
+		}
 	}
 
 	/**
@@ -178,7 +194,7 @@ public class XQueryGenerator {
 			outBuilder.append(qvarMapVariable).append("\n");
 		}
 		outBuilder.append("for $m in ").append(pathToRoot).append(" return\n")
-				.append( "for $x in $m//*:" ).append( getFirstChild( mainElement ).getLocalName() )
+				.append( "for $x in $m//*:" ).append(getFirstChild(mainElement).getLocalName())
 				.append( "\n" ).append( exactMatchXQuery );
 		if ( !lengthConstraint.isEmpty() || !qvarConstraint.isEmpty() ) {
 			outBuilder.append( "\n" ).append("where").append( "\n" );
@@ -189,7 +205,43 @@ public class XQueryGenerator {
 						.append( qvarConstraint.isEmpty() ? "" : "\n and " ).append( qvarConstraint );
 			}
 		}
-		outBuilder.append( "\n\n" ).append( "return" ).append( "\n" ).append(returnFormat);
+		outBuilder.append( "\n\n" ).append( "return" ).append( "\n" ).append( returnFormat );
+		return outBuilder.toString();
+	}
+
+	/**
+	 * Builds the XQuery as a string. Uses the recursive format of recursively looping through the documents.
+	 * This enables the $depth and the $rootApply variables.
+	 * @return XQuery as string
+	 */
+	private String getRecursiveString() {
+		final StringBuilder outBuilder = new StringBuilder();
+		if (!namespace.isEmpty()) {
+			outBuilder.append(namespace).append("\n");
+		}
+        if (!qvarMapVariable.isEmpty() && addQvarMap) {
+            outBuilder.append(qvarMapVariable).append("\n");
+        }
+
+		outBuilder.append("\ndeclare function local:compareApply($rootApply, $depth, $x ) {\n")
+				.append("(for $child in $x/* return local:compareApply(\n")
+				.append("if (empty($rootApply) and $child/name() = \"apply\") then $child else $rootApply,\n")
+				.append("if (empty($rootApply) and $child/name() = \"apply\") then 0 else $depth+1, $child),\n")
+				.append("if ($x/name() = \"apply\"\n")
+				.append(" and $x").append(exactMatchXQuery).append("\n");
+		if (!lengthConstraint.isEmpty()) {
+			outBuilder.append(" and ").append(lengthConstraint).append("\n");
+		}
+		if (!qvarConstraint.isEmpty()) {
+			outBuilder.append(" and ").append(qvarConstraint).append("\n");
+		}
+        outBuilder.append(" ) then\n")
+				.append(returnFormat).append("\n")
+				.append("else ()\n")
+				.append(")};\n\n")
+				.append("for $m in ").append(pathToRoot).append(" return\n")
+				.append("local:compareApply((), 0, $m)");
+
 		return outBuilder.toString();
 	}
 

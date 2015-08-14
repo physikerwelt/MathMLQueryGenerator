@@ -38,11 +38,11 @@ public class XQueryGeneratorTest extends TestCase {
 		return dir;
 	}
 
-	private void runTestCollection( String resourceName ) {
-		runTestCollection( getResources( resourceName ) );
+	private void runTestCollection( String resourceName, boolean findRootApply ) {
+		runTestCollection( getResources( resourceName ), findRootApply );
 	}
 
-	private void runTestCollection( File dir ) {
+	private void runTestCollection( File dir, boolean findRootApply ) {
 		String queryString = null;
 		String reference = null;
 		Document query = null;
@@ -62,21 +62,26 @@ public class XQueryGeneratorTest extends TestCase {
 					fail( "Cannot parse reference document " + nextFile.getName() );
 				}
 				XQueryGenerator xQueryGenerator = new XQueryGenerator( query );
+				xQueryGenerator.setFindRootApply(findRootApply);
 				assertEquals( "Example " + nextFile.getName() + " does not match reference.", reference, xQueryGenerator.toString() );
 			}
 		}
 	}
 
 	public void testMwsConversion() {
-		runTestCollection( "com/formulasearchengine/mathmlquerygenerator/mws" );
+		runTestCollection( "com/formulasearchengine/mathmlquerygenerator/mws", false);
 	}
 
 	public void testCmmlConversion() {
-		runTestCollection( "com/formulasearchengine/mathmlquerygenerator/cmml" );
+		runTestCollection( "com/formulasearchengine/mathmlquerygenerator/cmml", false);
 	}
 
 	public void testFormatsConversion() {
-		runTestCollection("com/formulasearchengine/mathmlquerygenerator/formats");
+		runTestCollection("com/formulasearchengine/mathmlquerygenerator/formats", false);
+	}
+
+	public void testRecurseConversion() {
+		runTestCollection("com/formulasearchengine/mathmlquerygenerator/recursive", true);
 	}
 
 	public void testCustomization() throws Exception {

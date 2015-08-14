@@ -37,18 +37,18 @@ public class NtcirTopicReaderTest {
 	}
 
 	private NtcirTopicReader getTopicReader( String resourceName ) throws ParserConfigurationException, IOException, SAXException, URISyntaxException, XPathExpressionException, NullPointerException {
-		final URL resource = getClass().getClassLoader().getResource( resourceName );
-		return new NtcirTopicReader( new File( resource.toURI() ) ).setAddQvarMap( false );
+		final URL resource = getClass().getClassLoader().getResource(resourceName);
+		return new NtcirTopicReader( new File( resource.toURI() ) ).setAddQvarMap(false);
 	}
 
 	public NtcirPattern getFirstTopic() throws URISyntaxException, ParserConfigurationException, SAXException, XPathExpressionException, IOException {
-		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
-		return tr.extractPatterns().get( 0 );
+		final NtcirTopicReader tr = getTopicReader(WIKIPEDIA_RESOURCE);
+		return tr.extractPatterns().get(0);
 	}
 
 	@Test
 	public void checkBaseX() throws Exception {
-		final String referenceString = getFileContents( "jp/ac/nii/basexReferenceQueries.txt" );
+		final String referenceString = getFileContents("jp/ac/nii/basexReferenceQueries.txt");
 		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
 		tr.setNamespace(BASEX_NAMESPACE);
 		tr.setPathToRoot(BASEX_PATHTOROOT);
@@ -59,6 +59,22 @@ public class NtcirTopicReaderTest {
 		}
 		assertEquals( referenceString, sb.toString() );
 
+	}
+
+	@Test
+	public void checkRecursiveBaseX() throws Exception {
+        final String referenceString = getFileContents("jp/ac/nii/basexRecursiveReferenceQueries.txt");
+		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
+		tr.setNamespace(BASEX_NAMESPACE);
+		tr.setPathToRoot(BASEX_PATHTOROOT);
+		tr.setReturnFormat(BASEX_RETURNFORMAT);
+		tr.setFindRootApply(true);
+		final StringBuilder sb = new StringBuilder();
+		for ( final NtcirPattern ntcirPattern : tr.extractPatterns() ) {
+			sb.append(ntcirPattern.getxQueryExpression()).append("\n");
+		}
+		System.out.println(sb.toString());
+		assertEquals( referenceString, sb.toString() );
 	}
 
 	@Test

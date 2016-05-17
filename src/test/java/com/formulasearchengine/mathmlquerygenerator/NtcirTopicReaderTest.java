@@ -18,9 +18,9 @@ import static com.formulasearchengine.mathmlquerygenerator.XQueryGeneratorTest.g
 import static org.junit.Assert.assertEquals;
 
 public class NtcirTopicReaderTest {
-	public static final String BASEX_HEADER = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";\n" +
-		"for $m in //*:expr return \n";
-	public static final String BASEX_FOOTER = "<a href=\"http://demo.formulasearchengine.com/index.php?curid={$m/@url}\">result</a>\n";
+	public static final String BASEX_NAMESPACE = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";";
+	public static final String BASEX_PATHTOROOT = "//*:expr";
+	public static final String BASEX_RETURNFORMAT = "<a href=\"http://demo.formulasearchengine.com/index.php?curid={$m/@url}\">result</a>";
 	public static final String WIKIPEDIA_RESOURCE = "jp/ac/nii/Ntcir11MathWikipediaTopicsParticipants.xml";
 	public static final String ARXIV_RESOURCE = "jp/ac/nii/NTCIR-11-Math-test.xml";
 
@@ -37,40 +37,57 @@ public class NtcirTopicReaderTest {
 	}
 
 	private NtcirTopicReader getTopicReader( String resourceName ) throws ParserConfigurationException, IOException, SAXException, URISyntaxException, XPathExpressionException, NullPointerException {
-		final URL resource = getClass().getClassLoader().getResource( resourceName );
-		return new NtcirTopicReader( new File( resource.toURI() ) ).setAddQvarMap( false );
+		final URL resource = getClass().getClassLoader().getResource(resourceName);
+		return new NtcirTopicReader( new File( resource.toURI() ) ).setAddQvarMap(false);
 	}
 
 	public NtcirPattern getFirstTopic() throws URISyntaxException, ParserConfigurationException, SAXException, XPathExpressionException, IOException {
-		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
-		return tr.extractPatterns().get( 0 );
+		final NtcirTopicReader tr = getTopicReader(WIKIPEDIA_RESOURCE);
+		return tr.extractPatterns().get(0);
 	}
 
 	@Test
 	public void checkBaseX() throws Exception {
-		final String referenceString = getFileContents( "jp/ac/nii/basexReferenceQueries.txt" );
+		final String referenceString = getFileContents("jp/ac/nii/basexReferenceQueries.txt");
 		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
-		tr.setHeader( BASEX_HEADER );
-		tr.setFooter( BASEX_FOOTER );
+		tr.setNamespace(BASEX_NAMESPACE);
+		tr.setPathToRoot(BASEX_PATHTOROOT);
+		tr.setReturnFormat(BASEX_RETURNFORMAT);
 		final StringBuilder sb = new StringBuilder();
 		for ( final NtcirPattern ntcirPattern : tr.extractPatterns() ) {
-			sb.append( ntcirPattern.getxQueryExpression() );
+			sb.append( ntcirPattern.getxQueryExpression() ).append("\n");
 		}
 		assertEquals( referenceString, sb.toString() );
 
 	}
 
 	@Test
+	public void checkRecursiveBaseX() throws Exception {
+        final String referenceString = getFileContents("jp/ac/nii/basexRecursiveReferenceQueries.txt");
+		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
+		tr.setNamespace(BASEX_NAMESPACE);
+		tr.setPathToRoot(BASEX_PATHTOROOT);
+		tr.setReturnFormat(BASEX_RETURNFORMAT);
+		tr.setFindRootApply(true);
+		final StringBuilder sb = new StringBuilder();
+		for ( final NtcirPattern ntcirPattern : tr.extractPatterns() ) {
+			sb.append(ntcirPattern.getxQueryExpression()).append("\n");
+		}
+		System.out.println(sb.toString());
+		assertEquals( referenceString, sb.toString() );
+	}
+
+	@Test
 	public void extractPattern() throws Exception {
 		final NtcirTopicReader tr = getTopicReader( WIKIPEDIA_RESOURCE );
-		tr.setHeader( BASEX_HEADER );
-		tr.setFooter( BASEX_FOOTER );
+		tr.setNamespace(BASEX_NAMESPACE);
+		tr.setPathToRoot(BASEX_PATHTOROOT);
+		tr.setReturnFormat(BASEX_RETURNFORMAT);
 		for ( final NtcirPattern ntcirPattern : tr.extractPatterns() ) {
 			if ( ntcirPattern.getNum().endsWith( "29" ) ) {
 				System.out.println( ntcirPattern.getxQueryExpression() );
 			}
 		}
-
 	}
 
 	@Test
@@ -91,6 +108,6 @@ public class NtcirTopicReaderTest {
 		DocumentBuilder documentBuilder = XMLHelper.getDocumentBuilder( true );
 		Document topics = documentBuilder.parse( new File( resource.toURI() ) );
 		new NtcirTopicReader( topics );
-		new NtcirTopicReader( topics, "", "" , false );
+		new NtcirTopicReader( topics, "", "", "", false );
 	}
 }

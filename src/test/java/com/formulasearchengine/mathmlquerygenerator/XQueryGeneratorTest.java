@@ -105,6 +105,8 @@ public class XQueryGeneratorTest extends TestCase {
 		xQueryGenerator.setReturnFormat(testResultFormat).setNamespace(testNamespace)
 			.setPathToRoot(testPathToRoot);
 		assertEquals(expectedOutput, xQueryGenerator.toString());
+		assertEquals(testResultFormat, xQueryGenerator.getReturnFormat());
+		assertEquals(testNamespace, xQueryGenerator.getNamespace());
 	}
 
 	public void testNoRestriction() throws Exception {
@@ -142,9 +144,7 @@ public class XQueryGeneratorTest extends TestCase {
 		ArrayList<String> xPaths = firstEntry.getValue();
 		assertEquals( 2, xPaths.size() );
 		assertEquals( firstExpectedLocation, xPaths.get(0) );
-	}
-	public void testRecursion() throws Exception {
-
+        assertEquals(true, xQueryGenerator.isAddQvarMap());
 	}
 
 }

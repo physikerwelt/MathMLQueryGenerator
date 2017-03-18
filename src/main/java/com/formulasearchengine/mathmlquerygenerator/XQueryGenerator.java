@@ -112,13 +112,8 @@ public class XQueryGenerator {
 			return new NonWhitespaceNodeList( expr ).item( 0 );
 		}
 		// if that fails try to get content MathML from an annotation tag
-		expr = xml.getElementsByTagName( "annotation-xml" );
-		for ( Node node : new NonWhitespaceNodeList( expr ) ) {
-			if ( node.hasAttributes() &&
-					node.getAttributes().getNamedItem( "encoding" ).getNodeValue().equals( "MathML-Content" ) ) {
-				return node;
-			}
-		}
+        Node node = getContentMathMLNode(xml);
+        if (node != null) return node;
 		// if that fails too interprete content of first semantic element as content MathML
 		expr = xml.getElementsByTagNameNS( "*", "semantics" );
 		if ( expr.getLength() > 0 ) {
@@ -133,7 +128,19 @@ public class XQueryGenerator {
 		return null;
 	}
 
-	public String getReturnFormat() {
+    private static Node getContentMathMLNode(Document xml) {
+        NodeList expr;
+        expr = xml.getElementsByTagName( "annotation-xml" );
+        for ( Node node : new NonWhitespaceNodeList( expr ) ) {
+            if ( node.hasAttributes() &&
+                    node.getAttributes().getNamedItem( "encoding" ).getNodeValue().equals( "MathML-Content" ) ) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public String getReturnFormat() {
 		return returnFormat;
 	}
 

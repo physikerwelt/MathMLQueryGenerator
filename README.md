@@ -1,5 +1,9 @@
 MathML Query Generator
 ======================
+[![Build Status](https://travis-ci.org/physikerwelt/MathMLQueryGenerator.svg?branch=travis)](https://travis-ci.org/physikerwelt/MathMLQueryGenerator)
+[![MavenCentral](https://maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/badge.svg)](maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/)
+[![Coverage Status](https://coveralls.io/repos/github/physikerwelt/MathMLQueryGenerator/badge.svg?branch=master)](https://coveralls.io/github/physikerwelt/MathMLQueryGenerator?branch=master)
+
 
 Converts individual content MathML elements to equivalent
 XQuery statements in DB2 dialect.
@@ -31,7 +35,3 @@ The NtcirTopicReader class supports parsing of queries specified in the NTCIR to
 http://ntcir-math.nii.ac.jp/wp-content/blogs.dir/13/files/2014/05/NTCIR11-Math-topics.pdf .
 The expected input is a DOMDocuement and the result is a List of NtcirPattern instances that
 include the XQuery expressions.
-
-[![Build Status](https://travis-ci.org/physikerwelt/MathMLQueryGenerator.svg?branch=travis)](https://travis-ci.org/physikerwelt/MathMLQueryGenerator)
-[![MavenCentral](https://maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/badge.svg)](maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/)
-[![Coverage Status](https://coveralls.io/repos/physikerwelt/MathMLQueryGenerator/badge.svg)](https://coveralls.io/r/physikerwelt/MathMLQueryGenerator)

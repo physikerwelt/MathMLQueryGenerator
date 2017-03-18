@@ -1,8 +1,8 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
 
-import com.formulasearchengine.mathmltools.xmlhelper.XMLHelper;
 import com.formulasearchengine.mathmltools.xmlhelper.NonWhitespaceNodeList;
+import com.formulasearchengine.mathmltools.xmlhelper.XMLHelper;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -11,10 +11,12 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
-
-import static com.formulasearchengine.mathmltools.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
  * Converts MathML queries into XQueries, given a namespace, a xquery/xpath to the root elements, and a xquery return format.
@@ -117,7 +119,9 @@ public class XQueryGenerator {
         }
         // if that fails try to get content MathML from an annotation tag
         Node node = getContentMathMLNode(xml);
-        if (node != null) return node;
+        if (node != null) {
+            return node;
+        }
         // if that fails too interprete content of first semantic element as content MathML
         expr = xml.getElementsByTagNameNS("*", "semantics");
         if (expr.getLength() > 0) {
@@ -136,8 +140,8 @@ public class XQueryGenerator {
         NodeList expr;
         expr = xml.getElementsByTagName("annotation-xml");
         for (Node node : new NonWhitespaceNodeList(expr)) {
-            if (node.hasAttributes() &&
-                    node.getAttributes().getNamedItem("encoding").getNodeValue().equals("MathML-Content")) {
+            if (node.hasAttributes()
+                    && node.getAttributes().getNamedItem("encoding").getNodeValue().equals("MathML-Content")) {
                 return node;
             }
         }
@@ -216,7 +220,7 @@ public class XQueryGenerator {
             outBuilder.append(qvarMapVariable).append("\n");
         }
         outBuilder.append("for $m in ").append(pathToRoot).append(" return\n")
-                .append("for $x in $m//*:").append(getFirstChild(mainElement).getLocalName())
+                .append("for $x in $m//*:").append(NonWhitespaceNodeList.getFirstChild(mainElement).getLocalName())
                 .append("\n").append(exactMatchXQuery);
         if (!lengthConstraint.isEmpty() || !qvarConstraint.isEmpty()) {
             outBuilder.append("\n").append("where").append("\n");
@@ -389,7 +393,8 @@ public class XQueryGenerator {
                 //Text nodes are always leaf nodes
                 out.append("./text() = '").append(child.getNodeValue().trim()).append("'");
             }
-        }//for child : nodelist
+        }
+        //for child : nodelist
 
         if (!isRoot && restrictLength) {
             if (lengthConstraint.isEmpty()) {
@@ -414,5 +419,4 @@ public class XQueryGenerator {
         }
         return qvar;
     }
-
 }

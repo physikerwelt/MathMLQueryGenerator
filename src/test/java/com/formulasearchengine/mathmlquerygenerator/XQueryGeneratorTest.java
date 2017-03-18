@@ -3,7 +3,7 @@ package com.formulasearchengine.mathmlquerygenerator;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
-import com.formulasearchengine.mathmlquerygenerator.xmlhelper.XMLHelper;
+import com.formulasearchengine.mathmltools.xmlhelper.XMLHelper;
 
 import java.io.File;
 import java.io.IOException;

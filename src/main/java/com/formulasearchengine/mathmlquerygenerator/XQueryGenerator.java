@@ -1,8 +1,8 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
 
-import com.formulasearchengine.mathmlquerygenerator.xmlhelper.XMLHelper;
-import com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespaceNodeList;
+import com.formulasearchengine.mathmltools.xmlhelper.XMLHelper;
+import com.formulasearchengine.mathmltools.xmlhelper.NonWhitespaceNodeList;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static com.formulasearchengine.mathmlquerygenerator.xmlhelper.NonWhitespaceNodeList.getFirstChild;
+import static com.formulasearchengine.mathmltools.xmlhelper.NonWhitespaceNodeList.getFirstChild;
 
 /**
  * Converts MathML queries into XQueries, given a namespace, a xquery/xpath to the root elements, and a xquery return format.

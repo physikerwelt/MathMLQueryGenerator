@@ -1,6 +1,6 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
-import com.formulasearchengine.mathmlquerygenerator.xmlhelper.XMLHelper;
+import com.formulasearchengine.mathmltools.xmlhelper.XMLHelper;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

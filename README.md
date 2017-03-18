@@ -1,7 +1,7 @@
 MathML Query Generator
 ======================
 [![Build Status](https://travis-ci.org/physikerwelt/MathMLQueryGenerator.svg?branch=travis)](https://travis-ci.org/physikerwelt/MathMLQueryGenerator)
-[![MavenCentral](https://maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/badge.svg)](maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/)
+[![MavenCentral](https://maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.formulasearchengine/mathmlquerygenerator/)
 [![Coverage Status](https://coveralls.io/repos/github/physikerwelt/MathMLQueryGenerator/badge.svg?branch=master)](https://coveralls.io/github/physikerwelt/MathMLQueryGenerator?branch=master)
 
 

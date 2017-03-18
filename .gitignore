@@ -11,5 +11,4 @@ target
 .idea/vcs.xml
 .idea/runConfigurations
 .idea/copyright
-checkstyle.xml
 /mathmlquerygenerator.iml

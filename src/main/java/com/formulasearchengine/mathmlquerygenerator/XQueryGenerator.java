@@ -1,12 +1,10 @@
 package com.formulasearchengine.mathmlquerygenerator;
 
-
 import com.formulasearchengine.mathmltools.xmlhelper.NonWhitespaceNodeList;
 import com.formulasearchengine.mathmltools.xmlhelper.XMLHelper;
 import com.google.common.collect.Lists;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,7 +14,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Converts MathML queries into XQueries, given a namespace, a xquery/xpath to the root elements, and a xquery return format.
@@ -29,22 +26,12 @@ import java.util.regex.Pattern;
  * Translated from http://git.wikimedia.org/blob/mediawiki%2Fextensions%2FMathSearch.git/31a80ae48d1aaa50da9103cea2e45a8dc2204b39/XQueryGenerator.php
  */
 @SuppressWarnings("WeakerAccess")
-public class XQueryGenerator {
-    private static final Pattern ANNOTATION_XML_PATTERN = Pattern.compile("annotation(-xml)?");
-    //Qvar map of qvar name to XPaths referenced by each qvar
-    private Map<String, ArrayList<String>> qvar = new LinkedHashMap<>();
-    private String relativeXPath = "";
-    private String exactMatchXQuery = "";
-    private String lengthConstraint = "";
+public class XQueryGenerator extends XQueryGeneratorBase {
+    private boolean findRootApply = false;
+    private boolean addQvarMap = true;
     private String qvarConstraint = "";
     private String qvarMapVariable = "";
-    private String namespace = "declare default element namespace \"http://www.w3.org/1998/Math/MathML\";";
-    private String pathToRoot = "db2-fn:xmlcolumn(\"math.math_mathml\")";
-    private String returnFormat = "data($m/*[1]/@alttext)";
-    private Node mainElement = null;
-    private boolean restrictLength = true;
-    private boolean addQvarMap = true;
-    private boolean findRootApply = false;
+    private Map<String, ArrayList<String>> qvar = new LinkedHashMap<>();
 
     /**
      * Constructs a basic generator from an XML document given as a string.
@@ -54,7 +41,7 @@ public class XQueryGenerator {
     public XQueryGenerator(String input)
             throws IOException, SAXException, ParserConfigurationException {
         final Document xml = XMLHelper.String2Doc(input, true);
-        this.mainElement = getMainElement(xml);
+        this.mainElement = XMLHelper.getMainElement(xml);
     }
 
     /**
@@ -63,213 +50,13 @@ public class XQueryGenerator {
      * @param xml Document XML object
      */
     public XQueryGenerator(Document xml) {
-        this.mainElement = getMainElement(xml);
+        this.mainElement = XMLHelper.getMainElement(xml);
     }
 
-    public boolean isRestrictLength() {
-        return restrictLength;
-    }
-
-    /**
-     * If set to true a query like $x+y$ does not match $x+y+z$.
-     *
-     * @param restrictLength
-     */
-    public XQueryGenerator setRestrictLength(boolean restrictLength) {
-        this.restrictLength = restrictLength;
-        this.lengthConstraint = "";
-        this.relativeXPath = "";
-        qvar = new HashMap<>();
-        return this;
-    }
-
-    public boolean isAddQvarMap() {
-        return addQvarMap;
-    }
-
-    /**
-     * Determines whether or not the $q variable is generated with a map of qvar names to their respective xml:id
-     */
-    public XQueryGenerator setAddQvarMap(boolean addQvarMap) {
-        this.addQvarMap = addQvarMap;
-        return this;
-    }
-
-    /**
-     * Determines whether or not the $rootApply and the $depth variables are generated using recursion to find the root
-     * node of the matched equation and the depth of the hit.
-     */
-    public XQueryGenerator setFindRootApply(boolean findRootApply) {
-        this.findRootApply = findRootApply;
-        return this;
-    }
-
-    /**
-     * Returns the main element for which to begin generating the XQuery
-     *
-     * @param xml XML Document to find main element of
-     * @return Node for main element
-     */
-    public static Node getMainElement(Document xml) {
-        // Try to get main mws:expr first
-        NodeList expr = xml.getElementsByTagName("mws:expr");
-
-        if (expr.getLength() > 0) {
-            return new NonWhitespaceNodeList(expr).item(0);
-        }
-        // if that fails try to get content MathML from an annotation tag
-        Node node = getContentMathMLNode(xml);
-        if (node != null) {
-            return node;
-        }
-        // if that fails too interprete content of first semantic element as content MathML
-        expr = xml.getElementsByTagNameNS("*", "semantics");
-        if (expr.getLength() > 0) {
-            return new NonWhitespaceNodeList(expr).item(0);
-        }
-        // if that fails too interprete content of root MathML element as content MathML
-        expr = xml.getElementsByTagName("math");
-        if (expr.getLength() > 0) {
-            return new NonWhitespaceNodeList(expr).item(0);
-        }
-
-        return null;
-    }
-
-    private static Node getContentMathMLNode(Document xml) {
-        NodeList expr;
-        expr = xml.getElementsByTagName("annotation-xml");
-        for (Node node : new NonWhitespaceNodeList(expr)) {
-            if (node.hasAttributes()
-                    && node.getAttributes().getNamedItem("encoding").getNodeValue().equals("MathML-Content")) {
-                return node;
-            }
-        }
-        return null;
-    }
-
-    public String getReturnFormat() {
-        return returnFormat;
-    }
-
-    public XQueryGenerator setReturnFormat(String returnFormat) {
-        this.returnFormat = returnFormat;
-        return this;
-    }
-
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public XQueryGenerator setNamespace(String namespace) {
-        this.namespace = namespace;
-        return this;
-    }
-
-    public XQueryGenerator setPathToRoot(String pathToRoot) {
-        this.pathToRoot = pathToRoot;
-        return this;
-    }
-
-    /**
-     * Resets the current xQuery expression and sets a new main element.
-     *
-     * @param mainElement
-     */
-    public void setMainElement(Node mainElement) {
-        this.mainElement = mainElement;
+    protected void generateConstraints() {
         qvar = new LinkedHashMap<>();
-        relativeXPath = "";
-        lengthConstraint = "";
-    }
-
-    /**
-     * Generates the constraints of the XQuery and then builds the XQuery and returns it as a string
-     *
-     * @return XQuery as string. Returns null if no main element set.
-     */
-    public String toString() {
-        if (mainElement == null) {
-            return null;
-        }
-        generateConstraints();
-        if (findRootApply) {
-            return getRecursiveString();
-        } else {
-            return getDefaultString();
-        }
-    }
-
-    private void generateConstraints() {
-        qvar = new LinkedHashMap<>();
-        exactMatchXQuery = generateSimpleConstraints(mainElement, true);
+        super.generateConstraints();
         generateQvarConstraints();
-    }
-
-    /**
-     * Builds the XQuery as a string. Uses the default format of looping through all apply nodes.
-     *
-     * @return XQuery as string
-     */
-    private String getDefaultString() {
-        final StringBuilder outBuilder = new StringBuilder();
-        if (!namespace.isEmpty()) {
-            outBuilder.append(namespace).append("\n");
-        }
-        if (!qvarMapVariable.isEmpty() && addQvarMap) {
-            outBuilder.append(qvarMapVariable).append("\n");
-        }
-        outBuilder.append("for $m in ").append(pathToRoot).append(" return\n")
-                .append("for $x in $m//*:").append(NonWhitespaceNodeList.getFirstChild(mainElement).getLocalName())
-                .append("\n").append(exactMatchXQuery);
-        if (!lengthConstraint.isEmpty() || !qvarConstraint.isEmpty()) {
-            outBuilder.append("\n").append("where").append("\n");
-            if (lengthConstraint.isEmpty()) {
-                outBuilder.append(qvarConstraint);
-            } else {
-                outBuilder.append(lengthConstraint)
-                        .append(qvarConstraint.isEmpty() ? "" : "\n and ").append(qvarConstraint);
-            }
-        }
-        outBuilder.append("\n\n").append("return").append("\n").append(returnFormat);
-        return outBuilder.toString();
-    }
-
-    /**
-     * Builds the XQuery as a string. Uses the recursive format of recursively looping through the documents.
-     * This enables the $depth and the $rootApply variables.
-     *
-     * @return XQuery as string
-     */
-    private String getRecursiveString() {
-        final StringBuilder outBuilder = new StringBuilder();
-        if (!namespace.isEmpty()) {
-            outBuilder.append(namespace).append("\n");
-        }
-        if (!qvarMapVariable.isEmpty() && addQvarMap) {
-            outBuilder.append(qvarMapVariable).append("\n");
-        }
-
-        outBuilder.append("\ndeclare function local:compareApply($rootApply, $depth, $x ) {\n")
-                .append("(for $child in $x/* return local:compareApply(\n")
-                .append("if (empty($rootApply) and $child/name() = \"apply\") then $child else $rootApply,\n")
-                .append("if (empty($rootApply) and $child/name() = \"apply\") then 0 else $depth+1, $child),\n")
-                .append("if ($x/name() = \"apply\"\n")
-                .append(" and $x").append(exactMatchXQuery).append("\n");
-        if (!lengthConstraint.isEmpty()) {
-            outBuilder.append(" and ").append(lengthConstraint).append("\n");
-        }
-        if (!qvarConstraint.isEmpty()) {
-            outBuilder.append(" and ").append(qvarConstraint).append("\n");
-        }
-        outBuilder.append(" ) then\n")
-                .append(returnFormat).append("\n")
-                .append("else ()\n")
-                .append(")};\n\n")
-                .append("for $m in ").append(pathToRoot).append(" return\n")
-                .append("local:compareApply((), 0, $m)");
-
-        return outBuilder.toString();
     }
 
     /**
@@ -322,95 +109,42 @@ public class XQueryGenerator {
         qvarConstraint = qvarConstrBuilder.toString();
     }
 
-
-    private String generateSimpleConstraints(Node node) {
-        return generateSimpleConstraints(node, false);
+    /**
+     * Builds the XQuery as a string. Uses the default format of looping through all apply nodes.
+     *
+     * @return XQuery as string
+     */
+    protected String getDefaultString() {
+        final StringBuilder outBuilder = new StringBuilder();
+        if (!namespace.isEmpty()) {
+            outBuilder.append(namespace).append("\n");
+        }
+        if (!qvarMapVariable.isEmpty() && addQvarMap) {
+            outBuilder.append(qvarMapVariable).append("\n");
+        }
+        outBuilder.append("for $m in ").append(pathToRoot).append(" return\n")
+                .append("for $x in $m//*:").append(NonWhitespaceNodeList.getFirstChild(mainElement).getLocalName())
+                .append("\n").append(exactMatchXQuery);
+        if (!lengthConstraint.isEmpty() || !qvarConstraint.isEmpty()) {
+            outBuilder.append("\n").append("where").append("\n");
+            if (lengthConstraint.isEmpty()) {
+                outBuilder.append(qvarConstraint);
+            } else {
+                outBuilder.append(lengthConstraint)
+                        .append(qvarConstraint.isEmpty() ? "" : "\n and ").append(qvarConstraint);
+            }
+        }
+        outBuilder.append("\n\n").append("return").append("\n").append(returnFormat);
+        return outBuilder.toString();
     }
 
-    /**
-     * Generates qvar map, length constraint, and returns exact match XQuery query for all child nodes of the given node.
-     * Called recursively to generate the query for the entire query document.
-     *
-     * @param node   Element from which to get children to generate constraints.
-     * @param isRoot Whether or not node should be treated as the root element of the document (the root element
-     *               is not added as a constraint here, but in getString())
-     * @return Exact match XQuery string
-     */
-    private String generateSimpleConstraints(Node node, boolean isRoot) {
-        //Index of child node
-        int childElementIndex = 0;
-        final StringBuilder out = new StringBuilder();
-        boolean queryHasText = false;
-        final NonWhitespaceNodeList nodeList = new NonWhitespaceNodeList(node.getChildNodes());
+    public String getNamespace() {
+        return namespace;
+    }
 
-        for (final Node child : nodeList) {
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
-                //If an element node and not an attribute or text node, add to xquery and increment index
-                childElementIndex++;
-
-                if (child.getNodeName().equals("mws:qvar")) {
-                    //If qvar, add to qvar map
-                    String qvarName = child.getTextContent();
-                    if (qvarName.isEmpty()) {
-                        qvarName = child.getAttributes().getNamedItem("name").getTextContent();
-                    }
-                    if (qvar.containsKey(qvarName)) {
-                        qvar.get(qvarName).add(relativeXPath + "/*[" + childElementIndex + "]");
-                    } else {
-                        qvar.put(qvarName, Lists.newArrayList(relativeXPath + "/*[" + childElementIndex + "]"));
-                    }
-                } else if (child.getLocalName() != null && ANNOTATION_XML_PATTERN.matcher(child.getLocalName()).matches()) {
-                    //Ignore annotations and presentation mathml
-                } else {
-                    if (queryHasText) {
-                        //Add another condition on top of existing condition in query
-                        out.append(" and ");
-                    } else {
-                        queryHasText = true;
-                    }
-
-                    //The first direct child of the root element is added as a constraint in getString()
-                    //so ignore it here
-                    if (!isRoot) {
-                        //Add constraint for current child element
-                        out.append("*[").append(childElementIndex).append("]/name() = '").
-                                append(child.getLocalName()).append("'");
-                    }
-                    if (child.hasChildNodes()) {
-                        if (!isRoot) {
-                            relativeXPath += "/*[" + childElementIndex + "]";
-                            //Add relative constraint so this can be recursively called
-                            out.append(" and *[").append(childElementIndex).append("]");
-                        }
-                        final String constraint = generateSimpleConstraints(child);
-                        if (!constraint.isEmpty()) {
-                            //This constraint appears as a child of the relative constraint above (e.g. [*1][constraint])
-                            out.append("[").append(constraint).append("]");
-                        }
-                    }
-                }
-            } else if (child.getNodeType() == Node.TEXT_NODE) {
-                //Text nodes are always leaf nodes
-                out.append("./text() = '").append(child.getNodeValue().trim()).append("'");
-            }
-        }
-        //for child : nodelist
-
-        if (!isRoot && restrictLength) {
-            if (lengthConstraint.isEmpty()) {
-                //Initialize constraint
-                lengthConstraint += "fn:count($x" + relativeXPath + "/*) = " + childElementIndex;
-            } else {
-                //Add as additional constraint
-                lengthConstraint += "\n" + " and fn:count($x" + relativeXPath + "/*) = " + childElementIndex;
-            }
-        }
-
-        if (!relativeXPath.isEmpty()) {
-            relativeXPath = relativeXPath.substring(0, relativeXPath.lastIndexOf("/"));
-        }
-
-        return out.toString();
+    public XQueryGenerator setNamespace(String namespace) {
+        this.namespace = namespace;
+        return this;
     }
 
     public Map<String, ArrayList<String>> getQvar() {
@@ -418,5 +152,140 @@ public class XQueryGenerator {
             generateConstraints();
         }
         return qvar;
+    }
+
+    /**
+     * Builds the XQuery as a string. Uses the recursive format of recursively looping through the documents.
+     * This enables the $depth and the $rootApply variables.
+     *
+     * @return XQuery as string
+     */
+    private String getRecursiveString() {
+        final StringBuilder outBuilder = new StringBuilder();
+        if (!namespace.isEmpty()) {
+            outBuilder.append(namespace).append("\n");
+        }
+        if (!qvarMapVariable.isEmpty() && addQvarMap) {
+            outBuilder.append(qvarMapVariable).append("\n");
+        }
+
+        outBuilder.append("\ndeclare function local:compareApply($rootApply, $depth, $x ) {\n")
+                .append("(for $child in $x/* return local:compareApply(\n")
+                .append("if (empty($rootApply) and $child/name() = \"apply\") then $child else $rootApply,\n")
+                .append("if (empty($rootApply) and $child/name() = \"apply\") then 0 else $depth+1, $child),\n")
+                .append("if ($x/name() = \"apply\"\n")
+                .append(" and $x").append(exactMatchXQuery).append("\n");
+        if (!lengthConstraint.isEmpty()) {
+            outBuilder.append(" and ").append(lengthConstraint).append("\n");
+        }
+        if (!qvarConstraint.isEmpty()) {
+            outBuilder.append(" and ").append(qvarConstraint).append("\n");
+        }
+        outBuilder.append(" ) then\n")
+                .append(returnFormat).append("\n")
+                .append("else ()\n")
+                .append(")};\n\n")
+                .append("for $m in ").append(pathToRoot).append(" return\n")
+                .append("local:compareApply((), 0, $m)");
+
+        return outBuilder.toString();
+    }
+
+    public String getReturnFormat() {
+        return returnFormat;
+    }
+
+    public XQueryGenerator setReturnFormat(String returnFormat) {
+        this.returnFormat = returnFormat;
+        return this;
+    }
+
+    protected boolean handleSpecialElements(Node child, Integer childElementIndex) {
+        if (!"mws:qvar".equals(child.getNodeName())) {
+            return false;
+        }
+        //If qvar, add to qvar map
+        String qvarName = child.getTextContent();
+        if (qvarName.isEmpty()) {
+            qvarName = child.getAttributes().getNamedItem("name").getTextContent();
+        }
+        if (qvar.containsKey(qvarName)) {
+            qvar.get(qvarName).add(relativeXPath + "/*[" + childElementIndex + "]");
+        } else {
+            qvar.put(qvarName, Lists.newArrayList(relativeXPath + "/*[" + childElementIndex + "]"));
+        }
+        return true;
+    }
+
+    public boolean isAddQvarMap() {
+        return addQvarMap;
+    }
+
+    /**
+     * Determines whether or not the $q variable is generated with a map of qvar names to their respective xml:id
+     */
+    public XQueryGenerator setAddQvarMap(boolean addQvarMap) {
+        this.addQvarMap = addQvarMap;
+        return this;
+    }
+
+    public boolean isRestrictLength() {
+        return restrictLength;
+    }
+
+    /**
+     * If set to true a query like $x+y$ does not match $x+y+z$.
+     *
+     * @param restrictLength
+     */
+    public XQueryGenerator setRestrictLength(boolean restrictLength) {
+        this.restrictLength = restrictLength;
+        this.lengthConstraint = "";
+        this.relativeXPath = "";
+        qvar = new HashMap<>();
+        return this;
+    }
+
+    /**
+     * Determines whether or not the $rootApply and the $depth variables are generated using recursion to find the root
+     * node of the matched equation and the depth of the hit.
+     */
+    public XQueryGenerator setFindRootApply(boolean findRootApply) {
+        this.findRootApply = findRootApply;
+        return this;
+    }
+
+    /**
+     * Resets the current xQuery expression and sets a new main element.
+     *
+     * @param mainElement
+     */
+    public void setMainElement(Node mainElement) {
+        this.mainElement = mainElement;
+        qvar = new LinkedHashMap<>();
+        relativeXPath = "";
+        lengthConstraint = "";
+    }
+
+    public XQueryGenerator setPathToRoot(String pathToRoot) {
+        this.pathToRoot = pathToRoot;
+        return this;
+    }
+
+    /**
+     * Generates the constraints of the XQuery and then builds the XQuery and returns it as a string
+     *
+     * @return XQuery as string. Returns null if no main element set.
+     */
+    public String toString() {
+        if (mainElement == null) {
+            return null;
+        }
+        generateConstraints();
+        if (findRootApply) {
+            return getRecursiveString();
+        } else {
+            return getDefaultString();
+        }
     }
 }

@@ -1,3 +1,5 @@
+This Repository is no longer maintained. The code was moved to https://github.com/gipplab/MathMLTools/tree/master/mathml-core/src/main/java/com/formulasearchengine/mathmltools/querygenerator
+
 MathML Query Generator
 ======================
 [![Build Status](https://travis-ci.org/physikerwelt/MathMLQueryGenerator.svg?branch=travis)](https://travis-ci.org/physikerwelt/MathMLQueryGenerator)
